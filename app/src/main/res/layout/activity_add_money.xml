@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.wallet.AddMoneyActivity"
+    android:background="@color/white"
+    android:id="@+id/wallet_swipe_layout"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/colorPrimary" >
+
+        <include layout="@layout/toolbar"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginEnd="@dimen/paddingLayout"
+            android:layout_marginRight="@dimen/paddingLayout"
+            android:layout_marginLeft="@dimen/paddingLayout"
+            android:layout_marginStart="@dimen/paddingLayout"
+            />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:id="@+id/wallet_activity_frame_container"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/ttcommons_regular"
+                    android:text="Add Money to:"
+                    android:textColor="@color/gray_9"
+                    android:textSize="16sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:fontFamily="@font/ttcommons_regular"
+                    android:text="Metro Wallet"
+                    android:textColor="@color/gray_9"
+                    android:textSize="24sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="64dp"
+                >
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cv_activity_wallet"
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginRight="2dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="16dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_Wallet"
+                        android:layout_width="64dp"
+                        android:layout_height="54dp"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="36dp"
+                        app:srcCompat="@drawable/ic_wallet_icon" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="32dp"
+                        android:fontFamily="@font/ttcommons_regular"
+                        android:text="Available Balance:"
+                        android:textColor="@color/gray_9"
+                        android:textSize="18sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="64dp"
+                        android:fontFamily="@font/ttcommons_regular"
+                        android:text="@string/available_balance"
+                        android:textColor="@color/gray_9"
+                        android:textSize="24sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="105dp"
+                        android:fontFamily="@font/ttcommons_regular"
+                        android:text="Issued for:"
+                        android:textColor="@color/gray_5"
+                        android:textSize="14sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="78dp"
+                        android:layout_marginTop="105dp"
+                        android:fontFamily="@font/ttcommons_regular"
+                        android:text="@string/customer_name"
+                        android:textColor="@color/gray_5"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="264dp"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:hint="₹ Amount"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
+                        android:id="@+id/et_add_wallet_amount"
+                        android:inputType="number"
+                        android:textSize="28sp"
+                        android:maxLength="5"
+                        android:fontFamily="@font/ttcommons_demibold"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="360dp"
+                android:orientation="horizontal"
+                >
+
+                <Button
+                    android:id="@+id/btn_add_money"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:text="Proceed to Add Money"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/ttcommons_demibold"
+                    android:textSize="25sp"
+                    android:backgroundTint="@color/colorBottomViewNotFocusedIcon"
+                    android:textAllCaps="false"
+                    />
+            </LinearLayout>
+
+        </FrameLayout>
+    </LinearLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

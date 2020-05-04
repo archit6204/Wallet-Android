@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.wallet.AddMoneyPaymentActivity"
+    android:background="@color/white"
+    android:id="@+id/wallet_swipe_layout"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/colorPrimary" >
+
+        <include layout="@layout/toolbar"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginEnd="@dimen/paddingLayout"
+            android:layout_marginRight="@dimen/paddingLayout"
+            android:layout_marginLeft="@dimen/paddingLayout"
+            android:layout_marginStart="@dimen/paddingLayout"
+            />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:id="@+id/wallet_activity_frame_container"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:fontFamily="@font/ttcommons_regular"
+                    android:text="Add Money to Wallet"
+                    android:textColor="@color/gray_9"
+                    android:textSize="22sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_add_wallet_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="26dp"
+                    android:layout_marginStart="80dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="8dp"
+                    android:fontFamily="@font/ttcommons_demibold"
+                    android:gravity="left"
+                    android:text="@string/add_wallet_amount"
+                    android:textColor="@color/gray_9"
+                    android:textSize="22sp" />
+            </LinearLayout>
+
+        </FrameLayout>
+    </LinearLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

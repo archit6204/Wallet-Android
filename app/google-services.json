@@ -1,0 +1,122 @@
+{
+  "project_info": {
+    "project_number": "460448490389",
+    "firebase_url": "https://wallet-6204.firebaseio.com",
+    "project_id": "wallet-6204",
+    "storage_bucket": "wallet-6204.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:460448490389:android:2360d47fb44f4c141a0c9c",
+        "android_client_info": {
+          "package_name": "com.ashwiniraj.phoneotp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "460448490389-8m5jis0aem29pn3r0sd6488b68s98e3k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ashwiniraj.phoneotp",
+            "certificate_hash": "113a574a1255bd50e429cdd6abd003633004b98e"
+          }
+        },
+        {
+          "client_id": "460448490389-4tc3olo66nbq9568pkcqrv0a306taga9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkp7SKsqk30w591vImCJMrOVVFAm7PXtE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "460448490389-4tc3olo66nbq9568pkcqrv0a306taga9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:460448490389:android:c2c0e5961ef7bd2f1a0c9c",
+        "android_client_info": {
+          "package_name": "com.example.wallet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "460448490389-l1u7oajnaap6h91umq1j0q02tk83k830.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wallet",
+            "certificate_hash": "113a574a1255bd50e429cdd6abd003633004b98e"
+          }
+        },
+        {
+          "client_id": "460448490389-4tc3olo66nbq9568pkcqrv0a306taga9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkp7SKsqk30w591vImCJMrOVVFAm7PXtE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "460448490389-4tc3olo66nbq9568pkcqrv0a306taga9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:460448490389:android:275b04a9137ab5fe1a0c9c",
+        "android_client_info": {
+          "package_name": "com.wallet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "460448490389-0raookooiu2j01onv82bj2vauddnnc6l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wallet",
+            "certificate_hash": "113a574a1255bd50e429cdd6abd003633004b98e"
+          }
+        },
+        {
+          "client_id": "460448490389-4tc3olo66nbq9568pkcqrv0a306taga9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkp7SKsqk30w591vImCJMrOVVFAm7PXtE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "460448490389-4tc3olo66nbq9568pkcqrv0a306taga9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
