@@ -12,12 +12,9 @@
         android:background="@color/colorPrimary" >
 
         <include layout="@layout/toolbar"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:layout_width="match_parent"
-            android:layout_marginEnd="@dimen/paddingLayout"
-            android:layout_marginRight="@dimen/paddingLayout"
-            android:layout_marginLeft="@dimen/paddingLayout"
-            android:layout_marginStart="@dimen/paddingLayout" />
+            />
 
         <FrameLayout
             android:id="@+id/bottom_navigation_fragment_container"
@@ -30,10 +27,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:theme="@style/Widget.BottomNavigationView"
             android:background="@color/colorPrimary"
             app:elevation="25dp"
             app:itemIconTint="@drawable/bottomview_selector"
             app:itemTextColor="@drawable/bottomview_selector"
+            app:labelVisibilityMode="labeled"
             app:menu="@menu/bottom_nav_menu" />
 
     </LinearLayout>

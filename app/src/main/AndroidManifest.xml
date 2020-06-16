@@ -10,16 +10,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.wallet.SendMoneyPaymentActivity"></activity>
-        <activity android:name=".ui.wallet.SendMoneyUserActivity" />
-        <activity android:name=".ui.wallet.AddMoneyPaymentActivity" />
-        <activity android:name=".ui.wallet.AddMoneyActivity" />
+        <activity android:name=".ui.wallet.SendMoneyUserActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            />
+        <activity android:name=".ui.wallet.AddMoneyPaymentActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            />
+        <activity android:name=".ui.wallet.AddMoneyActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            />
         <!--
         activity
             android:name=".BottomNavigator"
             android:label="@string/title_activity_bottom_navigator"></activity
         -->
         <!-- activity android:name=".RegisterActivity" / -->
-        <activity android:name=".BottomNavigator">
+        <activity android:name=".BottomNavigator"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,7 +35,9 @@
             </intent-filter>
         </activity> <!-- activity android:name=".MainActivity" / -->
         <activity android:name=".OtpActivity" />
-        <activity android:name=".ui.wallet.WalletActivity" />
+        <activity android:name=".ui.wallet.WalletActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            />
     </application>
 
 </manifest>

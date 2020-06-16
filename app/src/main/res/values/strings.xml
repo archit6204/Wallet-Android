@@ -276,4 +276,5 @@
     <string name="no_bank_account">No bank found</string>
     <string name="error_specific_transactions">Couldn\'t fetch Specific transactions. Please, try again.</string>
     <string name="add_wallet_amount"><b>₹ </b>%1$d</string>
+    <string name="proceed_to_add_money">Proceed to Add Money</string>
 </resources>

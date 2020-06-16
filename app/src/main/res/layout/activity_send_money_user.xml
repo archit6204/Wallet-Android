@@ -15,12 +15,8 @@
         android:background="@color/colorPrimary" >
 
         <include layout="@layout/toolbar"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:layout_width="match_parent"
-            android:layout_marginEnd="@dimen/paddingLayout"
-            android:layout_marginRight="@dimen/paddingLayout"
-            android:layout_marginLeft="@dimen/paddingLayout"
-            android:layout_marginStart="@dimen/paddingLayout"
             />
         <FrameLayout
             android:layout_width="match_parent"
@@ -138,6 +134,7 @@
                     android:layout_marginRight="16dp"
                     android:layout_marginLeft="16dp"
                     android:hint="₹ Amount"
+                    app:boxStrokeColor="@color/colorAccentBlue50"
                     >
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -167,7 +164,6 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:text="Proceed To Send Money"
-                    style="@style/Widget.MaterialComponents.Button"
                     android:textColor="@color/white"
                     android:fontFamily="@font/ttcommons_demibold"
                     android:textSize="25sp"

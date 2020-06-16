@@ -11,10 +11,12 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.wallet.R;
 import com.google.firebase.database.DataSnapshot;
@@ -32,7 +34,6 @@ public class AddMoneyActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private TextView tvTotalWalletAmount;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +43,6 @@ public class AddMoneyActivity extends AppCompatActivity {
         btnAddMoney = findViewById(R.id.btn_add_money);
         mDatabase = FirebaseDatabase.getInstance().getReference("TotalAmountInWallet");
         btnAddMoney.setEnabled(false);
-
         etAddWalletAmount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

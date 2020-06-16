@@ -15,12 +15,8 @@
         android:background="@color/colorPrimary" >
 
         <include layout="@layout/toolbar"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:layout_width="match_parent"
-            android:layout_marginEnd="@dimen/paddingLayout"
-            android:layout_marginRight="@dimen/paddingLayout"
-            android:layout_marginLeft="@dimen/paddingLayout"
-            android:layout_marginStart="@dimen/paddingLayout"
             />
         <FrameLayout
             android:layout_width="match_parent"
@@ -88,20 +84,20 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="32dp"
                         android:fontFamily="@font/ttcommons_regular"
-                        android:text="Available Balance:"
-                        android:textColor="@color/gray_9"
-                        android:textSize="18sp" />
+                        android:text="Your Balance is:"
+                        android:textColor="@color/gray_5"
+                        android:textSize="14sp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_available_wallet_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
-                        android:layout_marginTop="64dp"
-                        android:fontFamily="@font/ttcommons_regular"
+                        android:layout_marginTop="60dp"
+                        android:fontFamily="@font/ttcommons_demibold"
                         android:text="@string/available_balance"
-                        android:textColor="@color/gray_9"
-                        android:textSize="24sp" />
+                        android:textColor="@color/gray_6"
+                        android:textSize="20sp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -138,7 +134,8 @@
                     android:layout_marginBottom="12dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginLeft="16dp"
-                    android:hint="₹ Amount"
+                    android:hint="₹ Enter amount"
+                    app:boxStrokeColor="@color/colorAccentBlue50"
                     >
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -148,8 +145,8 @@
                         android:textSize="28sp"
                         android:maxLength="5"
                         android:fontFamily="@font/ttcommons_demibold"
+                        android:textColor="@color/gray_6"
                         />
-
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
@@ -167,12 +164,11 @@
                     android:layout_height="72dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:text="Proceed to Add Money"
-                    style="@style/Widget.MaterialComponents.Button"
+                    android:text="@string/proceed_to_add_money"
                     android:textColor="@color/white"
                     android:fontFamily="@font/ttcommons_demibold"
                     android:textSize="25sp"
-                    android:backgroundTint="@color/colorBottomViewNotFocusedIcon"
+                    android:backgroundTint="@color/colorAccentBlue50"
                     android:textAllCaps="false"
                     />
             </LinearLayout>

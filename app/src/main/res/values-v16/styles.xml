@@ -9,8 +9,12 @@
     </style>
 
     <style name="AppTheme.Toolbar" parent="ThemeOverlay.MaterialComponents.Light">
-        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:background">@color/colorAccentBlue50</item>
         <item name="android:fontFamily">@font/ttcommons_demibold</item>
+        <item name="titleTextColor">@color/colorPrimary</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
-
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 </resources>
