@@ -15,12 +15,8 @@
         android:background="@color/colorPrimary" >
 
         <include layout="@layout/toolbar"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:layout_width="match_parent"
-            android:layout_marginEnd="@dimen/paddingLayout"
-            android:layout_marginRight="@dimen/paddingLayout"
-            android:layout_marginLeft="@dimen/paddingLayout"
-            android:layout_marginStart="@dimen/paddingLayout"
             />
         <FrameLayout
             android:layout_width="match_parent"

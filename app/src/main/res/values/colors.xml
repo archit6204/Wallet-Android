@@ -3,7 +3,7 @@
 
     <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#FFFFFF</color>
-    <color name="colorAccent">#000000</color>
+    <color name="colorAccent">#00558c</color>
     <color name="changedBackgroundColour">#ecf0f1 </color>
     <color name="clickedblue">#00bfff</color>
     <!-- 100, 87, 54 etc.. - OPACITY IN PERCENTAGE -->
@@ -20,7 +20,7 @@
     <color name="colorTextDisabled">@color/colorBlack38</color>
 
     <color name="colorAccentBlue">#000AFF</color>
-    <color name="colorAccentBlue50">#18F1B5</color>
+    <color name="colorAccentBlue50">#00558c</color>
     <color name="colorAccentBlack">#2F3542</color>
     <color name="colorAccentYellow">#FFF700</color>
     <color name="colorListImageBackground">#E6E6E6</color>
