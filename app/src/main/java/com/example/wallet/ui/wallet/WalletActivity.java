@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.wallet.R;
@@ -27,10 +28,13 @@ public class WalletActivity extends AppCompatActivity {
     private int totalAmountInWallet = 0;
     private String walletId = "ARCHIT0001";
     private TextView tvTotalWalletAmount;
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet);
+        progressBar = findViewById(R.id.progressbar);
         addedMoneyDatabase = FirebaseDatabase.getInstance().getReference("AddedMoneyInWallet");
         mDatabase = FirebaseDatabase.getInstance().getReference("TotalAmountInWallet");
         tvTotalWalletAmount = findViewById(R.id.tv_available_wallet_amount);
@@ -53,6 +57,12 @@ public class WalletActivity extends AppCompatActivity {
 
             }
         });
+        init();
+    }
+
+    private void init() {
+        progressBar.setVisibility(View.VISIBLE);
+        tvTotalWalletAmount.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -82,6 +92,8 @@ public class WalletActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                progressBar.setVisibility(View.GONE);
+                tvTotalWalletAmount.setVisibility(View.VISIBLE);
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     AvailableBalanceData availableBalanceData = postSnapshot.getValue(AvailableBalanceData.class);
 

@@ -7,9 +7,10 @@
     app:contentInsetStart="0dp"
     app:contentInsetRight="0dp"
     app:contentInsetEnd="0dp"
-    app:title="Wallet"
-    app:titleMarginTop="48dp"
+    app:title="JusTap"
+    app:titleMarginTop="40dp"
     app:titleMarginStart="16dp"
     app:titleTextColor="@color/colorPrimaryDark"
     android:layout_width="match_parent"
+    app:titleTextAppearance="@style/Toolbar.TitleText"
     android:layout_height="@dimen/value_100dp" />

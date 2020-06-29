@@ -3,7 +3,7 @@
     <string name="payments">Payments</string>
     <string name="home">Home</string>
     <string name="wallet">Wallet</string>
-    <string name="available_balance">₹ 1460.29</string>
+    <string name="available_balance">Available Balance</string>
     <string name="customer_name">Metro Rail User</string>
     <string name="profile">Profile</string>
     <string name="title_activity_bottom_navigator_main">BottomNavigatorMain</string>
@@ -277,4 +277,6 @@
     <string name="error_specific_transactions">Couldn\'t fetch Specific transactions. Please, try again.</string>
     <string name="add_wallet_amount"><b>₹ </b>%1$d</string>
     <string name="proceed_to_add_money">Proceed to Add Money</string>
+    <string name="tap_to_show">Tap to show Balance</string>
+    <string name="fetching_balance">Fetching Balance</string>
 </resources>
