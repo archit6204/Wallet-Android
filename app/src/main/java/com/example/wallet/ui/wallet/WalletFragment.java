@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Html;
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,23 +14,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wallet.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentContainer;
-
-import static android.text.Html.FROM_HTML_MODE_LEGACY;
 
 public class WalletFragment extends Fragment {
 
@@ -38,28 +39,41 @@ public class WalletFragment extends Fragment {
     private TextView mTvTapToHideBalance;
     private String stringAvailableWalletAmount;
     private ViewGroup homeScreenContainer;
-    private AvailableBalanceData availableBalanceData;
+    private int totalAvailableBalance = -1;
     private ProgressBar progressBar;
+    private boolean isDataFetched = false;
+    private String tapToShow;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("TotalAmountInWallet");
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
+        tapToShow = getResources().getString(R.string.tap_to_show);
+        DocumentReference userRef = db.collection("users").document("user");
+        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                     availableBalanceData = postSnapshot.getValue(AvailableBalanceData.class);
-                }
-                mTvTapToShowBalance.setText(getResources().getString(R.string.tap_to_show));
-                if (progressBar != null) {
-                    progressBar.setVisibility(View.GONE);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    assert document != null;
+                    if (document.exists()) {
+                        AddMoneyData addMoneyData = document.toObject(AddMoneyData.class);
+                        assert addMoneyData != null;
+                        totalAvailableBalance = addMoneyData.getTotalAmount();
+                        if (totalAvailableBalance != -1 && tapToShow != null) {
+                            isDataFetched = true;
+                            mTvTapToShowBalance.setText(tapToShow);
+                        }
+                        if (progressBar != null) {
+                            progressBar.setVisibility(View.GONE);
+                        }
 
+                    } else {
+                        Log.d("error", "No such document");
+                    }
+                } else {
+                    Log.d("failed fetch", "get failed with ", task.getException());
+                }
             }
         });
     }
@@ -72,6 +86,9 @@ public class WalletFragment extends Fragment {
         mTvTapToShowBalance = view.findViewById(R.id.tv_tap_to_show_balance);
         mTvTapToHideBalance = view.findViewById(R.id.tv_hide_balance);
         progressBar = view.findViewById(R.id.pb_wallet);
+
+
+
         view.findViewById(R.id.cv_fragment_wallet).setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
@@ -84,8 +101,8 @@ public class WalletFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                if (availableBalanceData != null) {
-                    stringAvailableWalletAmount = getResources().getString(R.string.add_wallet_amount, availableBalanceData.getMoneyAmount());
+                if (totalAvailableBalance != -1) {
+                    stringAvailableWalletAmount = getResources().getString(R.string.add_wallet_amount, totalAvailableBalance);
                 }
                 if (mTvTapToShowBalance.getText().toString().equals(getResources().getString(R.string.tap_to_show)) ||
                         mTvTapToShowBalance.getText().toString().equals(getResources().getString(R.string.fetching_balance))) {

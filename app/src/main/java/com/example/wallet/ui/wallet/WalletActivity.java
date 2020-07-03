@@ -75,7 +75,7 @@ public class WalletActivity extends AppCompatActivity {
             for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                 AddMoneyData addMoneyData = postSnapshot.getValue(AddMoneyData.class);
                 assert addMoneyData != null;
-                totalAmount = totalAmount + addMoneyData.getMoneyAmount();
+                totalAmount = totalAmount + addMoneyData.getTotalAmount();
             }
             String id = mDatabase.push().getKey();
             AvailableBalanceData availableBalanceData = new AvailableBalanceData(id, totalAmount, walletId);

@@ -70,5 +70,5 @@
     <color name="gray_7">#3f3f3f</color>
     <color name="gray_8">#2a2a2a</color>
     <color name="gray_9">#151515</color>
-
+    <color name="added_amount_green">#007f00</color>
 </resources>

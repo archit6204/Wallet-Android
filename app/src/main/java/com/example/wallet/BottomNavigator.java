@@ -1,14 +1,12 @@
 package com.example.wallet;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.wallet.ui.wallet.WalletActivity;
 import com.example.wallet.ui.wallet.WalletFragment;
 import com.example.wallet.ui.home.HomeFragment;
-import com.example.wallet.ui.notifications.NotificationsFragment;
+import com.example.wallet.ui.TransactionHistory.TransactionHistoryFragment;
 import com.example.wallet.ui.profile.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -47,7 +45,7 @@ public class BottomNavigator extends AppCompatActivity {
                             selectedFragment = new HomeFragment();
                             break;
                         case R.id.action_payments:
-                            selectedFragment = new NotificationsFragment();
+                            selectedFragment = new TransactionHistoryFragment();
                             break;
                         case R.id.action_wallet:
                             selectedFragment = new WalletFragment();
