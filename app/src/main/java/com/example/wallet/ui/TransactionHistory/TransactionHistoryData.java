@@ -31,7 +31,7 @@ public class TransactionHistoryData {
         return transactionAmount;
     }
 
-    public String getTransactionAmountWithCurrency() {
+    public String transactionAmountWithCurrency() {
         return "₹" + transactionAmount;
     }
 
@@ -46,7 +46,7 @@ public class TransactionHistoryData {
         return transactionType;
     }
 
-    public String getTransactionFormattedDateAndTime() {
+    public String transactionFormattedDateAndTime() {
         String date = transactionDateAndTime.toString();
         String[] dateArray = transactionDateAndTime.toDate().toString().split(" ");
         String dayName = dateArray[0];
@@ -55,7 +55,7 @@ public class TransactionHistoryData {
         String time = dateArray[3];
         String timeZone = dateArray[4];
         String year = dateArray[5];
-        String formattedDate = dayName + " " + month + " " + dayDate + " " + year;
+        String formattedDate = dayName + ", " + dayDate + " " + month + " " + year + " | " + time;
         return formattedDate;
     }
 }

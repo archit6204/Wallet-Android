@@ -60,6 +60,8 @@ public class WalletFragment extends Fragment {
                         AddMoneyData addMoneyData = document.toObject(AddMoneyData.class);
                         assert addMoneyData != null;
                         totalAvailableBalance = addMoneyData.getTotalAmount();
+                        Log.d("data", "getTotalAmount data: " + addMoneyData.getTotalAmount());
+                        Log.d("data", "totalAvailableBalance data: " + totalAvailableBalance);
                         if (totalAvailableBalance != -1 && tapToShow != null) {
                             isDataFetched = true;
                             mTvTapToShowBalance.setText(tapToShow);

@@ -1,5 +1,7 @@
 package com.example.wallet.ui.wallet;
 
+import android.util.Log;
+
 import com.example.wallet.ui.TransactionHistory.TransactionHistoryData;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Timestamp;
@@ -17,8 +19,9 @@ public class AddMoneyData {
     private int totalAmount;
     private String walletId;
     private Timestamp lastUpdatedDateAndTime;
-    private List<TransactionHistoryData> transactionHistoryDataList = new ArrayList<>();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private AddMoneyData addMoneyData;
+    private List<TransactionHistoryData> transactionHistoryData = new ArrayList<>();
 
     public AddMoneyData(){
     }
@@ -27,7 +30,7 @@ public class AddMoneyData {
         this.totalAmount = totalAmount;
         this.walletId = walletId;
         this.lastUpdatedDateAndTime = new Timestamp(new Date());
-        transactionHistoryDataList.add(transactionHistoryData);
+        this.transactionHistoryData.add(transactionHistoryData);
     }
 
     public String getTransactionId() {
@@ -35,16 +38,17 @@ public class AddMoneyData {
     }
 
     public int getTotalAmount() {
-        final DocumentReference userRef = db.collection("users").document("user");
+        /*final DocumentReference userRef = db.collection("users").document("user");
         userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                AddMoneyData addMoneyData = documentSnapshot.toObject(AddMoneyData.class);
+                addMoneyData = documentSnapshot.toObject(AddMoneyData.class);
                 assert addMoneyData != null;
                 int previousAmount = addMoneyData.getTotalAmount();
                 totalAmount = previousAmount + totalAmount;
+                Log.d("data", "aaaaddMoneyDataaaaa data: " + totalAmount);
             }
-        });
+        });*/
         return totalAmount;
     }
 
@@ -55,7 +59,8 @@ public class AddMoneyData {
     public Timestamp getLastUpdatedDateAndTime() {
         return lastUpdatedDateAndTime;
     }
+
     public List<TransactionHistoryData> getTransactionHistoryData() {
-        return transactionHistoryDataList;
+        return transactionHistoryData;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.wallet.ui.TransactionHistory;
 
-import android.content.Context;
+import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,11 +9,11 @@ import android.widget.TextView;
 
 import com.example.wallet.R;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class TransactionHistoryAdapter
@@ -20,8 +21,11 @@ public class TransactionHistoryAdapter
 
     private List<TransactionHistoryData> transactions;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public TransactionHistoryAdapter(List<TransactionHistoryData> transactionHistoryDataList) {
         this.transactions = transactionHistoryDataList;
+        Log.d("data", "transactions data: " + transactions);
+        transactions.sort(Comparator.comparing(TransactionHistoryData::getTransactionDateAndTime).reversed());
         notifyDataSetChanged();
     }
 
@@ -54,12 +58,12 @@ public class TransactionHistoryAdapter
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        TransactionHistoryData transaction = transactions.get(position);
-
-        holder.tvTransactionAmount.setText(transaction.getTransactionAmountWithCurrency());
-        holder.tvTransactionDate.setText(transaction.getTransactionFormattedDateAndTime());
+        TransactionHistoryData transaction = (TransactionHistoryData) transactions.get(position);
+        Log.d("data", "transactionFormattedDateAndTime data: " + transaction.transactionFormattedDateAndTime());
+        holder.tvTransactionAmount.setText(transaction.transactionAmountWithCurrency());
+        holder.tvTransactionDate.setText(transaction.transactionFormattedDateAndTime());
         holder.tvBeneficiaryInstrument.setText(transaction.getWalletId());
-        holder.tvTransactionInstrument.setText(transaction.getTransactionId());
+        holder.tvTransactionInstrument.setText(transaction.getTransactionType());
 
         /*if (isBalancePositive(balance) && context != null) {
             int color = ContextCompat.getColor(context, R.color.colorAccentBlue);

@@ -53,7 +53,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_gravity="end|top"
-            android:textColor="@color/added_amount_green"
+            android:textColor="@color/colorAccentBlue50"
             android:textSize="@dimen/value_16sp"
             android:fontFamily="@font/ttcommons_demibold"/>
 
