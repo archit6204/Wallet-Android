@@ -65,7 +65,7 @@ public class AddMoneyPaymentActivity extends AppCompatActivity {
             final TransactionHistoryData transactionHistoryData = new TransactionHistoryData(
                     transactionId,
                     addWalletAmount,
-                    "JusTap",
+                    "JusTap wallet",
                     "Debited from: UPI");
             final AddMoneyData addMoneyData = new AddMoneyData(transactionId, addWalletAmount, walletId, transactionHistoryData);
 

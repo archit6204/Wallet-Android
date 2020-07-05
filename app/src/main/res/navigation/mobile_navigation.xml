@@ -12,14 +12,20 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_wallet"
         android:name="com.example.wallet.ui.wallet.WalletFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_wallet" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_transaction_history"
         android:name="com.example.wallet.ui.TransactionHistory.TransactionHistoryFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_transaction_history" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.example.wallet.ui.TransactionHistory.TransactionHistoryFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

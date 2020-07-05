@@ -10,7 +10,15 @@
     app:title="JusTap"
     app:titleMarginTop="40dp"
     app:titleMarginStart="16dp"
-    app:titleTextColor="@color/colorPrimaryDark"
+    app:titleTextColor="@color/gray_1"
     android:layout_width="match_parent"
     app:titleTextAppearance="@style/Toolbar.TitleText"
-    android:layout_height="@dimen/value_100dp" />
+    android:layout_height="@dimen/value_100dp" >
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_Wallet"
+        android:layout_width="32dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="44dp"
+        app:srcCompat="@drawable/ic_icon_contacless"
+        />
+</androidx.appcompat.widget.Toolbar>

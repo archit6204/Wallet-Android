@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/wallet_money"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.wallet.SendMoneyPaymentActivity"></activity>
+        <activity android:name=".ui.wallet.SendMoneyPaymentActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            />
         <activity android:name=".ui.wallet.SendMoneyUserActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             />
