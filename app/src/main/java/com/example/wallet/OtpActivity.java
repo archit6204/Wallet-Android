@@ -11,11 +11,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskExecutors;
 import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
@@ -27,7 +24,7 @@ public class OtpActivity extends AppCompatActivity {
     private String verificationid;
     private FirebaseAuth mAuth;
     private ProgressBar progressBar;
-    private EditText editText;
+    private EditText etReceivedOtp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,27 +33,24 @@ public class OtpActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        progressBar = findViewById(R.id.progressbar);
-        editText = findViewById(R.id.editTextCode);
+        progressBar = findViewById(R.id.pb_activity_otp);
+        etReceivedOtp = findViewById(R.id.et_received_otp);
 
-        String phonenumber = getIntent().getStringExtra("phonenumber");
-        sendVerificationCode(phonenumber);
+        String userMobileNumber = getIntent().getStringExtra("userMobileNumber");
+        sendVerificationCode(userMobileNumber);
 
-        findViewById(R.id.btnCreateAccount).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        findViewById(R.id.btn_create_account).setOnClickListener(v -> {
 
-                String code = editText.getText().toString().trim();
+            String code = etReceivedOtp.getText().toString().trim();
 
-                if ((code.isEmpty() || code.length() < 6)){
+            if ((code.isEmpty() || code.length() < 6)){
 
-                    editText.setError("Enter code...");
-                    editText.requestFocus();
-                    return;
-                }
-                verifyCode(code);
-
+                etReceivedOtp.setError("Enter code...");
+                etReceivedOtp.requestFocus();
+                return;
             }
+            verifyCode(code);
+
         });
     }
 
@@ -67,21 +61,17 @@ public class OtpActivity extends AppCompatActivity {
 
     private void signInWithCredential(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
 
-                            Intent intent = new Intent(OtpActivity.this, BottomNavigator.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        Intent intent = new Intent(OtpActivity.this, BottomNavigator.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-                            startActivity(intent);
+                        startActivity(intent);
 
-                        } else {
-                            Toast.makeText(OtpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                        }
+                    } else {
+                        Toast.makeText(OtpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                     }
-
                 });
     }
 
@@ -100,7 +90,7 @@ public class OtpActivity extends AppCompatActivity {
             mCallBack = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
         @Override
-        public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+        public void onCodeSent(String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
             verificationid = s;
         }

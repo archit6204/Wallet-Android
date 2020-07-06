@@ -4,46 +4,41 @@ import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.ProgressBar;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private Spinner spinner;
-    private EditText editText;
+    private EditText etUserMobileNo;
+    private ProgressBar pbActivityRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        spinner = findViewById(R.id.spinnerCountries);
-        spinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, CountryData.countryNames));
-        editText = findViewById(R.id.editTextPhone);
+        etUserMobileNo = findViewById(R.id.et_user_mobile_number);
+        pbActivityRegister = findViewById(R.id.pb_activity_register);
+        pbActivityRegister.setVisibility(View.INVISIBLE);
+        findViewById(R.id.btn_send_otp).setOnClickListener(v -> {
+            String countryCode = "91";
 
-        findViewById(R.id.buttonContinue).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String code = CountryData.countryAreaCodes[spinner.getSelectedItemPosition()];
+            String mobileNumber = etUserMobileNo.getText().toString().trim();
 
-                String number = editText.getText().toString().trim();
-
-                if (number.isEmpty() || number.length() < 10) {
-                    editText.setError("Valid number is required");
-                    editText.requestFocus();
-                    return;
-                }
-
-                String phonenumber = "+" + code + number;
-
-                Intent intent = new Intent(RegisterActivity.this, OtpActivity.class);
-                intent.putExtra("phonenumber", phonenumber);
-                startActivity(intent);
-
+            if (mobileNumber.isEmpty() || mobileNumber.length() < 10) {
+                etUserMobileNo.setError("Enter valid mobile number!");
+                etUserMobileNo.requestFocus();
+                return;
             }
+
+            String userMobileNumber = "+" + countryCode + mobileNumber;
+
+            Intent intent = new Intent(RegisterActivity.this, OtpActivity.class);
+            intent.putExtra("userMobileNumber", userMobileNumber);
+            startActivity(intent);
+
         });
 
     }
@@ -51,13 +46,12 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, BottomNavigator.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
             startActivity(intent);
         }
+        pbActivityRegister.setVisibility(View.INVISIBLE);
     }
 }
 

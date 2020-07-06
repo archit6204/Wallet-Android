@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wallet.R;
+import com.example.wallet.ui.utils.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -91,43 +92,33 @@ public class WalletFragment extends Fragment {
 
 
 
-        view.findViewById(R.id.cv_fragment_wallet).setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 Intent intent = new Intent(getActivity(), WalletActivity.class);
-                 startActivity(intent);
-             }
-         });
+        view.findViewById(R.id.cv_fragment_wallet).setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), WalletActivity.class);
+            startActivity(intent);
+        });
 
-        mTvTapToShowBalance.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View v) {
-                if (totalAvailableBalance != -1) {
-                    stringAvailableWalletAmount = getResources().getString(R.string.add_wallet_amount, totalAvailableBalance);
-                }
-                if (mTvTapToShowBalance.getText().toString().equals(getResources().getString(R.string.tap_to_show)) ||
-                        mTvTapToShowBalance.getText().toString().equals(getResources().getString(R.string.fetching_balance))) {
-                    TransitionManager.beginDelayedTransition(homeScreenContainer);
-                    if (stringAvailableWalletAmount != null) {
-                        mTvTapToShowBalance.setText(stringAvailableWalletAmount);
-                        mTvTapToHideBalance.setVisibility(View.VISIBLE);
-                    } else {
-                        mTvTapToShowBalance.setText(getResources().getString(R.string.fetching_balance));
-                        Toast.makeText(getContext(), getResources().getString(R.string.fetching_balance),
-                                Toast.LENGTH_SHORT).show();
-                    }
+        mTvTapToShowBalance.setOnClickListener(v -> {
+            if (totalAvailableBalance != -1) {
+                stringAvailableWalletAmount = getResources().getString(R.string.add_wallet_amount, totalAvailableBalance);
+            }
+            if (mTvTapToShowBalance.getText().toString().equals(Constants.TAP_TO_SHOW_BALANCE) ||
+                    mTvTapToShowBalance.getText().toString().equals(Constants.FETCHING_BALANCE)) {
+                TransitionManager.beginDelayedTransition(homeScreenContainer);
+                if (stringAvailableWalletAmount != null) {
+                    mTvTapToShowBalance.setText(stringAvailableWalletAmount);
+                    mTvTapToHideBalance.setVisibility(View.VISIBLE);
+                } else {
+                    mTvTapToShowBalance.setText(Constants.FETCHING_BALANCE);
+                    Toast.makeText(getContext(), Constants.FETCHING_BALANCE,
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        mTvTapToHideBalance.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TransitionManager.beginDelayedTransition(homeScreenContainer);
-                mTvTapToShowBalance.setText(getResources().getString(R.string.tap_to_show));
-                mTvTapToHideBalance.setVisibility(View.INVISIBLE);
-            }
+        mTvTapToHideBalance.setOnClickListener(v -> {
+            TransitionManager.beginDelayedTransition(homeScreenContainer);
+            mTvTapToShowBalance.setText(Constants.TAP_TO_SHOW_BALANCE);
+            mTvTapToHideBalance.setVisibility(View.INVISIBLE);
         });
 
         return view;

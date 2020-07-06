@@ -10,7 +10,7 @@
     app:title="JusTap"
     app:titleMarginTop="40dp"
     app:titleMarginStart="16dp"
-    app:titleTextColor="@color/gray_1"
+    app:titleTextColor="@color/gray_0"
     android:layout_width="match_parent"
     app:titleTextAppearance="@style/Toolbar.TitleText"
     android:layout_height="@dimen/value_100dp" >

@@ -34,9 +34,9 @@
                         >
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
-                            android:layout_height="60dp"
+                            android:layout_height="50dp"
                             android:id="@+id/et_beneficiary_name"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:maxLength="20"
                             android:textColor="@color/gray_4"
                             android:fontFamily="@font/ttcommons_demibold"
@@ -59,7 +59,7 @@
                     android:fontFamily="@font/ttcommons_regular"
                     android:text="Paying to:"
                     android:textColor="@color/gray_5"
-                    android:textSize="22sp" />
+                    android:textSize="16sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_beneficiary_name"
@@ -70,7 +70,7 @@
                     android:fontFamily="@font/ttcommons_demibold"
                     android:text="Please enter beneficiary name"
                     android:textColor="@color/gray_4"
-                    android:textSize="22sp" />
+                    android:textSize="16sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
@@ -80,7 +80,7 @@
                     android:fontFamily="@font/ttcommons_regular"
                     android:text="amount:"
                     android:textColor="@color/gray_5"
-                    android:textSize="22sp" />
+                    android:textSize="16sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_pay_amount"
@@ -91,7 +91,7 @@
                     android:fontFamily="@font/ttcommons_demibold"
                     android:text="Please enter amount ₹"
                     android:textColor="@color/gray_4"
-                    android:textSize="22sp" />
+                    android:textSize="16sp" />
             </LinearLayout>
                 <!--<com.google.android.material.card.MaterialCardView
                     android:id="@+id/cv_activity_wallet"
@@ -173,11 +173,11 @@
                     >
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
-                        android:layout_height="64dp"
+                        android:layout_height="50dp"
                         android:id="@+id/et_send_money_amount"
                         android:textColor="@color/gray_4"
                         android:inputType="number"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:maxLength="5"
                         android:fontFamily="@font/ttcommons_demibold"
                         />
@@ -192,9 +192,9 @@
         android:text="Proceed To Send Money"
         android:textColor="@color/white"
         android:fontFamily="@font/ttcommons_demibold"
-        android:textSize="25sp"
+        android:textSize="22sp"
         android:layout_gravity="bottom"
-        android:backgroundTint="@color/colorBottomViewNotFocusedIcon"
+        android:background="@color/colorAccentBlue50"
         android:textAllCaps="false"
         />
 </FrameLayout>

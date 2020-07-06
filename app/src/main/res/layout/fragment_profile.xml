@@ -1,14 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_light">
-
-    <TextView
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Profile Fragment"
-        android:textSize="30sp"
-        android:layout_centerInParent="true"/>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/marginItemsInSectionSmall"
+        app:srcCompat="@drawable/shape_bottom_sheet_dialog_grip"
+        android:contentDescription="TODO" />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/dialog_home_bottom_sheet_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/account_details"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/ttcommons_regular"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="@dimen/value_18sp" />
+
+    <include layout="@layout/profile_username_and_image"
+        android:layout_marginTop="@dimen/marginTopUserProfile"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="230dp"
+            layout="@layout/content_bottom_sheet_account_details" />
+
+</FrameLayout>

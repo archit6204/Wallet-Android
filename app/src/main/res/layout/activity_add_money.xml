@@ -151,28 +151,18 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="360dp"
-                android:orientation="horizontal"
-                >
-
                 <Button
                     android:id="@+id/btn_add_money"
                     android:layout_width="match_parent"
                     android:layout_height="72dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_gravity="bottom"
                     android:text="@string/proceed_to_add_money"
                     android:textColor="@color/white"
                     android:fontFamily="@font/ttcommons_demibold"
                     android:textSize="25sp"
-                    android:backgroundTint="@color/colorAccentBlue50"
+                    android:background="@color/colorAccentBlue50"
                     android:textAllCaps="false"
                     />
-            </LinearLayout>
-
         </FrameLayout>
     </LinearLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

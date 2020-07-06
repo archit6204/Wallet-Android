@@ -101,6 +101,10 @@ public class TransactionHistoryAdapter
                     holder.tvTransactionType.setText("Send to:");
                     holder.ivTransactionTypeLogo.setImageResource(R.drawable.ic_wallet_icon_imported);
             }
+
+            if (walletIdArray[0].equalsIgnoreCase("delhi")) {
+                    holder.ivTransactionTypeLogo.setImageResource(R.drawable.ic_delhi_metro_logo);
+            }
         }
 
         /*if (isBalancePositive(balance) && context != null) {
