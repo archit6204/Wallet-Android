@@ -35,7 +35,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/et_beneficiary_name"
+                android:id="@+id/et_user_name"
                 android:textSize="18sp"
                 android:maxLength="20"
                 android:textColor="@color/gray_6"

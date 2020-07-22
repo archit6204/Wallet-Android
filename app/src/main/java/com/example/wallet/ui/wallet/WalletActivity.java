@@ -73,7 +73,7 @@ public class WalletActivity extends AppCompatActivity {
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             int totalAmount = 0;
             for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                AddMoneyData addMoneyData = postSnapshot.getValue(AddMoneyData.class);
+                UserData addMoneyData = postSnapshot.getValue(UserData.class);
                 assert addMoneyData != null;
                 totalAmount = totalAmount + addMoneyData.getTotalAmount();
             }

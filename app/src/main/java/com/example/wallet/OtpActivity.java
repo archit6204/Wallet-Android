@@ -6,16 +6,30 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.wallet.ui.TransactionHistory.TransactionHistoryData;
+import com.example.wallet.ui.utils.GlobalVariables;
+import com.example.wallet.ui.wallet.UserData;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskExecutors;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.concurrent.TimeUnit;
 
@@ -23,20 +37,25 @@ public class OtpActivity extends AppCompatActivity {
 
     private String verificationid;
     private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
     private ProgressBar progressBar;
     private EditText etReceivedOtp;
+    private String userName;
+    private String userMobileNumber;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp);
-
         mAuth = FirebaseAuth.getInstance();
-
+        mDatabase = FirebaseDatabase.getInstance().getReference("AddedMoneyInWallet");
         progressBar = findViewById(R.id.pb_activity_otp);
         etReceivedOtp = findViewById(R.id.et_received_otp);
 
-        String userMobileNumber = getIntent().getStringExtra("userMobileNumber");
+        userName = getIntent().getStringExtra("userName");
+        userMobileNumber = getIntent().getStringExtra("userMobileNumber");
         sendVerificationCode(userMobileNumber);
 
         findViewById(R.id.btn_create_account).setOnClickListener(v -> {
@@ -63,15 +82,53 @@ public class OtpActivity extends AppCompatActivity {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        final DocumentReference userRef = db.collection("users").document(userName);
+                        userRef.get().addOnCompleteListener(userTask -> {
+                            if (userTask.isSuccessful()) {
+                                DocumentSnapshot document = userTask.getResult();
+                                assert document != null;
+                                if (document.exists()) {
+                                    Toast.makeText(OtpActivity.this, "Welcome " + userName + "!", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    String id = mDatabase.push().getKey();
+                                    String transactionId = "trns" + id;
+                                    String walletId = userName + userMobileNumber;
 
+                                    final UserData addMoneyData = new UserData(transactionId, 0, walletId, null);
+                                    addMoneyData.setMobileNumber(userMobileNumber);
+                                    addMoneyData.setUserName(userName);
+                                    GlobalVariables globalVariables = (GlobalVariables)getApplication();
+                                    globalVariables.setUserName(userName);
+                                    globalVariables.setMobileNumber(userMobileNumber);
+                                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                            .setDisplayName(userName)
+                                            /*.setPhotoUri(Uri.parse("https://example.com/jane-q-user/profile.jpg"))*/
+                                            .build();
+
+                                    assert currentUser != null;
+                                    currentUser.updateProfile(profileUpdates)
+                                            .addOnCompleteListener(task1 -> {
+                                                if (task1.isSuccessful()) {
+                                                    Log.d("TAG", "User profile updated.");
+                                                }
+                                            });
+                                    Toast.makeText(OtpActivity.this, "Account Created!", Toast.LENGTH_SHORT).show();
+                                    userRef.set(addMoneyData, SetOptions.merge())
+                                            .addOnSuccessListener(aVoid -> Toast.makeText(OtpActivity.this, "Transaction successful!", Toast.LENGTH_SHORT).show())
+                                            .addOnFailureListener(e -> Toast.makeText(OtpActivity.this, "Transaction failed!", Toast.LENGTH_SHORT).show());
+                                }
+                            } else {
+                                Toast.makeText(OtpActivity.this, "Transaction failed!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                         Intent intent = new Intent(OtpActivity.this, BottomNavigator.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
                         startActivity(intent);
-
                     } else {
                         Toast.makeText(OtpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                     }
+
                 });
     }
 

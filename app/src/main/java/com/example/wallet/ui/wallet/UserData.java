@@ -1,36 +1,44 @@
 package com.example.wallet.ui.wallet;
 
-import android.util.Log;
-
 import com.example.wallet.ui.TransactionHistory.TransactionHistoryData;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class AddMoneyData {
+import static com.squareup.okhttp.internal.Internal.instance;
+
+public class UserData {
 
     private String transactionId;
     private int totalAmount;
     private String walletId;
     private Timestamp lastUpdatedDateAndTime;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private AddMoneyData addMoneyData;
+    private UserData addMoneyData;
     private List<TransactionHistoryData> transactionHistoryData = new ArrayList<>();
+    private String mobileNumber;
+    private String userName;
+    private static UserData instance;
 
-    public AddMoneyData(){
+
+    public UserData(){
     }
-    public AddMoneyData(String transactionId, int totalAmount, String walletId, TransactionHistoryData transactionHistoryData) {
+    public UserData(String transactionId, int totalAmount, String walletId, TransactionHistoryData transactionHistoryData) {
         this.transactionId = transactionId;
         this.totalAmount = totalAmount;
         this.walletId = walletId;
         this.lastUpdatedDateAndTime = new Timestamp(new Date());
         this.transactionHistoryData.add(transactionHistoryData);
+    }
+
+    public static synchronized UserData getInstance() {
+        if (instance == null) {
+            instance = new UserData();
+        }
+        return instance;
     }
 
     public String getTransactionId() {
@@ -62,5 +70,21 @@ public class AddMoneyData {
 
     public List<TransactionHistoryData> getTransactionHistoryData() {
         return transactionHistoryData;
+    }
+
+    public String setUserName(String userName) {
+        return this.userName = userName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String setMobileNumber(String mobileNumber) {
+        return this.mobileNumber = mobileNumber;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
     }
 }

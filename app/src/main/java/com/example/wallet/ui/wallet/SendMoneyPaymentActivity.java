@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -15,9 +14,8 @@ import android.widget.Toast;
 
 import com.example.wallet.R;
 import com.example.wallet.ui.TransactionHistory.TransactionHistoryData;
+import com.example.wallet.ui.utils.GlobalVariables;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -26,8 +24,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
-
-import static android.text.Html.FROM_HTML_MODE_LEGACY;
 
 public class SendMoneyPaymentActivity extends AppCompatActivity {
 
@@ -40,14 +36,17 @@ public class SendMoneyPaymentActivity extends AppCompatActivity {
     private String walletId = "Beneficiary";
     private String transactionType = "Debited from: JusTap wallet";
     private ProgressBar progressBar;
+    private String userName;
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_money_payment);
         progressBar = findViewById(R.id.progressbar);
+        GlobalVariables globalVariables = (GlobalVariables)getApplication();
+        userName = globalVariables.getUserName();
         mDatabase = FirebaseDatabase.getInstance().getReference("AddedMoneyInWallet");
-        final DocumentReference userRef = db.collection("users").document("user");
+        final DocumentReference userRef = db.collection("users").document(userName);
         tvSendMoneyAmount = findViewById(R.id.tv_send_money_amount);
         tvBeneficiaryName = findViewById(R.id.tv_sent_beneficiary_name);
 
@@ -66,52 +65,37 @@ public class SendMoneyPaymentActivity extends AppCompatActivity {
                     sendMoneyAmount,
                     walletId,
                     transactionType);
-            final AddMoneyData addMoneyData = new AddMoneyData(transactionId, sendMoneyAmount, walletId, transactionHistoryData);
+            final UserData addMoneyData = new UserData(transactionId, sendMoneyAmount, walletId, transactionHistoryData);
 
             assert id != null;
-            userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        assert document != null;
-                        if (document.exists()) {
-                            AddMoneyData addMoneyData = document.toObject(AddMoneyData.class);
-                            assert addMoneyData != null;
-                            int previousAmount = addMoneyData.getTotalAmount();
-                            int totalAmount = previousAmount - sendMoneyAmount;
-                            userRef.update(
-                                    "transactionHistoryData", FieldValue.arrayUnion(transactionHistoryData),
-                                    "lastUpdatedDateAndTime", FieldValue.serverTimestamp(),
-                                    "totalAmount", totalAmount
-                            );
-                            Toast.makeText(SendMoneyPaymentActivity.this, "Transaction successful!", Toast.LENGTH_SHORT).show();
-                            tvSendMoneyAmount.setText(stringSendMoneyAmount);
-                            tvSendMoneyAmount.setVisibility(View.VISIBLE);
-                            tvBeneficiaryName.setText(beneficiaryName);
-                            tvBeneficiaryName.setVisibility(View.VISIBLE);
-                            progressBar.setVisibility(View.GONE);
-                        } else {
-                            Toast.makeText(SendMoneyPaymentActivity.this, "No Balance found!", Toast.LENGTH_SHORT).show();
-                            userRef.set(addMoneyData, SetOptions.merge())
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Toast.makeText(SendMoneyPaymentActivity.this, "Transaction successful!", Toast.LENGTH_SHORT).show();
-
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(SendMoneyPaymentActivity.this, "Transaction failed!", Toast.LENGTH_SHORT).show();
-
-                                        }
-                                    });
-                        }
+            userRef.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    assert document != null;
+                    if (document.exists()) {
+                        UserData addMoneyData1 = document.toObject(UserData.class);
+                        assert addMoneyData1 != null;
+                        int previousAmount = addMoneyData1.getTotalAmount();
+                        int totalAmount = previousAmount - sendMoneyAmount;
+                        userRef.update(
+                                "transactionHistoryData", FieldValue.arrayUnion(transactionHistoryData),
+                                "lastUpdatedDateAndTime", FieldValue.serverTimestamp(),
+                                "totalAmount", totalAmount
+                        );
+                        Toast.makeText(SendMoneyPaymentActivity.this, "Transaction successful!", Toast.LENGTH_SHORT).show();
+                        tvSendMoneyAmount.setText(stringSendMoneyAmount);
+                        tvSendMoneyAmount.setVisibility(View.VISIBLE);
+                        tvBeneficiaryName.setText(beneficiaryName);
+                        tvBeneficiaryName.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
                     } else {
-                        Toast.makeText(SendMoneyPaymentActivity.this, "Transaction failed!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SendMoneyPaymentActivity.this, "No Balance found!", Toast.LENGTH_SHORT).show();
+                        userRef.set(addMoneyData, SetOptions.merge())
+                                .addOnSuccessListener(aVoid -> Toast.makeText(SendMoneyPaymentActivity.this, "Transaction successful!", Toast.LENGTH_SHORT).show())
+                                .addOnFailureListener(e -> Toast.makeText(SendMoneyPaymentActivity.this, "Transaction failed!", Toast.LENGTH_SHORT).show());
                     }
+                } else {
+                    Toast.makeText(SendMoneyPaymentActivity.this, "Transaction failed!", Toast.LENGTH_SHORT).show();
                 }
             });
 

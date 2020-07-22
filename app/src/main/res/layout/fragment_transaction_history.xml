@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/transaction_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/darker_gray">
@@ -16,5 +17,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical" />
-
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_no_transaction_found"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Transaction Found!"
+        android:layout_gravity="center"
+        android:textColor="@color/gray_7"
+        android:textSize="24sp"
+        android:visibility="invisible"
+        android:fontFamily="@font/ttcommons_demibold"/>
 </FrameLayout>
