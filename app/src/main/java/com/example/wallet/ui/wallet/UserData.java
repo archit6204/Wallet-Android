@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.squareup.okhttp.internal.Internal.instance;
-
 public class UserData {
 
     private String transactionId;
@@ -72,16 +70,16 @@ public class UserData {
         return transactionHistoryData;
     }
 
-    public String setUserName(String userName) {
-        return this.userName = userName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getUserName() {
         return userName;
     }
 
-    public String setMobileNumber(String mobileNumber) {
-        return this.mobileNumber = mobileNumber;
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 
     public String getMobileNumber() {

@@ -56,7 +56,7 @@ public class SendMoneyPaymentActivity extends AppCompatActivity {
         beneficiaryName = intent.getStringExtra("beneficiaryName");
         String stringSendMoneyAmount = getResources().getString(R.string.add_wallet_amount, sendMoneyAmount);
 
-        if (sendMoneyAmount > 1 && beneficiaryName != null) {
+        if (sendMoneyAmount >= 1 && beneficiaryName != null) {
             String id = mDatabase.push().getKey();
             String transactionId = "trnstap" + id;
             walletId = beneficiaryName;
@@ -76,31 +76,35 @@ public class SendMoneyPaymentActivity extends AppCompatActivity {
                         UserData addMoneyData1 = document.toObject(UserData.class);
                         assert addMoneyData1 != null;
                         int previousAmount = addMoneyData1.getTotalAmount();
-                        int totalAmount = previousAmount - sendMoneyAmount;
-                        userRef.update(
-                                "transactionHistoryData", FieldValue.arrayUnion(transactionHistoryData),
-                                "lastUpdatedDateAndTime", FieldValue.serverTimestamp(),
-                                "totalAmount", totalAmount
-                        );
-                        Toast.makeText(SendMoneyPaymentActivity.this, "Transaction successful!", Toast.LENGTH_SHORT).show();
-                        tvSendMoneyAmount.setText(stringSendMoneyAmount);
-                        tvSendMoneyAmount.setVisibility(View.VISIBLE);
-                        tvBeneficiaryName.setText(beneficiaryName);
-                        tvBeneficiaryName.setVisibility(View.VISIBLE);
-                        progressBar.setVisibility(View.GONE);
+                        if (previousAmount >= sendMoneyAmount) {
+                            int totalAmount = previousAmount - sendMoneyAmount;
+                            userRef.update(
+                                    "transactionHistoryData", FieldValue.arrayUnion(transactionHistoryData),
+                                    "lastUpdatedDateAndTime", FieldValue.serverTimestamp(),
+                                    "totalAmount", totalAmount
+                            );
+                            Toast.makeText(SendMoneyPaymentActivity.this, "Transaction successful!", Toast.LENGTH_SHORT).show();
+                            tvSendMoneyAmount.setText(stringSendMoneyAmount);
+                            tvSendMoneyAmount.setVisibility(View.VISIBLE);
+                            tvBeneficiaryName.setText(beneficiaryName);
+                            tvBeneficiaryName.setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.GONE);
+                        } else {
+                            Toast.makeText(SendMoneyPaymentActivity.this, "your wallet Balance is low..!", Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
+                        }
                     } else {
-                        Toast.makeText(SendMoneyPaymentActivity.this, "No Balance found!", Toast.LENGTH_SHORT).show();
-                        userRef.set(addMoneyData, SetOptions.merge())
-                                .addOnSuccessListener(aVoid -> Toast.makeText(SendMoneyPaymentActivity.this, "Transaction successful!", Toast.LENGTH_SHORT).show())
-                                .addOnFailureListener(e -> Toast.makeText(SendMoneyPaymentActivity.this, "Transaction failed!", Toast.LENGTH_SHORT).show());
+                        Toast.makeText(SendMoneyPaymentActivity.this, "your wallet Balance is low. Please add ₹ in wallet.", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
                     }
                 } else {
                     Toast.makeText(SendMoneyPaymentActivity.this, "Transaction failed!", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                 }
             });
 
         } else {
-            Toast.makeText(this, "Minimum amount must be grater than 10...", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Minimum amount must be grater than ₹1...", Toast.LENGTH_LONG).show();
         }
 
     }

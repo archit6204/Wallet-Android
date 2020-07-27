@@ -25,7 +25,7 @@ public class RegisterActivity extends AppCompatActivity {
         etUserMobileNo = findViewById(R.id.et_user_mobile_number);
         etUserName = findViewById(R.id.et_user_name);
         pbActivityRegister = findViewById(R.id.pb_activity_register);
-        pbActivityRegister.setVisibility(View.INVISIBLE);
+        pbActivityRegister.setVisibility(View.VISIBLE);
         findViewById(R.id.btn_send_otp).setOnClickListener(v -> {
             String countryCode = "91";
             String mobileNumber = etUserMobileNo.getText().toString().trim();
@@ -61,12 +61,17 @@ public class RegisterActivity extends AppCompatActivity {
         if (currentUser != null) {
             if (currentUser.getDisplayName() != null) {
                 globalVariables.setUserName(currentUser.getDisplayName());
+                Intent intent = new Intent(this, BottomNavigator.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                pbActivityRegister.setVisibility(View.GONE);
+            } else {
+                FirebaseAuth.getInstance().signOut();
+                pbActivityRegister.setVisibility(View.GONE);
             }
-            Intent intent = new Intent(this, BottomNavigator.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+
         }
-        pbActivityRegister.setVisibility(View.INVISIBLE);
+        pbActivityRegister.setVisibility(View.GONE);
     }
 }
 

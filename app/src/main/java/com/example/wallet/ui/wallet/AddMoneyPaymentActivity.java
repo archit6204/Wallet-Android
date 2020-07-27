@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.wallet.R;
 import com.example.wallet.ui.TransactionHistory.TransactionHistoryData;
+import com.example.wallet.ui.utils.GlobalVariables;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
@@ -22,6 +23,7 @@ import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import static android.text.Html.FROM_HTML_MODE_LEGACY;
 
@@ -32,6 +34,7 @@ public class AddMoneyPaymentActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private String walletId = "ARCHIT0001";
     private Map<String, Object> user = new HashMap<>();
+    private String userName;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -40,9 +43,11 @@ public class AddMoneyPaymentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_money_payment);
-
+        GlobalVariables globalVariables = (GlobalVariables)getApplication();
+        assert globalVariables != null;
+        userName = globalVariables.getUserName();
         mDatabase = FirebaseDatabase.getInstance().getReference("AddedMoneyInWallet");
-        final DocumentReference userRef = db.collection("users").document("user");
+        final DocumentReference userRef = db.collection("users").document(userName);
         tvAddWalletAmount = findViewById(R.id.tv_add_wallet_amount);
 
         Intent intent = getIntent();

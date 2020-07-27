@@ -283,4 +283,5 @@
     <string name="feature_coming_soon">feature coming soon!</string>
     <string name="signing_out">Signing Out!</string>
     <string name="logout">LogOut</string>
+    <string name="plus_sign">+</string>
 </resources>

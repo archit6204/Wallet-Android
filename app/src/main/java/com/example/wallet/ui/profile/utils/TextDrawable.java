@@ -1,4 +1,4 @@
-package com.example.wallet.ui.profile.utis;
+package com.example.wallet.ui.profile.utils;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
