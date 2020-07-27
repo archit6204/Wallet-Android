@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:text="No Transaction Found!"
         android:layout_gravity="center"
-        android:textColor="@color/gray_7"
+        android:textColor="@color/gray_5"
         android:textSize="24sp"
         android:visibility="invisible"
         android:fontFamily="@font/ttcommons_demibold"/>

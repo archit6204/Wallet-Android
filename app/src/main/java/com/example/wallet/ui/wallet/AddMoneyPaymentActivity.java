@@ -74,6 +74,10 @@ public class AddMoneyPaymentActivity extends AppCompatActivity {
                         assert addMoneyData1 != null;
                         int previousAmount = addMoneyData1.getTotalAmount();
                         int totalAmount = previousAmount + addWalletAmount;
+                        TransactionHistoryData transactionHistoryData1 = addMoneyData1.getTransactionHistoryData().get(0);
+                        if (transactionHistoryData1 == null){
+                            userRef.update("transactionHistoryData", FieldValue.arrayRemove((TransactionHistoryData) null));
+                        }
                         userRef.update(
                                 "transactionHistoryData", FieldValue.arrayUnion(transactionHistoryData),
                                 "lastUpdatedDateAndTime", FieldValue.serverTimestamp(),
