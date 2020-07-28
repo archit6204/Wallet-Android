@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wallet.ui.TransactionHistory.TransactionHistoryData;
@@ -39,9 +40,11 @@ public class OtpActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private ProgressBar progressBar;
+    private ProgressBar progressBarAutoOTP;
     private EditText etReceivedOtp;
     private String userName;
     private String userMobileNumber;
+    private TextView tvAutoRead;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
@@ -52,16 +55,18 @@ public class OtpActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference("AddedMoneyInWallet");
         progressBar = findViewById(R.id.pb_activity_otp);
+        progressBarAutoOTP = findViewById(R.id.pb_auto_read_otp);
         etReceivedOtp = findViewById(R.id.et_received_otp);
-
+        tvAutoRead = findViewById(R.id.tv_auto_read_otp_msg);
+        progressBarAutoOTP.setVisibility(View.VISIBLE);
         userName = getIntent().getStringExtra("userName");
         userMobileNumber = getIntent().getStringExtra("userMobileNumber");
         sendVerificationCode(userMobileNumber);
 
         findViewById(R.id.btn_create_account).setOnClickListener(v -> {
-
             String code = etReceivedOtp.getText().toString().trim();
-
+            tvAutoRead.setVisibility(View.GONE);
+            progressBarAutoOTP.setVisibility(View.GONE);
             if ((code.isEmpty() || code.length() < 6)){
 
                 etReceivedOtp.setError("Enter code...");
@@ -125,6 +130,7 @@ public class OtpActivity extends AppCompatActivity {
                         Intent intent = new Intent(OtpActivity.this, BottomNavigator.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
+                        progressBar.setVisibility(View.GONE);
                     } else {
                         Toast.makeText(OtpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                     }
@@ -156,6 +162,10 @@ public class OtpActivity extends AppCompatActivity {
         public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
             String code = phoneAuthCredential.getSmsCode();
             if (code != null){
+                etReceivedOtp.setText(code);
+                tvAutoRead.setText("OTP received.");
+                Toast.makeText(OtpActivity.this, "creating account..!", Toast.LENGTH_LONG).show();
+                progressBarAutoOTP.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
                 verifyCode(code);
             }

@@ -43,7 +43,7 @@
                 android:layout_height="40dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginLeft="16dp"
-                app:srcCompat="@drawable/ic_wallet_icon_imported"
+                app:srcCompat="@drawable/ic_wallet_add_money"
                 />
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_tap_to_show_balance"

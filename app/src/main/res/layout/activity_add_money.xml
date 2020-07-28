@@ -36,8 +36,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/ttcommons_regular"
-                    android:text="Add Money to:"
-                    android:textColor="@color/gray_9"
+                    android:text="Adding money to:"
+                    android:textColor="@color/gray_6"
                     android:textSize="16sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -46,8 +46,8 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginLeft="16dp"
                     android:fontFamily="@font/ttcommons_regular"
-                    android:text="Metro Wallet"
-                    android:textColor="@color/gray_9"
+                    android:text="JusTap wallet"
+                    android:textColor="@color/gray_5"
                     android:textSize="24sp" />
             </LinearLayout>
 
@@ -71,12 +71,12 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_Wallet"
-                        android:layout_width="64dp"
-                        android:layout_height="54dp"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
                         android:layout_gravity="right"
                         android:layout_marginRight="16dp"
                         android:layout_marginTop="36dp"
-                        app:srcCompat="@drawable/ic_wallet_icon" />
+                        app:srcCompat="@drawable/ic_wallet_add_money" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"

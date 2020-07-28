@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_0"
+    android:background="@color/transaction_history_bg"
     tools:context=".OtpActivity">
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -46,7 +46,31 @@
                 android:textSize="18sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
     </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_auto_read_otp_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="110dp"
+        android:layout_marginStart="80dp"
+        android:layout_gravity="center"
+        android:fontFamily="@font/ttcommons_regular"
+        android:text="Auto reading otp.."
+        android:textColor="@color/colorAccentBlue50"
+        android:textSize="18sp" />
+
+    <ProgressBar
+        android:id="@+id/pb_auto_read_otp"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginBottom="110dp"
+        android:layout_marginEnd="32dp"
+        android:layout_gravity="center|end"
+        android:indeterminateTint="@color/colorAccentBlue50"
+        android:visibility="visible"/>
 
     <ProgressBar
         android:id="@+id/pb_activity_otp"

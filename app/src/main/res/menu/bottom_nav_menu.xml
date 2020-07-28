@@ -11,7 +11,7 @@
     <item
         android:id="@+id/action_wallet"
         android:enabled="true"
-        android:icon="@drawable/ic_wallet"
+        android:icon="@drawable/ic_wallet_add_money"
         android:title="@string/wallet"
         app:showAsAction="ifRoom|withText"/>
     <item

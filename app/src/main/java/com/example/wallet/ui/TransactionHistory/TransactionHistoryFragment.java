@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -78,13 +79,20 @@ public class TransactionHistoryFragment extends Fragment {
                     assert map != null;
                     transactionHistoryDataList = addMoneyData.getTransactionHistoryData();
                     Log.d("data", "transactionHistoryDataList.size:" + transactionHistoryDataList.size());
-                    if (transactionHistoryDataList.size() > 1) {
-                        setupRecyclerView();
-                    }
-                    else {
+                    if (transactionHistoryDataList.size() >= 1) {
+                        TransactionHistoryData transactionHistoryData = transactionHistoryDataList.get(0);
+                        if (transactionHistoryData == null) {
+                            rvTransactionHistory.setVisibility(View.GONE);
+                            noTransactionFound.setVisibility(View.VISIBLE);
+                            userRef.update("transactionHistoryData", FieldValue.arrayRemove((TransactionHistoryData) null));
+                        } else {
+                            setupRecyclerView();
+                        }
+                    } else {
                         rvTransactionHistory.setVisibility(View.GONE);
                         noTransactionFound.setVisibility(View.VISIBLE);
                     }
+
                     if (progressBar != null) {
                         progressBar.setVisibility(View.GONE);
                     }

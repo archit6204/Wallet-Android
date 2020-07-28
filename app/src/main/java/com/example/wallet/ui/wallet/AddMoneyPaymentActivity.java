@@ -21,7 +21,9 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -35,6 +37,7 @@ public class AddMoneyPaymentActivity extends AppCompatActivity {
     private String walletId = "ARCHIT0001";
     private Map<String, Object> user = new HashMap<>();
     private String userName;
+    private List<TransactionHistoryData> transactionHistoryDataList = new ArrayList<>();
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -74,16 +77,19 @@ public class AddMoneyPaymentActivity extends AppCompatActivity {
                         assert addMoneyData1 != null;
                         int previousAmount = addMoneyData1.getTotalAmount();
                         int totalAmount = previousAmount + addWalletAmount;
-                        TransactionHistoryData transactionHistoryData1 = addMoneyData1.getTransactionHistoryData().get(0);
-                        if (transactionHistoryData1 == null){
-                            userRef.update("transactionHistoryData", FieldValue.arrayRemove((TransactionHistoryData) null));
+                        transactionHistoryDataList = addMoneyData1.getTransactionHistoryData();
+                        if (transactionHistoryDataList.size() >= 1) {
+                            TransactionHistoryData transactionHistoryData1 = transactionHistoryDataList.get(0);
+                            if (transactionHistoryData1 == null) {
+                                userRef.update("transactionHistoryData", FieldValue.arrayRemove((TransactionHistoryData) null));
+                            }
                         }
-                        userRef.update(
-                                "transactionHistoryData", FieldValue.arrayUnion(transactionHistoryData),
-                                "lastUpdatedDateAndTime", FieldValue.serverTimestamp(),
-                                "totalAmount", totalAmount
-                        );
-                        Toast.makeText(AddMoneyPaymentActivity.this, "Transaction successful!", Toast.LENGTH_SHORT).show();
+                            userRef.update(
+                                    "transactionHistoryData", FieldValue.arrayUnion(transactionHistoryData),
+                                    "lastUpdatedDateAndTime", FieldValue.serverTimestamp(),
+                                    "totalAmount", totalAmount
+                            );
+                            Toast.makeText(AddMoneyPaymentActivity.this, "Transaction successful!", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(AddMoneyPaymentActivity.this, "No Balance found!", Toast.LENGTH_SHORT).show();
                         userRef.set(addMoneyData, SetOptions.merge())
