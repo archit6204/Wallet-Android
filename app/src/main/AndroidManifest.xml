@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.wallet">
 
+    <uses-permission android:name="android.permission.NFC" />
+
+    <uses-feature android:name="android.hardware.nfc"
+        android:required="true"
+        />
+
     <application
         android:name=".ui.utils.GlobalVariables"
         android:allowBackup="true"
@@ -10,38 +16,46 @@
         android:roundIcon="@mipmap/wallet_money"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.wallet.SendMoneyPaymentActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
-            />
-        <activity android:name=".ui.wallet.SendMoneyUserActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
-            />
-        <activity android:name=".ui.wallet.AddMoneyPaymentActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
-            />
-        <activity android:name=".ui.wallet.AddMoneyActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
-            />
-        <activity android:name=".RegisterActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
-            >
+        <activity
+            android:name=".ui.nfc.NFCDisplayActivity"
+            android:label="NFC Data Display">
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.nfc.NFCAndroidBeamActivity" />
+        <activity
+            android:name=".ui.wallet.SendMoneyPaymentActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+        <activity
+            android:name=".ui.wallet.SendMoneyUserActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+        <activity
+            android:name=".ui.wallet.AddMoneyPaymentActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+        <activity
+            android:name=".ui.wallet.AddMoneyActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+        <activity
+            android:name=".RegisterActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BottomNavigator"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
-            >
-        </activity>
-        <!-- activity android:name=".MainActivity" / -->
-        <activity android:name=".OtpActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
-            />
-        <activity android:name=".ui.wallet.WalletActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
-            />
+        <activity
+            android:name=".BottomNavigator"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" /> <!-- activity android:name=".MainActivity" / -->
+        <activity
+            android:name=".OtpActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+        <activity
+            android:name=".ui.wallet.WalletActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
     </application>
 
 </manifest>

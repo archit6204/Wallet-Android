@@ -114,6 +114,28 @@
         app:layout_constraintStart_toStartOf="@+id/tv_item_casual_list_title"
         app:layout_constraintTop_toBottomOf="@+id/tv_item_casual_list_title" />
 
+    <ImageView
+        android:id="@+id/iv_nfc_sendMoney_icon"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="80dp"
+        android:layout_gravity="center|end"
+        android:layout_marginEnd="32dp"
+        app:srcCompat="@drawable/ic_cashless_nfc_payment" />
+
+    <TextView
+        android:id="@+id/tv_sendMoney_nfc_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="34dp"
+        android:layout_gravity="center|end"
+        android:text="Via NFC"
+        android:textColor="@color/colorAccentBlue50"
+        android:fontFamily="@font/ttcommons_demibold"
+        app:layout_constraintStart_toStartOf="@+id/tv_item_casual_list_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_item_casual_list_title" />
+
     <View
         android:id="@+id/divider3"
         android:layout_width="match_parent"

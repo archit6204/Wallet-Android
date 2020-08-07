@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wallet.R;
+import com.example.wallet.ui.nfc.NFCAndroidBeamActivity;
 import com.example.wallet.ui.wallet.AddMoneyActivity;
 import com.example.wallet.ui.wallet.SendMoneyUserActivity;
 import com.example.wallet.ui.wallet.WalletActivity;
@@ -26,6 +27,7 @@ public class HomeFragment extends Fragment {
     private ImageView ivUPI;
     private ImageView ivAddMoney;
     private ImageView ivSendMoney;
+    private ImageView ivNFCSendMoney;
 
     @Nullable
     @Override
@@ -36,6 +38,7 @@ public class HomeFragment extends Fragment {
         ivUPI = view.findViewById(R.id.iv_item_upi_icon);
         ivAddMoney = view.findViewById(R.id.iv_item_addMoney_icon);
         ivSendMoney = view.findViewById(R.id.iv_item_sendMoney_icon);
+        ivNFCSendMoney = view.findViewById(R.id.iv_nfc_sendMoney_icon);
         ivMetro.setOnClickListener(v -> {
             Toast.makeText(getContext(), getResources().getString(R.string.feature_coming_soon),
                     Toast.LENGTH_SHORT).show();
@@ -54,6 +57,10 @@ public class HomeFragment extends Fragment {
         });
         ivSendMoney.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), SendMoneyUserActivity.class);
+            startActivity(intent);
+        });
+        ivNFCSendMoney.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), NFCAndroidBeamActivity.class);
             startActivity(intent);
         });
         return view;
