@@ -4,9 +4,9 @@
 
     <uses-permission android:name="android.permission.NFC" />
 
-    <uses-feature android:name="android.hardware.nfc"
-        android:required="true"
-        />
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
 
     <application
         android:name=".ui.utils.GlobalVariables"
@@ -16,12 +16,28 @@
         android:roundIcon="@mipmap/wallet_money"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service
+            android:name=".ui.hostCardEmulator.HostCardEmulatorService"
+            android:exported="true"
+            android:permission="android.permission.BIND_NFC_SERVICE">
+            <intent-filter>
+                <action android:name="android.nfc.cardemulation.action.HOST_APDU_SERVICE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.nfc.cardemulation.host_apdu_service"
+                android:resource="@xml/apduservice" />
+        </service>
+
+        <activity android:name=".ui.hostCardEmulator.HostCardEmulatorActivity" />
         <activity
             android:name=".ui.nfc.NFCDisplayActivity"
             android:label="NFC Data Display">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
-                <category android:name="android.intent.category.DEFAULT"/>
+
+                <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>

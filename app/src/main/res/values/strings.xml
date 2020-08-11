@@ -284,4 +284,6 @@
     <string name="signing_out">Signing Out!</string>
     <string name="logout">LogOut</string>
     <string name="plus_sign">+</string>
+    <string name="servicedesc">Host Card Emulator Service</string>
+    <string name="aiddescription">Sample AID for testing</string>
 </resources>
