@@ -41,7 +41,9 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.nfc.NFCAndroidBeamActivity" />
+        <activity
+            android:name=".ui.nfc.NFCAndroidBeamActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity
             android:name=".ui.wallet.SendMoneyPaymentActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
