@@ -14,8 +14,10 @@ import android.widget.Toast;
 
 import com.example.wallet.R;
 import com.example.wallet.RegisterActivity;
+import com.example.wallet.ui.hostCardEmulator.HostCardReaderActivity;
 import com.example.wallet.ui.profile.utils.TextDrawable;
 import com.example.wallet.ui.utils.GlobalVariables;
+import com.example.wallet.ui.wallet.AddMoneyActivity;
 import com.example.wallet.ui.wallet.UserData;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -25,6 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Objects;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 
@@ -37,7 +40,6 @@ public class ProfileFragment extends Fragment {
     private View vAccountDetailsVpa;
     private View vAccountDetailsMobile;
     private View vAccountDetailsUserName;
-    private Button btnEditProfile;
     private TextView tvLogout;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String userName = "";
@@ -84,16 +86,21 @@ public class ProfileFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_profile, container, false);
         ivUserImage = view.findViewById(R.id.iv_user_image);
         tvUserName = view.findViewById(R.id.tv_user_name);
-        btnEditProfile = view.findViewById(R.id.btn_edit_profile);
+        Button btnEditProfile = view.findViewById(R.id.btn_edit_profile);
         vAccountDetailsMobile = view.findViewById(R.id.inc_account_details_mobile_number);
         vAccountDetailsVpa = view.findViewById(R.id.inc_account_details_vpa);
         vAccountDetailsUserName = view.findViewById(R.id.inc_account_details_username);
         tvLogout = vAccountDetailsUserName.findViewById(R.id.tv_item_logout);
         ivLogoutImage = vAccountDetailsUserName.findViewById(R.id.iv_item_logout_icon);
+        ImageView ivCardImage = vAccountDetailsVpa.findViewById(R.id.iv_item_casual_list_icon);
         progressBar = view.findViewById(R.id.pb_profile);
         btnEditProfile.setOnClickListener(v -> {
             Toast.makeText(getContext(), getResources().getString(R.string.feature_coming_soon),
                     Toast.LENGTH_SHORT).show();
+        });
+        ivCardImage.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), HostCardReaderActivity.class);
+            startActivity(intent);
         });
         return view;
     }

@@ -43,7 +43,7 @@
         android:text="Sorry! this device does not have NFC."
         android:layout_gravity="center"
         android:textColor="@color/gray_5"
-        android:textSize="24sp"
+            android:textSize="20sp"
         android:visibility="invisible"
         android:fontFamily="@font/ttcommons_demibold"/>
 

@@ -35,7 +35,7 @@ public class NFCDisplayActivity extends AppCompatActivity {
             mTextView.setText(new String(message.getRecords()[0].getPayload()));
 
         } else
-            mTextView.setText("Waiting for NDEF Message");
+            mTextView.setText("Waiting for NDEF Message...");
 
     }
 }

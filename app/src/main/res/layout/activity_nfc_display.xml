@@ -13,8 +13,9 @@ tools:context=".ui.nfc.NFCDisplayActivity">
     android:id="@+id/text_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textSize="24sp"
+    android:textSize="20sp"
     android:lines="3"
+    android:textColor="@color/gray_6"
     android:fontFamily="@font/ttcommons_regular"
     android:gravity="top|left"/>
 
