@@ -3,9 +3,12 @@
     package="com.example.wallet">
 
     <uses-permission android:name="android.permission.NFC" />
-    <uses-feature android:name="android.hardware.nfc.hce"
+
+    <uses-feature
+        android:name="android.hardware.nfc.hce"
         android:required="true" />
-    <uses-feature android:name="android.hardware.nfc"
+    <uses-feature
+        android:name="android.hardware.nfc"
         android:required="true" />
 
     <application
@@ -17,6 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <activity
+            android:name=".ui.TransactionHistory.transactionStatus.TransactionStatusActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity
             android:name=".ui.hostCardEmulator.HostCardReaderActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />

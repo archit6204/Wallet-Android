@@ -1,16 +1,21 @@
 package com.example.wallet.ui.TransactionHistory;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.wallet.R;
+import com.example.wallet.ui.TransactionHistory.transactionStatus.TransactionStatusActivity;
 import com.example.wallet.ui.utils.GlobalVariables;
+import com.example.wallet.ui.wallet.AddMoneyActivity;
 import com.example.wallet.ui.wallet.UserData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -34,7 +39,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-public class TransactionHistoryFragment extends Fragment {
+public class TransactionHistoryFragment extends Fragment implements TransactionHistoryAdapter.ClickListener {
 
     private RecyclerView rvTransactionHistory;
     private List<TransactionHistoryData> transactionHistoryDataList = new ArrayList<>();
@@ -108,40 +113,18 @@ public class TransactionHistoryFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setupRecyclerView() {
-        mTransactionHistoryAdapter = new TransactionHistoryAdapter(transactionHistoryDataList);
+        mTransactionHistoryAdapter = new TransactionHistoryAdapter(transactionHistoryDataList, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         rvTransactionHistory.setLayoutManager(mLayoutManager);
         rvTransactionHistory.setItemAnimator(new DefaultItemAnimator());
         rvTransactionHistory.setAdapter(mTransactionHistoryAdapter);
-        if (transactionHistoryDataList.size() > 1) {
-
-        }
-        /*rvTransactionHistory.addOnItemTouchListener(new RecyclerView.OnItemTouchListener(getContext(),
-                new RecyclerView.OnItemTouchListener() {
-                    @Override
-                    public void onItemClick(View childView, int position) {
-                        mPresenter.handleTransactionClick(position);
-                    }
-
-                    @Override
-                    public void onItemLongPress(View childView, int position) {
-
-                    }
-                }) {
-            @Override
-            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-                return false;
-            }
-
-            @Override
-            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-
-            }
-
-            @Override
-            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-            }
-        });*/
     }
+
+    @Override
+    public void onClick(int position, View v) {
+        Intent intent = new Intent(getActivity(), TransactionStatusActivity.class);
+        startActivity(intent);
+        /*Toast.makeText(getContext(), "Position: " + position, Toast.LENGTH_SHORT).show();*/
+    }
+
 }

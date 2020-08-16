@@ -1,5 +1,7 @@
 package com.example.wallet.ui.TransactionHistory;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.wallet.R;
+import com.example.wallet.ui.TransactionHistory.transactionStatus.TransactionStatusActivity;
 
 import java.util.Comparator;
 import java.util.List;
@@ -21,16 +24,18 @@ public class TransactionHistoryAdapter
         extends RecyclerView.Adapter<TransactionHistoryAdapter.ViewHolder> {
 
     private List<TransactionHistoryData> transactions;
+    private ClickListener clickListener;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public TransactionHistoryAdapter(List<TransactionHistoryData> transactionHistoryDataList) {
+    public TransactionHistoryAdapter(List<TransactionHistoryData> transactionHistoryDataList, ClickListener clickListener) {
         this.transactions = transactionHistoryDataList;
+        this.clickListener = clickListener;
         Log.d("data", "transactions data: " + transactions);
         transactions.sort(Comparator.comparing(TransactionHistoryData::getTransactionDateAndTime).reversed());
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView tvTransactionStatus;
         public TextView tvTransactionAmount;
         public TextView tvTransactionDate;
@@ -38,24 +43,34 @@ public class TransactionHistoryAdapter
         public TextView tvBeneficiaryInstrument;
         public TextView tvTransactionInstrument;
         public ImageView ivTransactionTypeLogo;
-        public ViewHolder(View v) {
+        public View cvTransactionItem;
+        private ClickListener mListener;
+
+        public ViewHolder(View v, ClickListener clickListener) {
             super(v);
+            this.mListener = clickListener;
+            v.setOnClickListener(this);
             tvTransactionAmount = v.findViewById(R.id.tv_history_amount);
             tvTransactionDate = v.findViewById(R.id.tv_transaction_date);
             tvTransactionType = v.findViewById(R.id.tv_transaction_type);
             tvBeneficiaryInstrument = v.findViewById(R.id.tv_beneficiary_instrument);
             tvTransactionInstrument = v.findViewById(R.id.tv_transaction_instrument);
             ivTransactionTypeLogo = v.findViewById(R.id.iv_transaction_type_logo);
+            cvTransactionItem = v.findViewById(R.id.cv_transaction_item);
+        }
+
+        @Override
+        public void onClick(View v) {
+            mListener.onClick(getAdapterPosition(), v);
         }
     }
-
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.item_transaction_history, parent, false);
-        return new ViewHolder(v);
+        return new ViewHolder(v,clickListener);
     }
 
     @Override
@@ -74,14 +89,12 @@ public class TransactionHistoryAdapter
                 holder.ivTransactionTypeLogo.setImageResource(R.drawable.ic_transaction_wallet);
             }
             if (walletIdArray.length == 1) {
-                switch (walletIdArray[0].toLowerCase()) {
-                    case "justap":
-                        holder.tvTransactionType.setText("Money added to:");
-                        holder.ivTransactionTypeLogo.setImageResource(R.drawable.ic_transaction_wallet);
-                        break;
-                    default:
-                        holder.tvTransactionType.setText("Send to:");
-                        holder.ivTransactionTypeLogo.setImageResource(R.drawable.ic_wallet_add_money);
+                if ("justap".equals(walletIdArray[0].toLowerCase())) {
+                    holder.tvTransactionType.setText("Money added to:");
+                    holder.ivTransactionTypeLogo.setImageResource(R.drawable.ic_transaction_wallet);
+                } else {
+                    holder.tvTransactionType.setText("Send to:");
+                    holder.ivTransactionTypeLogo.setImageResource(R.drawable.ic_wallet_add_money);
                 }
             }
             if (walletIdArray.length > 1) {
@@ -107,30 +120,11 @@ public class TransactionHistoryAdapter
                     holder.ivTransactionTypeLogo.setImageResource(R.drawable.ic_delhi_metro_logo);
                 }
             }
-
-        /*if (isBalancePositive(balance) && context != null) {
-            int color = ContextCompat.getColor(context, R.color.colorAccentBlue);
-            holder.tvTransactionAmount.setTextColor(color);
-        }*/
-
-       /* switch (transaction.getTransactionType()) {
-            case DEBIT:
-                holder.tvTransactionStatus.setText(Constants.DEBIT);
-                break;
-            case CREDIT:
-                holder.tvTransactionStatus.setText(Constants.CREDIT);
-                break;
-            case OTHER:
-                holder.tvTransactionStatus.setText(Constants.OTHER);
-                break;
-        }*/
+            holder.cvTransactionItem.setOnClickListener(v -> {
+                clickListener.onClick(holder.getAdapterPosition(), v);
+            });
         }
     }
-
-    /*private boolean isBalancePositive(String balance) {
-        balance = balance.replaceAll("[,.]", "");
-        return Double.parseDouble(balance) > 0;
-    }*/
 
     @Override
     public int getItemCount() {
@@ -141,21 +135,9 @@ public class TransactionHistoryAdapter
         }
     }
 
-    /*public void setContext(Context context) {
-    }*/
-
-    /*public void setData(List<TransactionHistoryData> transactions) {
-        this.transactions = transactions;
-
+    interface ClickListener {
+        void onClick(int position, View v);
     }
-
-    public ArrayList<TransactionHistoryData> getTransactions() {
-        return (ArrayList<TransactionHistoryData>) transactions;
-    }
-
-    public TransactionHistoryData getTransaction(int position) {
-        return transactions.get(position);
-    }*/
-
 }
+
 
