@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/gray">
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_transaction_id"
         android:layout_width="match_parent"
@@ -14,18 +15,33 @@
         android:layout_gravity="top"
         app:cardBackgroundColor="@color/white"
         >
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_transaction_id_to"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Transaction ID"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:gravity="center"
+            android:layout_gravity="start|top"
+            android:textColor="@color/gray_5"
+            android:textSize="14sp"
+            android:visibility="invisible"
+            android:fontFamily="@font/ttcommons_regular"/>
+
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_beneficiary_logo"
+            android:id="@+id/iv_help_support_logo"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="28dp"
             android:layout_marginStart="16dp"
             android:layout_gravity="top"
-            app:srcCompat="@drawable/ic_user"
-            android:visibility="invisible"
+            app:srcCompat="@drawable/ic_help_support"
+            android:visibility="visible"
             />
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_beneficiary_name"
+            android:id="@+id/tv_help_support_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Archit Pandey"
@@ -37,7 +53,7 @@
             android:fontFamily="@font/ttcommons_regular"/>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_beneficiary_subtitle"
+            android:id="@+id/tv_help_support_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -52,24 +68,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Share"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="36dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="28dp"
             android:layout_gravity="end|bottom"
             android:textColor="@color/colorAccentBlue50"
             android:textSize="16sp"
             android:fontFamily="@font/ttcommons_regular"/>
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <!--<androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_share_logo"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="32dp"
             android:layout_gravity="end|bottom"
-            app:srcCompat="@drawable/ic_baseline_share_24"
-            />
+            app:srcCompat="@drawable/ic_arrow_back"
+            android:visibility="invisible"
+            />-->
     </com.google.android.material.card.MaterialCardView>
 
 </FrameLayout>

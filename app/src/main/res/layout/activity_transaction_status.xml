@@ -17,6 +17,15 @@
         app:cardBackgroundColor="@color/added_amount_green"
         >
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_transaction_back_logo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginStart="16dp"
+            android:layout_gravity="top|left"
+            app:srcCompat="@drawable/ic_arrow_back"
+        />
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_transaction_type_logo"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -36,28 +45,15 @@
             android:fontFamily="@font/ttcommons_regular"/>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_transaction_instrument"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Debited from: HDFC bank"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
-            android:layout_gravity="end|bottom"
-            android:textColor="@color/gray_7"
-            android:textSize="12sp"
-            android:fontFamily="@font/ttcommons_regular"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_transaction_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2 days ago"
-            android:layout_marginTop="140dp"
+            android:layout_marginTop="144dp"
             android:gravity="center"
             android:layout_gravity="top|center"
             android:textColor="@color/gray_8"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:fontFamily="@font/ttcommons_regular"/>
     </com.google.android.material.card.MaterialCardView>
 
@@ -87,12 +83,22 @@
     />
 
     <include
-        android:id="@+id/inc_HelpSupport_details"
+        android:id="@+id/inc_Help_support_details"
         layout="@layout/transaction_status_id_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="124dp"
+        android:layout_marginBottom="125dp"
         />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_powered_by"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Powered by"
+        android:layout_marginBottom="72dp"
+        android:layout_gravity="bottom|center"
+        android:textColor="@color/gray_6"
+        android:textSize="@dimen/value_16sp"
+        android:fontFamily="@font/ttcommons_regular"/>
 </FrameLayout>
