@@ -1,7 +1,6 @@
 package com.example.wallet.ui.TransactionHistory;
 
-import android.content.Context;
-import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.wallet.R;
-import com.example.wallet.ui.TransactionHistory.transactionStatus.TransactionStatusActivity;
 
 import java.util.Comparator;
 import java.util.List;
@@ -35,7 +33,7 @@ public class TransactionHistoryAdapter
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView tvTransactionStatus;
         public TextView tvTransactionAmount;
         public TextView tvTransactionDate;
@@ -70,11 +68,12 @@ public class TransactionHistoryAdapter
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.item_transaction_history, parent, false);
-        return new ViewHolder(v,clickListener);
+        return new ViewHolder(v, clickListener);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         TransactionHistoryData transaction = (TransactionHistoryData) transactions.get(position);
         if (transaction != null) {
             Log.d("data", "transactionFormattedDateAndTime data: " + transaction.transactionFormattedDateAndTime());
@@ -120,9 +119,7 @@ public class TransactionHistoryAdapter
                     holder.ivTransactionTypeLogo.setImageResource(R.drawable.ic_delhi_metro_logo);
                 }
             }
-            holder.cvTransactionItem.setOnClickListener(v -> {
-                clickListener.onClick(holder.getAdapterPosition(), v);
-            });
+            holder.cvTransactionItem.setOnClickListener(v -> clickListener.onClick(holder.getAdapterPosition(), v));
         }
     }
 

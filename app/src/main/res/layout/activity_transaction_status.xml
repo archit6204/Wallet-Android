@@ -60,8 +60,7 @@
             android:textSize="12sp"
             android:fontFamily="@font/ttcommons_regular"/>
     </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
+    <!--<com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_transaction_id"
         android:layout_width="match_parent"
         android:layout_height="112dp"
@@ -142,7 +141,21 @@
             android:layout_gravity="end|bottom"
             app:srcCompat="@drawable/ic_baseline_share_24"
             />
+    </com.google.android.material.card.MaterialCardView>-->
+    <include
+        android:id="@+id/inc_paid_to_details"
+        layout="@layout/transaction_status_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="106dp" />
 
-    </com.google.android.material.card.MaterialCardView>
-
+    <include
+        android:id="@+id/inc_debited_from_details"
+        layout="@layout/transaction_status_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        />
 </FrameLayout>
