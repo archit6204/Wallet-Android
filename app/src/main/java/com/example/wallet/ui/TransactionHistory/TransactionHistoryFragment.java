@@ -3,6 +3,7 @@ package com.example.wallet.ui.TransactionHistory;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -25,7 +26,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -39,7 +42,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-public class TransactionHistoryFragment extends Fragment implements TransactionHistoryAdapter.ClickListener {
+public class TransactionHistoryFragment extends Fragment implements TransactionHistoryAdapter.ClickListener, Serializable {
 
     private RecyclerView rvTransactionHistory;
     private List<TransactionHistoryData> transactionHistoryDataList = new ArrayList<>();
@@ -48,6 +51,7 @@ public class TransactionHistoryFragment extends Fragment implements TransactionH
     private ProgressBar progressBar;
     private String userName;
     private TextView noTransactionFound;
+    private List<TransactionHistoryData> transactions;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,7 +105,6 @@ public class TransactionHistoryFragment extends Fragment implements TransactionH
                     if (progressBar != null) {
                         progressBar.setVisibility(View.GONE);
                     }
-                    Log.d("data", "DocumentSnapshot transactionHistoryDataList: " + transactionHistoryDataList);
                 } else {
                     Log.d("error", "No sucList<TransactionHistoryData>h document");
                 }
@@ -113,6 +116,8 @@ public class TransactionHistoryFragment extends Fragment implements TransactionH
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setupRecyclerView() {
+        transactions = transactionHistoryDataList;
+        transactions.sort(Comparator.comparing(TransactionHistoryData::getTransactionDateAndTime).reversed());
         mTransactionHistoryAdapter = new TransactionHistoryAdapter(transactionHistoryDataList, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         rvTransactionHistory.setLayoutManager(mLayoutManager);
@@ -120,9 +125,14 @@ public class TransactionHistoryFragment extends Fragment implements TransactionH
         rvTransactionHistory.setAdapter(mTransactionHistoryAdapter);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onClick(int position, View v) {
+        TransactionHistoryData transactionItem = transactions.get(position);
         Intent intent = new Intent(getActivity(), TransactionStatusActivity.class);
+        /*Bundle bundle = new Bundle();
+        bundle.putSerializable("transactionItem", (Serializable) transactionItem);*/
+        intent.putExtra("transactionItem", (Parcelable) transactionItem);
         startActivity(intent);
         /*Toast.makeText(getContext(), "Position: " + position, Toast.LENGTH_SHORT).show();*/
     }
