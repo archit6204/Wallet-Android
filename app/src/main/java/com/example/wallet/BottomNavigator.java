@@ -40,37 +40,34 @@ public class BottomNavigator extends AppCompatActivity {
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment selectedFragment = null;
+            item -> {
+                Fragment selectedFragment = null;
 
-                    switch (item.getItemId()) {
-                        case R.id.action_home:
-                            selectedFragment = new HomeFragment();
-                            break;
-                        case R.id.action_payments:
-                            selectedFragment = new TransactionHistoryFragment();
-                            break;
-                        case R.id.action_wallet:
-                            selectedFragment = new WalletFragment();
-                            break;
-                        case R.id.action_profile:
-                            selectedFragment = new ProfileFragment();
-                            break;
+                switch (item.getItemId()) {
+                    case R.id.action_home:
+                        selectedFragment = new HomeFragment();
+                        break;
+                    case R.id.action_payments:
+                        selectedFragment = new TransactionHistoryFragment();
+                        break;
+                    case R.id.action_wallet:
+                        selectedFragment = new WalletFragment();
+                        break;
+                    case R.id.action_profile:
+                        selectedFragment = new ProfileFragment();
+                        break;
 
-                    }
-                    if(selectedFragment!=null) {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_navigation_fragment_container,
-                                selectedFragment).commit();
-                    }
-                    else {
-                        Toast.makeText(getApplication(), "No Item selected!",
-                                Toast.LENGTH_SHORT).show();
-                    }
-
-                    return true;
                 }
+                if(selectedFragment!=null) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.bottom_navigation_fragment_container,
+                            selectedFragment).commit();
+                }
+                else {
+                    Toast.makeText(getApplication(), "No Item selected!",
+                            Toast.LENGTH_SHORT).show();
+                }
+
+                return true;
             };
 
     @Override

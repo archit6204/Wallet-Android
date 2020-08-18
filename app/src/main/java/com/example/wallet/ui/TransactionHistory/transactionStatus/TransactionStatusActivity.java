@@ -1,17 +1,24 @@
 package com.example.wallet.ui.TransactionHistory.transactionStatus;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.wallet.BottomNavigator;
 import com.example.wallet.R;
 import com.example.wallet.ui.TransactionHistory.TransactionHistoryData;
+import com.example.wallet.ui.home.HomeFragment;
+import com.example.wallet.ui.wallet.AddMoneyPaymentActivity;
 import com.google.firebase.Timestamp;
 
 public class TransactionStatusActivity extends AppCompatActivity {
@@ -44,6 +51,13 @@ public class TransactionStatusActivity extends AppCompatActivity {
         transactionAmount = transactionItem.getTransactionAmount();
         transactionFormattedDateNTime = transactionItem.transactionFormattedDateAndTime();
         showTransactionStatus();
+        Button btnBackToHome = findViewById(R.id.btn_back_to_home);
+        btnBackToHome.setOnClickListener(v -> {
+            Intent intentBackToHome = new Intent(TransactionStatusActivity.this, BottomNavigator.class);
+            startActivity(intentBackToHome);
+        });
+        ImageView ivTransactionBack = findViewById(R.id.iv_transaction_back_logo);
+        ivTransactionBack.setOnClickListener(v -> finish());
     }
 
     public void showTransactionStatus() {
