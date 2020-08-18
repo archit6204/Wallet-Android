@@ -3,7 +3,7 @@
     <string name="payments">Payments</string>
     <string name="home">Home</string>
     <string name="wallet">Wallet</string>
-    <string name="available_balance">Available Balance</string>
+    <string name="available_balance">Available balance</string>
     <string name="customer_name">JusTap User</string>
     <string name="profile">Profile</string>
     <string name="title_activity_bottom_navigator_main">BottomNavigatorMain</string>
@@ -273,13 +273,13 @@
     <string name="test_vpa">rohan.jain@mifos</string>
     <string name="set_amount">Set Amount</string>
     <string name="grip">Grip</string>
-    <string name="hide_balance">Hide Balance</string>
+    <string name="hide_balance">Hide balance</string>
     <string name="no_bank_account">No bank found</string>
     <string name="error_specific_transactions">Couldn\'t fetch Specific transactions. Please, try again.</string>
     <string name="add_wallet_amount"><b>₹ </b>%1$d</string>
     <string name="proceed_to_add_money">Proceed to Add Money</string>
-    <string name="tap_to_show">Tap to show Balance</string>
-    <string name="fetching_balance">Fetching Balance</string>
+    <string name="tap_to_show">Tap to show balance</string>
+    <string name="fetching_balance">Fetching balance</string>
     <string name="feature_coming_soon">feature coming soon!</string>
     <string name="signing_out">Signing Out!</string>
     <string name="logout">LogOut</string>

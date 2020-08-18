@@ -23,7 +23,7 @@
             android:clickable="true"
             android:focusable="true"
             app:cardCornerRadius="16dp"
-            app:cardBackgroundColor="@color/gray"
+            app:cardBackgroundColor="@color/grey_100"
             >
            <!-- <TextView
                 android:id="@+id/tv_account_balance"
@@ -55,7 +55,7 @@
                 android:layout_gravity="center_horizontal|top"
                 android:textColor="@color/colorAccentBlue50"
                 android:textSize="@dimen/textH4"
-                android:fontFamily="@font/ttcommons_demibold"/>
+                android:fontFamily="@font/ttcommons_regular"/>
 
             <ProgressBar
                 android:id="@+id/pb_wallet"
@@ -88,7 +88,7 @@
                 android:layout_marginTop="80dp"
                 android:gravity="center"
                 android:layout_gravity="center_horizontal|top"
-                android:fontFamily="@font/ttcommons_demibold"
+                android:fontFamily="@font/ttcommons_regular"
                 android:textColor="@color/colorAccentBlue50"
                 android:visibility="gone"
                />

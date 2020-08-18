@@ -160,8 +160,8 @@ public class Constants {
     public static final String INDEX = "Index";
     public static final String CHANGE_UPI_PIN = "Change UPI PIN";
     public static final String FORGOT_UPI_PIN = "Forgot UPI PIN";
-    public static final String TAP_TO_SHOW_BALANCE = "Tap to show Balance";
-    public static final String FETCHING_BALANCE = "Fetching Balance";
+    public static final String TAP_TO_SHOW_BALANCE = "Tap to show balance";
+    public static final String FETCHING_BALANCE = "Fetching balance";
     // broadcast receiver intent filters
     public static final String REGISTRATION_COMPLETE = "registrationComplete";
     public static final String PUSH_NOTIFICATION = "pushNotification";

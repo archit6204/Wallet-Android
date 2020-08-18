@@ -12,7 +12,7 @@
         <item name="windowNoTitle">true</item>
         <item name="titleTextColor">@color/colorPrimary</item>
         <item name="android:background">@color/colorAccentBlue50</item>
-        <item name="android:fontFamily">@font/ttcommons_demibold</item>
+        <item name="android:fontFamily">@font/ttcommons_regular</item>
     </style>
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">22sp</item>
@@ -29,6 +29,6 @@
     </style>
     <style name="Widget.BottomNavigationView"
         parent="Widget.Design.BottomNavigationView">
-        <item name="fontFamily">@font/ttcommons_demibold</item>
+        <item name="fontFamily">@font/ttcommons_regular</item>
     </style>
 </resources>
