@@ -47,6 +47,7 @@ public class TransactionStatusActivity extends AppCompatActivity {
         vHelpSupportDetails = findViewById(R.id.inc_Help_support_details);
         tvTransactionFormattedDateNTime = findViewById(R.id.tv_transaction_date);
         transactionItem = (TransactionHistoryData) getIntent().getSerializableExtra("transactionItem");
+        String previousPage = getIntent().getStringExtra("previousPage");
         assert transactionItem != null;
         transactionAmount = transactionItem.getTransactionAmount();
         transactionFormattedDateNTime = transactionItem.transactionFormattedDateAndTime();
@@ -54,10 +55,20 @@ public class TransactionStatusActivity extends AppCompatActivity {
         Button btnBackToHome = findViewById(R.id.btn_back_to_home);
         btnBackToHome.setOnClickListener(v -> {
             Intent intentBackToHome = new Intent(TransactionStatusActivity.this, BottomNavigator.class);
+            intentBackToHome.putExtra("fragmentName", "home");
             startActivity(intentBackToHome);
         });
         ImageView ivTransactionBack = findViewById(R.id.iv_transaction_back_logo);
-        ivTransactionBack.setOnClickListener(v -> finish());
+        ivTransactionBack.setOnClickListener(v -> {
+            assert previousPage != null;
+            if (previousPage.equals("TransactionHistoryFragment")) {
+                finish();
+            } else {
+                Intent intentBackToHome = new Intent(TransactionStatusActivity.this, BottomNavigator.class);
+                intentBackToHome.putExtra("fragmentName", "history");
+                startActivity(intentBackToHome);
+            }
+        });
     }
 
     public void showTransactionStatus() {

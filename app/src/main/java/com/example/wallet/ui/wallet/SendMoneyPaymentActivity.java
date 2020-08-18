@@ -116,6 +116,7 @@ public class SendMoneyPaymentActivity extends AppCompatActivity {
                             tvBeneficiaryName.setVisibility(View.VISIBLE);
                             Intent intentTransactionStatus = new Intent(SendMoneyPaymentActivity.this, TransactionStatusActivity.class);
                             intentTransactionStatus.putExtra("transactionItem", (Parcelable) userTransactionHistoryData);
+                            intentTransactionStatus.putExtra("previousPage", "SendMoneyPaymentActivity");
                             startActivity(intentTransactionStatus);
                             progressBar.setVisibility(View.GONE);
                         } else {

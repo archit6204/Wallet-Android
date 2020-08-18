@@ -29,11 +29,39 @@ public class BottomNavigator extends AppCompatActivity {
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-
         //I added this if statement to keep the selected fragment when rotating the device
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.bottom_navigation_fragment_container,
-                    new HomeFragment()).commit();
+            String fragmentName = getIntent().getStringExtra("fragmentName");
+            if (fragmentName != null && !fragmentName.isEmpty()) {
+                switch (fragmentName) {
+                    case "history":
+                        bottomNav.getMenu().findItem(R.id.action_payments).setChecked(true);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_navigation_fragment_container,
+                                new TransactionHistoryFragment()).commit();
+                        break;
+
+                    case "wallet":
+                        bottomNav.getMenu().findItem(R.id.action_wallet).setChecked(true);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_navigation_fragment_container,
+                                new WalletFragment()).commit();
+                        break;
+
+                    case "profile":
+                        bottomNav.getMenu().findItem(R.id.action_profile).setChecked(true);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_navigation_fragment_container,
+                                new ProfileFragment()).commit();
+                        break;
+
+                    default:
+                        bottomNav.getMenu().findItem(R.id.action_home).setChecked(true);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_navigation_fragment_container,
+                                new HomeFragment()).commit();
+                }
+            } else {
+                bottomNav.getMenu().findItem(R.id.action_home).setChecked(true);
+                getSupportFragmentManager().beginTransaction().replace(R.id.bottom_navigation_fragment_container,
+                        new HomeFragment()).commit();
+            }
         }
 
 

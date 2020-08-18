@@ -63,6 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
                 globalVariables.setUserName(currentUser.getDisplayName());
                 Intent intent = new Intent(this, BottomNavigator.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.putExtra("fragmentName", "home");
                 startActivity(intent);
                 pbActivityRegister.setVisibility(View.GONE);
             } else {

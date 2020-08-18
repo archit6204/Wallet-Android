@@ -94,6 +94,7 @@ public class AddMoneyPaymentActivity extends AppCompatActivity {
                             Toast.makeText(AddMoneyPaymentActivity.this, "Redirecting to transaction status page...", Toast.LENGTH_SHORT).show();
                         Intent intentTransactionStatus = new Intent(AddMoneyPaymentActivity.this, TransactionStatusActivity.class);
                         intentTransactionStatus.putExtra("transactionItem", (Parcelable) transactionHistoryData);
+                        intentTransactionStatus.putExtra("previousPage", "AddMoneyPaymentActivity");
                         startActivity(intentTransactionStatus);
                     } else {
                         Toast.makeText(AddMoneyPaymentActivity.this, "No Balance found!", Toast.LENGTH_SHORT).show();
@@ -102,6 +103,7 @@ public class AddMoneyPaymentActivity extends AppCompatActivity {
                                             Toast.makeText(AddMoneyPaymentActivity.this, "Redirecting to transaction status page...", Toast.LENGTH_SHORT).show();
                                             Intent intentTransactionStatus = new Intent(AddMoneyPaymentActivity.this, TransactionStatusActivity.class);
                                             intentTransactionStatus.putExtra("transactionItem", (Parcelable) transactionHistoryData);
+                                            intentTransactionStatus.putExtra("previousPage", "AddMoneyPaymentActivity");
                                             startActivity(intentTransactionStatus);
                                         })
                                 .addOnFailureListener(e -> Toast.makeText(AddMoneyPaymentActivity.this, "Transaction failed!", Toast.LENGTH_SHORT).show());

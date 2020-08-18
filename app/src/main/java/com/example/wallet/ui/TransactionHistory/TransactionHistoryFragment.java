@@ -130,11 +130,9 @@ public class TransactionHistoryFragment extends Fragment implements TransactionH
     public void onClick(int position, View v) {
         TransactionHistoryData transactionItem = transactions.get(position);
         Intent intent = new Intent(getActivity(), TransactionStatusActivity.class);
-        /*Bundle bundle = new Bundle();
-        bundle.putSerializable("transactionItem", (Serializable) transactionItem);*/
         intent.putExtra("transactionItem", (Parcelable) transactionItem);
+        intent.putExtra("previousPage", "TransactionHistoryFragment");
         startActivity(intent);
-        /*Toast.makeText(getContext(), "Position: " + position, Toast.LENGTH_SHORT).show();*/
     }
 
 }
