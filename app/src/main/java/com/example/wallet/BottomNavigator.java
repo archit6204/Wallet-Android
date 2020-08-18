@@ -1,14 +1,19 @@
 package com.example.wallet;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
+import com.example.wallet.ui.utils.GlobalVariables;
 import com.example.wallet.ui.wallet.WalletFragment;
 import com.example.wallet.ui.home.HomeFragment;
 import com.example.wallet.ui.TransactionHistory.TransactionHistoryFragment;
 import com.example.wallet.ui.profile.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -67,5 +72,19 @@ public class BottomNavigator extends AppCompatActivity {
                     return true;
                 }
             };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        GlobalVariables globalVariables = (GlobalVariables)getApplication();
+        if (currentUser != null) {
+            if (currentUser.getDisplayName() != null && !currentUser.getDisplayName().isEmpty()){
+                globalVariables.setUserName(currentUser.getDisplayName());
+            } else {
+                FirebaseAuth.getInstance().signOut();
+            }
+        }
+    }
 
 }

@@ -6,12 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.Html;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wallet.R;
 import com.example.wallet.ui.TransactionHistory.TransactionHistoryData;
+import com.example.wallet.ui.TransactionHistory.transactionStatus.TransactionStatusActivity;
 import com.example.wallet.ui.utils.GlobalVariables;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -89,11 +91,19 @@ public class AddMoneyPaymentActivity extends AppCompatActivity {
                                     "lastUpdatedDateAndTime", FieldValue.serverTimestamp(),
                                     "totalAmount", totalAmount
                             );
-                            Toast.makeText(AddMoneyPaymentActivity.this, "Transaction successful!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddMoneyPaymentActivity.this, "Redirecting to transaction status page...", Toast.LENGTH_SHORT).show();
+                        Intent intentTransactionStatus = new Intent(AddMoneyPaymentActivity.this, TransactionStatusActivity.class);
+                        intentTransactionStatus.putExtra("transactionItem", (Parcelable) transactionHistoryData);
+                        startActivity(intentTransactionStatus);
                     } else {
                         Toast.makeText(AddMoneyPaymentActivity.this, "No Balance found!", Toast.LENGTH_SHORT).show();
                         userRef.set(addMoneyData, SetOptions.merge())
-                                .addOnSuccessListener(aVoid -> Toast.makeText(AddMoneyPaymentActivity.this, "Transaction successful!", Toast.LENGTH_SHORT).show())
+                                .addOnSuccessListener( aVoid -> {
+                                            Toast.makeText(AddMoneyPaymentActivity.this, "Redirecting to transaction status page...", Toast.LENGTH_SHORT).show();
+                                            Intent intentTransactionStatus = new Intent(AddMoneyPaymentActivity.this, TransactionStatusActivity.class);
+                                            intentTransactionStatus.putExtra("transactionItem", (Parcelable) transactionHistoryData);
+                                            startActivity(intentTransactionStatus);
+                                        })
                                 .addOnFailureListener(e -> Toast.makeText(AddMoneyPaymentActivity.this, "Transaction failed!", Toast.LENGTH_SHORT).show());
                     }
                 } else {

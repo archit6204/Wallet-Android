@@ -19,7 +19,7 @@ public class NFCDisplayActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc_display);
-        mTextView = (TextView) findViewById(R.id.text_view);
+        mTextView = findViewById(R.id.text_view);
     }
 
     @Override

@@ -34,7 +34,7 @@ class HostCardReaderActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
             return
         } else {
             tvNoNfcFound?.visibility = View.INVISIBLE
-            mTextView?.text = " Reading card..\\n Please place device back facing back."
+            mTextView?.text = R.string.hce_reading_card.toString()
         }
 
         if (!nfcAdapter!!.isEnabled) {
@@ -43,7 +43,7 @@ class HostCardReaderActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
             tvNoNfcFound?.text = "NFC found! Please enable NFC via Settings."
         } else {
             tvNoNfcFound?.visibility = View.VISIBLE
-            tvNoNfcFound?.text = "Waitng for another device or card..."
+            tvNoNfcFound?.text = "Waiting for another device or card..."
         }
     }
 
@@ -66,8 +66,7 @@ class HostCardReaderActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
         val response = isoDep.transceive(Utils.hexStringToByteArray(
                 "00A4040007A0000002471001"))
         runOnUiThread {
-            mTextView?.append("\nCard Response: "
-                    + Utils.toHex(response))
+            mTextView?.text = ("\nCard Response: " + Utils.toHex(response))
         }
         isoDep.close()
         tvNoNfcFound?.visibility = View.INVISIBLE

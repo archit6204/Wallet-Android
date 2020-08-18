@@ -286,4 +286,5 @@
     <string name="plus_sign">+</string>
     <string name="servicedesc">Host Card Emulator Service</string>
     <string name="aiddescription">Sample AID for testing</string>
+    <string name="hce_reading_card"></string>
 </resources>

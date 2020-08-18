@@ -27,7 +27,9 @@ public class TransactionStatusActivity extends AppCompatActivity {
     private TransactionHistoryData transactionItem;
     private String transactionFormattedDateNTime;
     private TextView tvTransactionFormattedDateNTime;
-
+    private String[] transactionTypeArray;
+    private String debitedOrCredited;
+    private String debitedOrCreditedInstrument;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,21 +48,26 @@ public class TransactionStatusActivity extends AppCompatActivity {
 
     public void showTransactionStatus() {
         tvTransactionFormattedDateNTime.setText(transactionFormattedDateNTime);
-        String paidTo = "Paid to";
-        String share = "Share";
-        showPaidToDetails(paidTo);
-        showDebitedFromDetails(share);
+        transactionType = transactionItem.getTransactionType();
+        transactionTypeArray = transactionType.split(":");
+        debitedOrCredited = transactionTypeArray[0];
+        debitedOrCreditedInstrument = transactionTypeArray[1];
+        showPaidToDetails();
+        showDebitedFromDetails();
         showTransactionIdDetails();
         showHelpSupportDetails();
     }
 
-    public void showPaidToDetails(String vpa) {
-        String paidTo = "Paid to";
+    public void showPaidToDetails() {
+        String paidOrReceived = "Paid to";
+        if (debitedOrCredited.equalsIgnoreCase("Credited to")) {
+            paidOrReceived = "Received from";
+        }
         String share = "Share";
         String walletId = transactionItem.getWalletId();
         String amount = Integer.toString(transactionAmount);
         ((TextView) vPaidToDetails.findViewById(R.id.tv_paid_to))
-                .setText(paidTo);
+                .setText(paidOrReceived);
         ((TextView) vPaidToDetails.findViewById(R.id.tv_share))
                 .setText(share);
         ((ImageView) vPaidToDetails.findViewById(R.id.iv_beneficiary_logo))
@@ -74,15 +81,11 @@ public class TransactionStatusActivity extends AppCompatActivity {
     }
 
     @SuppressLint("SetTextI18n")
-    public void showDebitedFromDetails(String vpa) {
-        String debitedFrom = "Debited from";
-        String transactionType = transactionItem.getTransactionType();
-        String[] transactionTypeArray = transactionType.split(":");
-        String debitedInstrument = transactionTypeArray[1];
+    public void showDebitedFromDetails() {
         String showBalance = "Show balance";
         String amount = Integer.toString(transactionAmount);
         ((TextView) vDebitedFromDetails.findViewById(R.id.tv_paid_to))
-                .setText(debitedFrom);
+                .setText(debitedOrCredited);
         ((TextView) vDebitedFromDetails.findViewById(R.id.tv_share))
                 .setText(showBalance);
         ((ImageView) vDebitedFromDetails.findViewById(R.id.iv_beneficiary_logo))
@@ -92,19 +95,14 @@ public class TransactionStatusActivity extends AppCompatActivity {
         ((TextView) vDebitedFromDetails.findViewById(R.id.tv_transaction_amount))
                 .setText(amount);
         ((TextView) vDebitedFromDetails.findViewById(R.id.tv_beneficiary_name))
-                .setText(debitedInstrument);
+                .setText(debitedOrCreditedInstrument);
         ((TextView) vDebitedFromDetails.findViewById(R.id.tv_beneficiary_subtitle))
                 .setText("UTR: 09812375699876");
     }
 
     public void showTransactionIdDetails() {
-        String paidTo = "Debited from";
         String transactionId = transactionItem.getTransactionId();
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.MATCH_PARENT
-        );
-        FrameLayout.LayoutParams tvCopyParams = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT
         );
@@ -118,11 +116,8 @@ public class TransactionStatusActivity extends AppCompatActivity {
                 .setText(transactionId);
         ((TextView) vTransactionIdDetails.findViewById(R.id.tv_help_support_name))
                 .setLayoutParams(params);
-        tvCopyParams.setMargins(value0dp, value0dp, value16dp, value22dp);
         ((TextView) vTransactionIdDetails.findViewById(R.id.tv_share))
                 .setText("copy");
-        /*((TextView) vTransactionIdDetails.findViewById(R.id.tv_share))
-                .setLayoutParams(tvCopyParams);*/
         ((ImageView) vTransactionIdDetails.findViewById(R.id.iv_help_support_logo))
                 .setVisibility(View.GONE);
         ((TextView) vTransactionIdDetails.findViewById(R.id.tv_help_support_subtitle))
