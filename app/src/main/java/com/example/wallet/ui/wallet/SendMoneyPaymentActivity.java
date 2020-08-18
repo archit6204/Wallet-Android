@@ -87,18 +87,29 @@ public class SendMoneyPaymentActivity extends AppCompatActivity {
                         int previousAmount = addMoneyData1.getTotalAmount();
                         if (previousAmount >= sendMoneyAmount) {
                             int userTotalAmount = previousAmount - sendMoneyAmount;
-                            int beneficiaryTotalAmount = previousAmount + sendMoneyAmount;
                             userRef.update(
                                     "transactionHistoryData", FieldValue.arrayUnion(userTransactionHistoryData),
                                     "lastUpdatedDateAndTime", FieldValue.serverTimestamp(),
                                     "totalAmount", userTotalAmount
                             );
-                            beneficiaryRef.update(
-                                    "transactionHistoryData", FieldValue.arrayUnion(beneficiaryTransactionHistoryData),
-                                    "lastUpdatedDateAndTime", FieldValue.serverTimestamp(),
-                                    "totalAmount", beneficiaryTotalAmount
-                            );
                             Toast.makeText(SendMoneyPaymentActivity.this, "Redirecting to transaction status page...", Toast.LENGTH_SHORT).show();
+                            beneficiaryRef.get().addOnCompleteListener(taskBeneficiaryRef -> {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot documentBeneficiaryRef = taskBeneficiaryRef.getResult();
+                                            assert documentBeneficiaryRef != null;
+                                            if (documentBeneficiaryRef.exists()) {
+                                                UserData beneficiaryAddMoneyData = documentBeneficiaryRef.toObject(UserData.class);
+                                                assert beneficiaryAddMoneyData != null;
+                                                int beneficiaryPreviousAmount = beneficiaryAddMoneyData.getTotalAmount();
+                                                int beneficiaryTotalAmount = beneficiaryPreviousAmount + sendMoneyAmount;
+                                                beneficiaryRef.update(
+                                                        "transactionHistoryData", FieldValue.arrayUnion(beneficiaryTransactionHistoryData),
+                                                        "lastUpdatedDateAndTime", FieldValue.serverTimestamp(),
+                                                        "totalAmount", beneficiaryTotalAmount
+                                                );
+                                            }
+                                        }
+                                    });
                             tvSendMoneyAmount.setText(stringSendMoneyAmount);
                             tvSendMoneyAmount.setVisibility(View.VISIBLE);
                             tvBeneficiaryName.setText(beneficiaryName);
