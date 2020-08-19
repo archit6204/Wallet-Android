@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.wallet.ui.utils.GlobalVariables;
 import com.google.firebase.auth.FirebaseAuth;
@@ -58,19 +59,18 @@ public class RegisterActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         GlobalVariables globalVariables = (GlobalVariables)getApplication();
-        if (currentUser != null) {
+        if (currentUser != null && currentUser.getPhoneNumber() != null && currentUser.getPhoneNumber().length() == 13) {
             if (currentUser.getDisplayName() != null) {
                 globalVariables.setUserName(currentUser.getDisplayName());
+                globalVariables.setMobileNumber(currentUser.getPhoneNumber());
                 Intent intent = new Intent(this, BottomNavigator.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.putExtra("fragmentName", "home");
                 startActivity(intent);
-                pbActivityRegister.setVisibility(View.GONE);
             } else {
                 FirebaseAuth.getInstance().signOut();
-                pbActivityRegister.setVisibility(View.GONE);
             }
-
+            pbActivityRegister.setVisibility(View.GONE);
         }
         pbActivityRegister.setVisibility(View.GONE);
     }

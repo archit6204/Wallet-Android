@@ -32,6 +32,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class OtpActivity extends AppCompatActivity {
@@ -87,53 +88,59 @@ public class OtpActivity extends AppCompatActivity {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        final DocumentReference userRef = db.collection("users").document(userName);
-                        userRef.get().addOnCompleteListener(userTask -> {
-                            if (userTask.isSuccessful()) {
-                                DocumentSnapshot document = userTask.getResult();
-                                assert document != null;
-                                if (document.exists()) {
-                                    Toast.makeText(OtpActivity.this, "Welcome " + userName + "!", Toast.LENGTH_SHORT).show();
+                        if (userMobileNumber.length() == 13 && userName.length() >= 3) {
+                            final DocumentReference userRef = db.collection("users").document(userName);
+                            userRef.get().addOnCompleteListener(userTask -> {
+                                if (userTask.isSuccessful()) {
+                                    DocumentSnapshot document = userTask.getResult();
+                                    assert document != null;
+                                    if (document.exists()) {
+                                        Toast.makeText(OtpActivity.this, "Welcome " + userName + "!",
+                                                Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        String id = mDatabase.push().getKey();
+                                        String transactionId = "trns" + id;
+                                        String walletId = userName + userMobileNumber;
+
+                                        final UserData addMoneyData = new UserData(transactionId, 0, walletId, null);
+                                        addMoneyData.setMobileNumber(userMobileNumber);
+                                        addMoneyData.setUserName(userName);
+                                        GlobalVariables globalVariables = (GlobalVariables) getApplication();
+                                        globalVariables.setUserName(userName);
+                                        globalVariables.setMobileNumber(userMobileNumber);
+                                        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                .setDisplayName(userName)
+                                                /*.setPhotoUri(Uri.parse("https://example.com/jane-q-user/profile.jpg"))*/
+                                                .build();
+
+                                        assert currentUser != null;
+                                        currentUser.updateProfile(profileUpdates)
+                                                .addOnCompleteListener(task1 -> {
+                                                    if (task1.isSuccessful()) {
+                                                        Log.d("TAG", "User profile updated.");
+                                                    }
+                                                });
+                                        Toast.makeText(OtpActivity.this, "Account Created!", Toast.LENGTH_SHORT).show();
+                                        userRef.set(addMoneyData, SetOptions.merge())
+                                                .addOnSuccessListener(aVoid -> Toast.makeText(OtpActivity.this, "Transaction successful!",
+                                                        Toast.LENGTH_SHORT).show())
+                                                .addOnFailureListener(e -> Toast.makeText(OtpActivity.this, "Transaction failed!",
+                                                        Toast.LENGTH_SHORT).show());
+                                    }
                                 } else {
-                                    String id = mDatabase.push().getKey();
-                                    String transactionId = "trns" + id;
-                                    String walletId = userName + userMobileNumber;
-
-                                    final UserData addMoneyData = new UserData(transactionId, 0, walletId, null);
-                                    addMoneyData.setMobileNumber(userMobileNumber);
-                                    addMoneyData.setUserName(userName);
-                                    GlobalVariables globalVariables = (GlobalVariables)getApplication();
-                                    globalVariables.setUserName(userName);
-                                    globalVariables.setMobileNumber(userMobileNumber);
-                                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                            .setDisplayName(userName)
-                                            /*.setPhotoUri(Uri.parse("https://example.com/jane-q-user/profile.jpg"))*/
-                                            .build();
-
-                                    assert currentUser != null;
-                                    currentUser.updateProfile(profileUpdates)
-                                            .addOnCompleteListener(task1 -> {
-                                                if (task1.isSuccessful()) {
-                                                    Log.d("TAG", "User profile updated.");
-                                                }
-                                            });
-                                    Toast.makeText(OtpActivity.this, "Account Created!", Toast.LENGTH_SHORT).show();
-                                    userRef.set(addMoneyData, SetOptions.merge())
-                                            .addOnSuccessListener(aVoid -> Toast.makeText(OtpActivity.this, "Transaction successful!", Toast.LENGTH_SHORT).show())
-                                            .addOnFailureListener(e -> Toast.makeText(OtpActivity.this, "Transaction failed!", Toast.LENGTH_SHORT).show());
+                                    Toast.makeText(OtpActivity.this, "Transaction failed!", Toast.LENGTH_SHORT).show();
                                 }
-                            } else {
-                                Toast.makeText(OtpActivity.this, "Transaction failed!", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        Intent intent = new Intent(OtpActivity.this, BottomNavigator.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        intent.putExtra("fragmentName", "home");
-                        startActivity(intent);
-                        progressBar.setVisibility(View.GONE);
+                            });
+                            Intent intent = new Intent(OtpActivity.this, BottomNavigator.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            intent.putExtra("fragmentName", "home");
+                            startActivity(intent);
+                            progressBar.setVisibility(View.GONE);
+                        }
                     } else {
-                        Toast.makeText(OtpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(OtpActivity.this, Objects.requireNonNull(task.getException()).getMessage(),
+                                Toast.LENGTH_LONG).show();
                     }
 
                 });

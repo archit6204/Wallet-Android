@@ -42,6 +42,7 @@ class HostCardEmulatorService: HostApduService() {
         }
 
         if (hexCommandApdu.substring(10, 24) == AID)  {
+
             return Utils.hexStringToByteArray(STATUS_SUCCESS)
         } else {
             return Utils.hexStringToByteArray(STATUS_FAILED)
