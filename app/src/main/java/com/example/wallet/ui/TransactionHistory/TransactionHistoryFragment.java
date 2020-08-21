@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.wallet.BottomNavigator;
 import com.example.wallet.R;
 import com.example.wallet.ui.TransactionHistory.transactionStatus.TransactionStatusActivity;
 import com.example.wallet.ui.utils.GlobalVariables;
@@ -33,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -84,8 +86,6 @@ public class TransactionHistoryFragment extends Fragment implements TransactionH
                 if (document.exists()) {
                     UserData addMoneyData = document.toObject(UserData.class);
                     assert addMoneyData != null;
-                    Map<String, Object> map = document.getData();
-                    assert map != null;
                     transactionHistoryDataList = addMoneyData.getTransactionHistoryData();
                     Log.d("data", "transactionHistoryDataList.size:" + transactionHistoryDataList.size());
                     if (transactionHistoryDataList.size() >= 1) {
@@ -135,4 +135,10 @@ public class TransactionHistoryFragment extends Fragment implements TransactionH
         startActivity(intent);
     }
 
+    /*@Override
+    public void handleOnBackPressed() {
+        Intent intentBackToHome = new Intent(this.getContext(), BottomNavigator.class);
+        intentBackToHome.putExtra("fragmentName", "home");
+        startActivity(intentBackToHome);
+    }*/
 }

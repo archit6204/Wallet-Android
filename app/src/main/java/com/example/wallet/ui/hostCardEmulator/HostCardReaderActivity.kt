@@ -86,8 +86,6 @@ class HostCardReaderActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
         isoDep.connect()
         val response = isoDep.transceive(Utils.hexStringToByteArray(
                 "00A4040007A0000002471001"))
-        /*val responseUserName = isoDep.transceive(Utils.hexStringToByteArray(
-                userName))*/
         val responseInHex = Utils.toHex(response)
         val responseHexStatus = responseInHex.substring(0, 4)
         val responseHexUserMobileNo = responseInHex.substring(4, 17)
@@ -107,10 +105,8 @@ class HostCardReaderActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
         }
         runOnUiThread {
             mTextView?.text = ("\nCard Response: " + Utils.toHex(response))
-            /*mTextView?.text = ("\nresponseUserName: " + Utils.toHex(responseUserName))*/
         }
         isoDep.close()
-        /*tvNoNfcFound?.visibility = View.INVISIBLE*/
     }
 
     private fun onTagResponseSuccess(response: String): Boolean {
@@ -180,10 +176,6 @@ class HostCardReaderActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
                                 }
                             }
                         }
-                        /*val intentTransactionStatus = Intent(this, TransactionStatusActivity::class.java)
-                        intentTransactionStatus.putExtra("transactionItem", userTransactionHistoryData as Parcelable)
-                        intentTransactionStatus.putExtra("previousPage", "SendMoneyPaymentActivity")
-                        startActivity(intentTransactionStatus)*/
                     } else {
                         Toast.makeText(this, "your wallet Balance is low..!", Toast.LENGTH_SHORT).show()
                     }
