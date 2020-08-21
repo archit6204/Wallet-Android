@@ -2,19 +2,14 @@ package com.example.wallet.ui.utils;
 
 import android.app.Application;
 
+import com.example.wallet.ui.wallet.UserData;
+
 public class GlobalVariables extends Application {
 
-    private int data = 200;
     private String userName = "";
     private String mobileNumber = "";
+    private UserData currentUserData;
 
-    public int getData() {
-        return this.data;
-    }
-
-    public void setData(int d) {
-        this.data=d;
-    }
 
     public void setUserName(String userName) {
         this.userName = userName;
@@ -30,5 +25,13 @@ public class GlobalVariables extends Application {
 
     public String getMobileNumber() {
         return mobileNumber;
+    }
+
+    public void setCurrentUserData(UserData currentUserData) {
+        this.currentUserData = currentUserData;
+    }
+
+    public UserData getCurrentUserData() {
+        return currentUserData;
     }
 }

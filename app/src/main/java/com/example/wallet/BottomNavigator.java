@@ -2,11 +2,13 @@ package com.example.wallet;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.wallet.ui.utils.GlobalVariables;
+import com.example.wallet.ui.wallet.UserData;
 import com.example.wallet.ui.wallet.WalletFragment;
 import com.example.wallet.ui.home.HomeFragment;
 import com.example.wallet.ui.TransactionHistory.TransactionHistoryFragment;
@@ -14,6 +16,9 @@ import com.example.wallet.ui.profile.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -102,13 +107,35 @@ public class BottomNavigator extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         GlobalVariables globalVariables = (GlobalVariables)getApplication();
-        if (currentUser != null) {
-            if (currentUser.getDisplayName() != null && !currentUser.getDisplayName().isEmpty()){
-                globalVariables.setUserName(currentUser.getDisplayName());
-            } else {
-                FirebaseAuth.getInstance().signOut();
-            }
+        if (currentUser != null && currentUser.getPhoneNumber() != null && currentUser.getPhoneNumber().length() == 13) {
+                if (currentUser.getDisplayName() != null && !currentUser.getDisplayName().isEmpty()) {
+                    globalVariables.setUserName(currentUser.getDisplayName());
+                    globalVariables.setMobileNumber(currentUser.getPhoneNumber());
+                    DocumentReference userRef = db.collection("users").document(currentUser.getDisplayName());
+                    userRef.get().addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            assert document != null;
+                            if (document.exists()) {
+                                UserData currentUserData = document.toObject(UserData.class);
+                                assert currentUserData != null;
+                                globalVariables.setCurrentUserData(currentUserData);
+                                Toast.makeText(getApplication(), "Welcome "+  currentUser.getDisplayName() + "!",
+                                        Toast.LENGTH_LONG).show();
+                            } else {
+                                Log.d("error", "No such document");
+                            }
+                        } else {
+                            Toast.makeText(getApplication(), "Please check your internet connection!",
+                                    Toast.LENGTH_SHORT).show();
+                            Log.d("failed fetch", "get failed with ", task.getException());
+                        }
+                    });
+                } else {
+                    FirebaseAuth.getInstance().signOut();
+                }
         }
     }
 

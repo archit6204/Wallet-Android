@@ -15,7 +15,6 @@ public class UserData {
     private String walletId;
     private Timestamp lastUpdatedDateAndTime;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private UserData addMoneyData;
     private List<TransactionHistoryData> transactionHistoryData = new ArrayList<>();
     private String mobileNumber;
     private String userName;
@@ -44,17 +43,6 @@ public class UserData {
     }
 
     public int getTotalAmount() {
-        /*final DocumentReference userRef = db.collection("users").document("user");
-        userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                addMoneyData = documentSnapshot.toObject(AddMoneyData.class);
-                assert addMoneyData != null;
-                int previousAmount = addMoneyData.getTotalAmount();
-                totalAmount = previousAmount + totalAmount;
-                Log.d("data", "aaaaddMoneyDataaaaa data: " + totalAmount);
-            }
-        });*/
         return totalAmount;
     }
 

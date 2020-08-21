@@ -13,8 +13,16 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.example.wallet.R
+import com.example.wallet.ui.TransactionHistory.TransactionHistoryData
 import com.example.wallet.ui.TransactionHistory.transactionStatus.TransactionStatusActivity
 import com.example.wallet.ui.utils.GlobalVariables
+import com.example.wallet.ui.wallet.UserData
+import com.google.android.gms.tasks.Task
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class HostCardReaderActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
@@ -23,6 +31,9 @@ class HostCardReaderActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
     private var mTextView: TextView? = null
     private var tvNoNfcFound: TextView? = null
     private val STATUS_SUCCESS = "9000"
+    private val db = FirebaseFirestore.getInstance()
+    private val mDatabase: DatabaseReference? = null
+    private val userTransactionType = "Debited from: JusTap wallet"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_host_card_reader)
@@ -67,6 +78,7 @@ class HostCardReaderActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
     override fun onTagDiscovered(tag: Tag?) {
         val globalVariables = application as GlobalVariables
         val userName = globalVariables.userName
+        val mobileNo = globalVariables.mobileNumber
         val isoDep = IsoDep.get(tag)
         isoDep.connect()
         val response = isoDep.transceive(Utils.hexStringToByteArray(
@@ -91,15 +103,82 @@ class HostCardReaderActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
     }
 
     private fun onTagResponseSuccess(response: String): Boolean {
+
         if (response == STATUS_SUCCESS) {
-            val intent = Intent(this, TransactionStatusActivity::class.java)
-           /* intent.putExtra("transactionItem", transactionItem as Parcelable?)*/
+
+            checkingUserTransferPayments()
+
+            /*val intent = Intent(this, TransactionStatusActivity::class.java)
+            intent.putExtra("transactionItem", transactionItem as Parcelable?)
             intent.putExtra("previousPage", "HostCardReaderActivity")
-            startActivity(intent)
+            startActivity(intent)*/
             return true
         } else {
             Toast.makeText(this, "Transaction Failed!", Toast.LENGTH_SHORT).show()
             return false
+        }
+    }
+
+    private fun checkingUserTransferPayments() {
+        val userRef: DocumentReference = db.collection("users").document(userName)
+        val beneficiaryRef: DocumentReference = db.collection("users").document(beneficiaryName)
+        val id: String? = mDatabase?.push()?.key
+        val transactionId = "trnstap$id"
+        val sendMoneyAmount = 20
+        val userTransactionHistoryData = TransactionHistoryData(
+                transactionId,
+                sendMoneyAmount,
+                beneficiaryName,
+                userTransactionType)
+        val beneficiaryTransactionType = "Credited to: JusTap wallet"
+        val beneficiaryTransactionHistoryData = TransactionHistoryData(
+                transactionId,
+                sendMoneyAmount,
+                userName,
+                beneficiaryTransactionType)
+        userRef.get().addOnCompleteListener { task: Task<DocumentSnapshot?> ->
+            if (task.isSuccessful) {
+                val document = task.result!!
+                if (document.exists()) {
+                    val currentUserData = document.toObject(UserData::class.java)!!
+                    val previousAmount = currentUserData.totalAmount
+                    if (previousAmount >= sendMoneyAmount) {
+                        val userTotalAmount: Int = previousAmount - sendMoneyAmount
+                        userRef.update(
+                                "transactionHistoryData", FieldValue.arrayUnion(userTransactionHistoryData),
+                                "lastUpdatedDateAndTime", FieldValue.serverTimestamp(),
+                                "totalAmount", userTotalAmount
+                        )
+                        Toast.makeText(this, "Redirecting to transaction status page...", Toast.LENGTH_SHORT).show()
+                        beneficiaryRef.get().addOnCompleteListener { taskBeneficiaryRef: Task<DocumentSnapshot?> ->
+                            if (task.isSuccessful) {
+                                val documentBeneficiaryRef = taskBeneficiaryRef.result!!
+                                if (documentBeneficiaryRef.exists()) {
+                                    val beneficiaryUserData = documentBeneficiaryRef.toObject(UserData::class.java)!!
+                                    val beneficiaryPreviousAmount = beneficiaryUserData.totalAmount
+                                    val beneficiaryTotalAmount: Int = beneficiaryPreviousAmount + sendMoneyAmount
+                                    beneficiaryRef.update(
+                                            "transactionHistoryData", FieldValue.arrayUnion(beneficiaryTransactionHistoryData),
+                                            "lastUpdatedDateAndTime", FieldValue.serverTimestamp(),
+                                            "totalAmount", beneficiaryTotalAmount
+                                    )
+                                }
+                            }
+                        }
+                        /*val intentTransactionStatus = Intent(this, TransactionStatusActivity::class.java)
+                        intentTransactionStatus.putExtra("transactionItem", userTransactionHistoryData as Parcelable)
+                        intentTransactionStatus.putExtra("previousPage", "SendMoneyPaymentActivity")
+                        startActivity(intentTransactionStatus)*/
+                    } else {
+                        Toast.makeText(this, "your wallet Balance is low..!", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(this, "your wallet Balance is low. Please add ₹ in wallet.", Toast.LENGTH_SHORT).show()
+
+                }
+            } else {
+                Toast.makeText(this, "Transaction failed!", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }
