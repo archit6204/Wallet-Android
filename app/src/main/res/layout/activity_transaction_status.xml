@@ -115,7 +115,7 @@
             android:id="@+id/iv_transaction_powered_by_logo"
             android:layout_width="50dp"
             android:layout_height="25dp"
-            android:layout_marginBottom="64dp"
+            android:layout_marginBottom="72dp"
             android:layout_gravity="bottom|center"
             app:srcCompat="@drawable/ic_upi_logo"
             />
@@ -124,7 +124,7 @@
     <Button
         android:id="@+id/btn_back_to_home"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="54dp"
         android:layout_gravity="bottom"
         android:paddingStart="110dp"
         android:paddingEnd="110dp"

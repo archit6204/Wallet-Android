@@ -79,7 +79,6 @@ class HostCardEmulatorService: HostApduService() {
                         intent.putExtra("previousPage", "HostCardEmulatorService")
                         startActivity(intent)
                     } else {
-                        Toast.makeText(this, "Redirecting to history page...", Toast.LENGTH_SHORT).show()
                         val intentBackToHome = Intent(this, BottomNavigator::class.java)
                         intentBackToHome.putExtra("fragmentName", "history")
                         startActivity(intentBackToHome)
@@ -107,7 +106,7 @@ class HostCardEmulatorService: HostApduService() {
                     val currentUserData = document.toObject(UserData::class.java)!!
                     val transactionHistoryDataList = currentUserData.transactionHistoryData
                     if (transactionHistoryDataList.size >= 1) {
-                        var transactionHistoryData: TransactionHistoryData = transactionHistoryDataList[0]
+                        val transactionHistoryData: TransactionHistoryData = transactionHistoryDataList[0]
                         if (transactionHistoryData == null) {
                             userRef.update("transactionHistoryData", FieldValue.arrayRemove(null as TransactionHistoryData?))
                         } else {
@@ -117,17 +116,19 @@ class HostCardEmulatorService: HostApduService() {
                             Toast.makeText(this, "Redirecting to transaction status page...", Toast.LENGTH_SHORT).show()
                         }
                     } else {
-
+                        Toast.makeText(this, "Redirecting to history page...", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     isTransactionDataFetched = false
                     Log.d("error", "No such document")
+                    Toast.makeText(this, "Redirecting to history page...", Toast.LENGTH_SHORT).show()
                 }
             } else {
                 isTransactionDataFetched = false
                 Toast.makeText(application, "Please check your internet connection!",
                         Toast.LENGTH_SHORT).show()
                 Log.d("failed fetch", "get failed with ", task.exception)
+                Toast.makeText(this, "Redirecting to history page...", Toast.LENGTH_SHORT).show()
             }
         }
         return isTransactionDataFetched
