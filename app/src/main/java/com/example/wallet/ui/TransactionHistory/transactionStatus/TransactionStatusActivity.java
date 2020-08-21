@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -13,6 +16,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.wallet.BottomNavigator;
 import com.example.wallet.R;
@@ -149,6 +153,14 @@ public class TransactionStatusActivity extends AppCompatActivity {
                 .setVisibility(View.INVISIBLE);
         ((TextView) vTransactionIdDetails.findViewById(R.id.tv_transaction_id_to))
                 .setVisibility(View.VISIBLE);
+        ((TextView) vTransactionIdDetails.findViewById(R.id.tv_share))
+                .setOnClickListener(v -> {
+                    ClipboardManager clipboard = (ClipboardManager) getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText(null, transactionId);
+                    if (clipboard == null) return;
+                    clipboard.setPrimaryClip(clip);
+                    Toast.makeText(this, "Copied to clipboard", Toast.LENGTH_SHORT).show();
+                });
     }
 
     public void showHelpSupportDetails() {
