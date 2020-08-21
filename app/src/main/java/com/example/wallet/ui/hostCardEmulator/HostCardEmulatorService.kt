@@ -47,9 +47,11 @@ class HostCardEmulatorService: HostApduService() {
 
         if (hexCommandApdu.substring(10, 24) == AID)  {
             val userMobileNo = globalVariables.mobileNumber
-            var userFormattedMobileNo = userMobileNo.substring(1)
+            val userName = globalVariables.userName
+            val userFormattedMobileNo = userMobileNo.substring(1)
+            val userFormattedData = STATUS_SUCCESS + userFormattedMobileNo + userName
             if (!userMobileNo.isNullOrEmpty() && userMobileNo == currentUser?.phoneNumber && userFormattedMobileNo.length == 12) {
-                return Utils.hexStringToByteArray(userFormattedMobileNo)
+                return Utils.hexStringToByteArray(userFormattedData)
             } else {
                 return Utils.hexStringToByteArray(STATUS_FAILED)
             }
