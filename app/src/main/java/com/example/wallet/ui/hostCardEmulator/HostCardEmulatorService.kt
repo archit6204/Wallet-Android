@@ -45,13 +45,20 @@ class HostCardEmulatorService: HostApduService() {
             return Utils.hexStringToByteArray(INS_NOT_SUPPORTED)
         }
 
-        if (hexCommandApdu.substring(10, 24) == AID)  {
+        if (hexCommandApdu.substring(10, 24) == AID) {
             val userMobileNo = globalVariables.mobileNumber
             val userName = globalVariables.userName
             val userFormattedMobileNo = userMobileNo.substring(1)
             val userFormattedData = STATUS_SUCCESS + userFormattedMobileNo + userName
-            if (!userMobileNo.isNullOrEmpty() && userMobileNo == currentUser?.phoneNumber && userFormattedMobileNo.length == 12) {
+            if (!userMobileNo.isNullOrEmpty() && userMobileNo == currentUser?.phoneNumber && userFormattedMobileNo.length == 12 && hexCommandApdu.length == 24) {
                 return Utils.hexStringToByteArray(userFormattedData)
+            }
+            else if (!userMobileNo.isNullOrEmpty() && userMobileNo == currentUser?.phoneNumber && userFormattedMobileNo.length == 12 && hexCommandApdu.length == 28) {
+                    val onTransactionSuccessResponse = hexCommandApdu.substring(24)
+                if (onTransactionSuccessResponse == STATUS_SUCCESS) {
+
+                }
+                return Utils.hexStringToByteArray(STATUS_SUCCESS)
             } else {
                 return Utils.hexStringToByteArray(STATUS_FAILED)
             }

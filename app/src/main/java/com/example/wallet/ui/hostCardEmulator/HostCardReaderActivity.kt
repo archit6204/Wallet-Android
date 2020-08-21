@@ -96,8 +96,10 @@ class HostCardReaderActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
         beneficiaryName = userName
         if (responseHexStatus == STATUS_SUCCESS && responseHexUserMobileNo.length == 12 && responseHexUserName.isNotEmpty()) {
             val isResponseSuccess = onTagResponseSuccess(responseHexStatus)
-            if (isResponseSuccess) {
-
+            if (isResponseSuccess && isTransactionSuccessful) {
+                val transactionOnSuccessData = "00A4040007A00000024710019000$otherUserName"
+                val transactionOnSuccessResponse = isoDep.transceive(Utils.hexStringToByteArray(
+                        transactionOnSuccessData))
             }
         } else {
             Toast.makeText(this, "Transaction Failed!", Toast.LENGTH_SHORT).show()
