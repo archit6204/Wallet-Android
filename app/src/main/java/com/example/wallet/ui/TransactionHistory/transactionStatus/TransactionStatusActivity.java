@@ -1,29 +1,23 @@
 package com.example.wallet.ui.TransactionHistory.transactionStatus;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.wallet.BottomNavigator;
 import com.example.wallet.R;
 import com.example.wallet.ui.TransactionHistory.TransactionHistoryData;
-import com.example.wallet.ui.home.HomeFragment;
-import com.example.wallet.ui.wallet.AddMoneyPaymentActivity;
 import com.google.firebase.Timestamp;
+import androidx.appcompat.app.AppCompatActivity;
+
 
 public class TransactionStatusActivity extends AppCompatActivity {
     private View vPaidToDetails;
@@ -41,6 +35,7 @@ public class TransactionStatusActivity extends AppCompatActivity {
     private String[] transactionTypeArray;
     private String debitedOrCredited;
     private String debitedOrCreditedInstrument;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
