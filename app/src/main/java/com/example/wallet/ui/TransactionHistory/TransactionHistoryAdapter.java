@@ -82,6 +82,8 @@ public class TransactionHistoryAdapter
             holder.tvBeneficiaryInstrument.setText(transaction.getWalletId());
             holder.tvTransactionInstrument.setText(transaction.getTransactionType());
             String walletId = transaction.getWalletId();
+            String transactionType = transaction.getTransactionType();
+            String[] transactionTypeArray = transactionType.split(":");
             String[] walletIdArray = walletId.split(" ");
             if (walletId.equalsIgnoreCase("JusTap")) {
                 holder.tvTransactionType.setText("Money added to:");
@@ -93,7 +95,7 @@ public class TransactionHistoryAdapter
                     holder.ivTransactionTypeLogo.setImageResource(R.drawable.ic_transaction_wallet);
                 } else {
                     holder.tvTransactionType.setText("Send to:");
-                    holder.ivTransactionTypeLogo.setImageResource(R.drawable.ic_wallet_add_money);
+                    holder.ivTransactionTypeLogo.setImageResource(R.drawable.ic_user);
                 }
             }
             if (walletIdArray.length > 1) {
@@ -112,12 +114,17 @@ public class TransactionHistoryAdapter
                         break;
                     default:
                         holder.tvTransactionType.setText("Send to:");
-                        holder.ivTransactionTypeLogo.setImageResource(R.drawable.ic_wallet_add_money);
+                        holder.ivTransactionTypeLogo.setImageResource(R.drawable.ic_user);
                 }
 
                 if (walletIdArray[0].equalsIgnoreCase("delhi")) {
                     holder.ivTransactionTypeLogo.setImageResource(R.drawable.ic_delhi_metro_logo);
                 }
+            }
+            if (transactionTypeArray[0].equalsIgnoreCase("Credited to")) {
+                holder.tvTransactionType.setText("Received from:");
+            } else {
+                holder.tvTransactionType.setText("Send to:");
             }
             holder.cvTransactionItem.setOnClickListener(v -> clickListener.onClick(holder.getAdapterPosition(), v));
         }
