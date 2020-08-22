@@ -9,6 +9,7 @@ public class GlobalVariables extends Application {
     private String userName = "";
     private String mobileNumber = "";
     private UserData currentUserData;
+    private int userAvailableBalance;
 
 
     public void setUserName(String userName) {
@@ -33,5 +34,13 @@ public class GlobalVariables extends Application {
 
     public UserData getCurrentUserData() {
         return currentUserData;
+    }
+
+    public void setUserAvailableBalance(int userAvailableBalance) {
+        this.userAvailableBalance = userAvailableBalance;
+    }
+
+    public int getUserAvailableBalance() {
+        return userAvailableBalance;
     }
 }

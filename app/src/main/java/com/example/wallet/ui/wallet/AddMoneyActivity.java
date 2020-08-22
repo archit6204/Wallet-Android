@@ -89,8 +89,7 @@ public class AddMoneyActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         GlobalVariables globalVariables = (GlobalVariables)getApplication();
-        UserData currentUserData = globalVariables.getCurrentUserData();
-        int currentUserTotalAmount = currentUserData.getTotalAmount();
+        int currentUserTotalAmount = globalVariables.getUserAvailableBalance();
         String stringAvailableWalletAmount = getString(R.string.add_wallet_amount, currentUserTotalAmount);
         tvTotalWalletAmount.setText(stringAvailableWalletAmount);
         tvTotalWalletAmount.setVisibility(View.VISIBLE);
