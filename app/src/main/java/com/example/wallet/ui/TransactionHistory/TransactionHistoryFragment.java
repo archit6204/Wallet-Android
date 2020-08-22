@@ -54,11 +54,11 @@ public class TransactionHistoryFragment extends Fragment implements TransactionH
     private String userName;
     private TextView noTransactionFound;
     private List<TransactionHistoryData> transactions;
-
+    GlobalVariables globalVariables;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        GlobalVariables globalVariables = (GlobalVariables) Objects.requireNonNull(getActivity()).getApplication();
+        globalVariables = (GlobalVariables) Objects.requireNonNull(getActivity()).getApplication();
         assert globalVariables != null;
         userName = globalVariables.getUserName();
     }
@@ -86,6 +86,8 @@ public class TransactionHistoryFragment extends Fragment implements TransactionH
                 if (document.exists()) {
                     UserData addMoneyData = document.toObject(UserData.class);
                     assert addMoneyData != null;
+                    globalVariables.setCurrentUserData(addMoneyData);
+                    globalVariables.setUserAvailableBalance(addMoneyData.getTotalAmount());
                     transactionHistoryDataList = addMoneyData.getTransactionHistoryData();
                     Log.d("data", "transactionHistoryDataList.size:" + transactionHistoryDataList.size());
                     if (transactionHistoryDataList.size() >= 1) {
