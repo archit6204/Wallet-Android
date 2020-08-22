@@ -3,7 +3,7 @@
     android:id="@+id/transaction_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_100">
+    android:background="@color/grey_50">
     <ProgressBar
         android:id="@+id/pb_transaction_history"
         style="?android:attr/progressBarStyle"

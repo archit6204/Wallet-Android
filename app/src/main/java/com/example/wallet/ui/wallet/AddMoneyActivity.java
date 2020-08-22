@@ -19,6 +19,7 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.example.wallet.R;
+import com.example.wallet.ui.utils.GlobalVariables;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -87,27 +88,13 @@ public class AddMoneyActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    AvailableBalanceData availableBalanceData = postSnapshot.getValue(AvailableBalanceData.class);
-                    assert availableBalanceData != null;
-                    String stringAvailableWalletAmount = getString(R.string.add_wallet_amount, availableBalanceData.getMoneyAmount());
-                    tvTotalWalletAmount.setText(Html.fromHtml(stringAvailableWalletAmount, FROM_HTML_MODE_LEGACY));
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
+        GlobalVariables globalVariables = (GlobalVariables)getApplication();
+        UserData currentUserData = globalVariables.getCurrentUserData();
+        int currentUserTotalAmount = currentUserData.getTotalAmount();
+        String stringAvailableWalletAmount = getString(R.string.add_wallet_amount, currentUserTotalAmount);
+        tvTotalWalletAmount.setText(stringAvailableWalletAmount);
+        tvTotalWalletAmount.setVisibility(View.VISIBLE);
     }
 
-        }
+}
 

@@ -22,6 +22,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText etUserMobileNo;
     private EditText etUserName;
     private ProgressBar pbActivityRegister;
+    private boolean isUserDataFetched = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
             intent.putExtra("userMobileNumber", userMobileNumber);
             intent.putExtra("userName", userName);
             startActivity(intent);
-
         });
-
     }
 
     @Override
@@ -66,6 +65,8 @@ public class RegisterActivity extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         GlobalVariables globalVariables = (GlobalVariables)getApplication();
         if (currentUser != null && currentUser.getPhoneNumber() != null && currentUser.getPhoneNumber().length() == 13) {
+            Toast.makeText(getApplication(), "Redirecting to home page...",
+                    Toast.LENGTH_SHORT).show();
             if (currentUser.getDisplayName() != null && !currentUser.getDisplayName().isEmpty()) {
                 globalVariables.setUserName(currentUser.getDisplayName());
                 globalVariables.setMobileNumber(currentUser.getPhoneNumber());
@@ -80,25 +81,36 @@ public class RegisterActivity extends AppCompatActivity {
                             globalVariables.setCurrentUserData(currentUserData);
                             Toast.makeText(getApplication(), "Welcome "+  currentUser.getDisplayName() + "!",
                                     Toast.LENGTH_LONG).show();
+                            isUserDataFetched = true;
+                            Intent intent = new Intent(this, BottomNavigator.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            intent.putExtra("fragmentName", "home");
+                            startActivity(intent);
+                            pbActivityRegister.setVisibility(View.GONE);
                         } else {
+                            pbActivityRegister.setVisibility(View.GONE);
                             Log.d("error", "No such document");
+                            isUserDataFetched = false;
                         }
                     } else {
                         Toast.makeText(getApplication(), "Please check your internet connection!",
                                 Toast.LENGTH_SHORT).show();
                         Log.d("failed fetch", "get failed with ", task.getException());
+                        isUserDataFetched = false;
+                        pbActivityRegister.setVisibility(View.GONE);
                     }
                 });
-                Intent intent = new Intent(this, BottomNavigator.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.putExtra("fragmentName", "home");
-                startActivity(intent);
+
             } else {
                 FirebaseAuth.getInstance().signOut();
+                isUserDataFetched = false;
+                pbActivityRegister.setVisibility(View.GONE);
             }
+        } else {
+            FirebaseAuth.getInstance().signOut();
+            isUserDataFetched = false;
             pbActivityRegister.setVisibility(View.GONE);
         }
-        pbActivityRegister.setVisibility(View.GONE);
     }
 }
 

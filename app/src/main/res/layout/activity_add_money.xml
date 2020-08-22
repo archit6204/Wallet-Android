@@ -48,7 +48,7 @@
                     android:fontFamily="@font/ttcommons_regular"
                     android:text="JusTap wallet"
                     android:textColor="@color/gray_5"
-                    android:textSize="24sp" />
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -62,12 +62,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="160dp"
                     android:layout_marginLeft="2dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginRight="2dp"
                     android:clickable="true"
                     android:focusable="true"
-                    app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="16dp">
+                    app:cardBackgroundColor="@color/grey_50"
+                    >
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_Wallet"
@@ -95,9 +93,10 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="60dp"
                         android:fontFamily="@font/ttcommons_demibold"
-                        android:text="@string/available_balance"
+                        android:text="@string/amount"
+                        android:visibility="invisible"
                         android:textColor="@color/gray_6"
-                        android:textSize="20sp" />
+                        android:textSize="18sp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -142,7 +141,7 @@
                         android:layout_height="64dp"
                         android:id="@+id/et_add_wallet_amount"
                         android:inputType="number"
-                        android:textSize="28sp"
+                        android:textSize="24sp"
                         android:maxLength="5"
                         android:fontFamily="@font/ttcommons_demibold"
                         android:textColor="@color/gray_6"
@@ -154,12 +153,12 @@
                 <Button
                     android:id="@+id/btn_add_money"
                     android:layout_width="match_parent"
-                    android:layout_height="72dp"
+                    android:layout_height="68dp"
                     android:layout_gravity="bottom"
                     android:text="@string/proceed_to_add_money"
                     android:textColor="@color/white"
                     android:fontFamily="@font/ttcommons_demibold"
-                    android:textSize="25sp"
+                    android:textSize="22sp"
                     android:background="@color/colorAccentBlue50"
                     android:textAllCaps="false"
                     />

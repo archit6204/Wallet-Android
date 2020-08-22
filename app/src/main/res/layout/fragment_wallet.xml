@@ -22,20 +22,9 @@
             android:layout_marginRight="16dp"
             android:clickable="true"
             android:focusable="true"
-            app:cardCornerRadius="16dp"
+            app:cardCornerRadius="8dp"
             app:cardBackgroundColor="@color/grey_100"
             >
-           <!-- <TextView
-                android:id="@+id/tv_account_balance"
-                android:layout_width="match_parent"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|top"
-                android:layout_marginTop="@dimen/marginBetweenLogoAndLoginInput"
-                android:text="@string/fetching"
-                android:textColor="@color/colorAccent"
-                android:textSize="@dimen/textH4"
-                app:fontFamily="@font/montserrat" />-->
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_Wallet"
