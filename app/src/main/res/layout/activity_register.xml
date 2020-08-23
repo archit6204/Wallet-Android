@@ -25,9 +25,11 @@
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
+            android:id="@+id/til_user_user_name"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:layout_marginRight="16dp"
+            android:visibility="invisible"
             android:layout_marginLeft="16dp"
             android:hint="enter Username"
             app:boxStrokeColor="@color/colorAccentBlue50"
@@ -53,9 +55,11 @@
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
+            android:id="@+id/til_user_mobile_number"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:layout_marginRight="16dp"
+            android:visibility="invisible"
             android:layout_marginLeft="16dp"
             android:hint="enter 10 digit mobile number"
             app:boxStrokeColor="@color/colorAccentBlue50"
@@ -94,5 +98,6 @@
         android:text="Proceed to send OTP"
         android:textAllCaps="false"
         android:textColor="@color/white"
+        android:visibility="invisible"
         android:textSize="22sp" />
 </FrameLayout>
