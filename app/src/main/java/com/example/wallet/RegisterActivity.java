@@ -1,5 +1,6 @@
 package com.example.wallet;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +21,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+
+@SuppressLint("SetTextI18n")
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText etUserMobileNo;
@@ -127,6 +130,7 @@ public class RegisterActivity extends AppCompatActivity {
             pbActivityRegister.setVisibility(View.GONE);
         }
     }
+
 
     private void init() {
         tilUserMobileNo.setVisibility(View.VISIBLE);

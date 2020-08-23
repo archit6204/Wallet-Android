@@ -1,11 +1,17 @@
 package com.example.wallet.ui.TransactionHistory.transactionStatus;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -16,7 +22,15 @@ import com.example.wallet.BottomNavigator;
 import com.example.wallet.R;
 import com.example.wallet.ui.TransactionHistory.TransactionHistoryData;
 import com.google.firebase.Timestamp;
+
+import java.io.File;
+import java.io.FileOutputStream;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 
 public class TransactionStatusActivity extends AppCompatActivity {
@@ -35,11 +49,12 @@ public class TransactionStatusActivity extends AppCompatActivity {
     private String[] transactionTypeArray;
     private String debitedOrCredited;
     private String debitedOrCreditedInstrument;
-
+    private View rootView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_status);
+        rootView = getWindow().getDecorView().findViewById(android.R.id.content);
         vPaidToDetails = findViewById(R.id.inc_paid_to_details);
         vDebitedFromDetails = findViewById(R.id.inc_debited_from_details);
         vTransactionIdDetails = findViewById(R.id.inc_transaction_id_details);
@@ -92,8 +107,13 @@ public class TransactionStatusActivity extends AppCompatActivity {
         String amount = Integer.toString(transactionAmount);
         ((TextView) vPaidToDetails.findViewById(R.id.tv_paid_to))
                 .setText(paidOrReceived);
-        ((TextView) vPaidToDetails.findViewById(R.id.tv_share))
-                .setText(share);
+        TextView tvShareDetails = ((TextView) vPaidToDetails.findViewById(R.id.tv_share));
+        tvShareDetails.setText(share);
+        tvShareDetails.setOnClickListener(v -> {
+            Bitmap bitmap = getScreenShot(rootView);
+            File file =  store(bitmap, "Justap Screenshot");
+            shareImage(file);
+        });
         ((ImageView) vPaidToDetails.findViewById(R.id.iv_beneficiary_logo))
                 .setImageDrawable(getResources().getDrawable(R.drawable.ic_user));
         ((ImageView) vPaidToDetails.findViewById(R.id.iv_share_logo))
@@ -172,4 +192,65 @@ public class TransactionStatusActivity extends AppCompatActivity {
         ((TextView) vHelpSupportDetails.findViewById(R.id.tv_transaction_id_to))
                 .setVisibility(View.INVISIBLE);
     }
+
+    public static Bitmap getScreenShot(View view) {
+        View screenView = view.getRootView();
+        screenView.setDrawingCacheEnabled(true);
+        Bitmap bitmap = Bitmap.createBitmap(screenView.getDrawingCache());
+        screenView.setDrawingCacheEnabled(false);
+        return bitmap;
+    }
+
+    public File store(Bitmap bm, String fileName) {
+        final String dirPath = Environment.getExternalStorageDirectory().toString() + "/" + "screenshot";
+        File dir = new File(dirPath);
+        if(!dir.exists())
+            dir.mkdirs();
+        String fileNameq = fileName + ".jpeg";
+        File file = new File(dirPath, fileNameq);
+        try {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                // Do the file write
+                FileOutputStream fOut = new FileOutputStream(file);
+                bm.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
+                fOut.flush();
+                fOut.close();
+            } else {
+                // Request permission from the user
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 0) {
+            Bitmap bitmap = getScreenShot(rootView);
+            File file = store(bitmap, "justap");
+            shareImage(file);
+        }
+    }
+    private void shareImage(File file){
+        /*Uri uri = Uri.fromFile(file);*/
+        Uri uri = FileProvider.getUriForFile(this, this.getApplicationContext().getPackageName() + ".provider", file);
+
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.setType("image/*");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "");
+        intent.putExtra(android.content.Intent.EXTRA_TEXT, "");
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        try {
+            startActivity(Intent.createChooser(intent, "Share Screenshot"));
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, "No App Available", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
+

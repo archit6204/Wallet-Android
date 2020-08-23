@@ -45,7 +45,7 @@ class HostCardReaderActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
         tvNoNfcFound = findViewById<View>(R.id.tv_no_nfc_found) as TextView?
         val toolbar:Toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
-        toolbar.title = "NFC Reader"
+        toolbar.title = "Receive payments"
         if (nfcAdapter == null) {
             tvNoNfcFound?.visibility = View.VISIBLE
             mTextView?.text = "NFC not found on device."
