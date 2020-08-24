@@ -23,7 +23,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class HostCardEmulatorService: HostApduService() {
     private var currentUser = FirebaseAuth.getInstance().currentUser
-    var globalVariables = application as GlobalVariables
     private var isTransactionDataFetched = false
     private var userTransactionData: TransactionHistoryData? = null
     companion object {
@@ -63,6 +62,8 @@ class HostCardEmulatorService: HostApduService() {
         }
 
         if (hexCommandApdu.substring(10, 24) == AID) {
+            Toast.makeText(this, "AId", Toast.LENGTH_SHORT).show()
+            /*val globalVariables = application as GlobalVariables
             val userMobileNo = globalVariables.mobileNumber
             val userName = globalVariables.userName
             val userFormattedMobileNo = userMobileNo.substring(1)
@@ -72,7 +73,9 @@ class HostCardEmulatorService: HostApduService() {
             }
             else if (!userMobileNo.isNullOrEmpty() && userMobileNo == currentUser?.phoneNumber && userFormattedMobileNo.length == 12 && hexCommandApdu.length == 28) {
                     val onTransactionSuccessResponse = hexCommandApdu.substring(24)
+                Toast.makeText(this, "onTransactionSuccessResponse...", Toast.LENGTH_SHORT).show()
                 if (onTransactionSuccessResponse == STATUS_SUCCESS) {
+
                     if(fetchingTransactionData() && userTransactionData != null) {
                         val intent = Intent(this, TransactionStatusActivity::class.java)
                         intent.putExtra("transactionItem", userTransactionData as Parcelable?)
@@ -84,18 +87,19 @@ class HostCardEmulatorService: HostApduService() {
                         startActivity(intentBackToHome)
                     }
 
-                }
+                }*/
                 return Utils.hexStringToByteArray(STATUS_SUCCESS)
             } else {
                 return Utils.hexStringToByteArray(STATUS_FAILED)
             }
-        } else {
+        } /*else {
             return Utils.hexStringToByteArray(STATUS_FAILED)
-        }
+        }*/
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
+    /*@RequiresApi(Build.VERSION_CODES.N)
     private fun fetchingTransactionData():Boolean {
+        Toast.makeText(this, "fetchingTransactionData...", Toast.LENGTH_SHORT).show()
         val currentUser = FirebaseAuth.getInstance().currentUser
         val db = FirebaseFirestore.getInstance()
         val userRef: DocumentReference? = currentUser?.displayName?.let { userName -> db.collection("users").document(userName) }
@@ -132,5 +136,6 @@ class HostCardEmulatorService: HostApduService() {
             }
         }
         return isTransactionDataFetched
-    }
-}
+    }*/
+/*
+}*/

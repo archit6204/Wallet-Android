@@ -85,24 +85,26 @@ public class HomeFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         GlobalVariables globalVariables = (GlobalVariables) Objects.requireNonNull(getActivity()).getApplication();
         assert globalVariables != null;
-        DocumentReference userRef = db.collection("users").document(globalVariables.getUserName());
-        userRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                assert document != null;
-                if (document.exists()) {
-                    UserData currentUserData = document.toObject(UserData.class);
-                    assert currentUserData != null;
-                    globalVariables.setCurrentUserData(currentUserData);
-                    globalVariables.setUserAvailableBalance(currentUserData.getTotalAmount());
+        if (globalVariables.getUserName() != null) {
+            DocumentReference userRef = db.collection("users").document(globalVariables.getUserName());
+            userRef.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    assert document != null;
+                    if (document.exists()) {
+                        UserData currentUserData = document.toObject(UserData.class);
+                        assert currentUserData != null;
+                        globalVariables.setCurrentUserData(currentUserData);
+                        globalVariables.setUserAvailableBalance(currentUserData.getTotalAmount());
+                    } else {
+                        Log.d("error", "No sucList<TransactionHistoryData>h document");
+                    }
+                    progressBar.setVisibility(View.GONE);
                 } else {
-                    Log.d("error", "No sucList<TransactionHistoryData>h document");
+                    Log.d("failed fetch", "get failed with ", task.getException());
+                    progressBar.setVisibility(View.GONE);
                 }
-                progressBar.setVisibility(View.GONE);
-            } else {
-                Log.d("failed fetch", "get failed with ", task.getException());
-                progressBar.setVisibility(View.GONE);
-            }
-        });
+            });
+        }
     }
 }

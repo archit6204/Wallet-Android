@@ -127,15 +127,15 @@ public class OtpActivity extends AppCompatActivity {
                                                         Toast.LENGTH_SHORT).show())
                                                 .addOnFailureListener(e -> Toast.makeText(OtpActivity.this, "Transaction failed!",
                                                         Toast.LENGTH_SHORT).show());
+                                        Intent intent = new Intent(OtpActivity.this, BottomNavigator.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        intent.putExtra("fragmentName", "home");
+                                        startActivity(intent);
                                     }
                                 } else {
                                     Toast.makeText(OtpActivity.this, "Transaction failed!", Toast.LENGTH_SHORT).show();
                                 }
                             });
-                            Intent intent = new Intent(OtpActivity.this, BottomNavigator.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            intent.putExtra("fragmentName", "home");
-                            startActivity(intent);
                             progressBar.setVisibility(View.GONE);
                         }
                     } else {
