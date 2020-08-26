@@ -83,6 +83,7 @@ public class TransactionStatusActivity extends AppCompatActivity {
                 startActivity(intentBackToHome);
             }
         });
+
     }
 
     public void showTransactionStatus() {
@@ -158,17 +159,17 @@ public class TransactionStatusActivity extends AppCompatActivity {
         params.setMargins(value16dp, value42dp, value0dp, value0dp);
         ((TextView) vTransactionIdDetails.findViewById(R.id.tv_help_support_name))
                 .setText(transactionId);
-        ((TextView) vTransactionIdDetails.findViewById(R.id.tv_help_support_name))
+        vTransactionIdDetails.findViewById(R.id.tv_help_support_name)
                 .setLayoutParams(params);
         ((TextView) vTransactionIdDetails.findViewById(R.id.tv_share))
                 .setText("copy");
-        ((ImageView) vTransactionIdDetails.findViewById(R.id.iv_help_support_logo))
+        vTransactionIdDetails.findViewById(R.id.iv_help_support_logo)
                 .setVisibility(View.GONE);
-        ((TextView) vTransactionIdDetails.findViewById(R.id.tv_help_support_subtitle))
+        vTransactionIdDetails.findViewById(R.id.tv_help_support_subtitle)
                 .setVisibility(View.INVISIBLE);
-        ((TextView) vTransactionIdDetails.findViewById(R.id.tv_transaction_id_to))
+        vTransactionIdDetails.findViewById(R.id.tv_transaction_id_to)
                 .setVisibility(View.VISIBLE);
-        ((TextView) vTransactionIdDetails.findViewById(R.id.tv_share))
+        vTransactionIdDetails.findViewById(R.id.tv_share)
                 .setOnClickListener(v -> {
                     ClipboardManager clipboard = (ClipboardManager) getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
                     ClipData clip = ClipData.newPlainText(null, transactionId);
@@ -183,14 +184,21 @@ public class TransactionStatusActivity extends AppCompatActivity {
         String showBalance = "Show balance";
         ((TextView) vHelpSupportDetails.findViewById(R.id.tv_help_support_name))
                 .setText(contactSupport);
-        ((TextView) vHelpSupportDetails.findViewById(R.id.tv_share))
+        vHelpSupportDetails.findViewById(R.id.tv_share)
                 .setVisibility(View.INVISIBLE);
-        ((ImageView) vHelpSupportDetails.findViewById(R.id.iv_help_support_logo))
-                .setImageDrawable(getResources().getDrawable(R.drawable.ic_help_support));
-        ((TextView) vHelpSupportDetails.findViewById(R.id.tv_help_support_subtitle))
+        ImageView ivHelpLogo = vHelpSupportDetails.findViewById(R.id.iv_help_support_logo);
+        ivHelpLogo.setImageDrawable(getResources().getDrawable(R.drawable.ic_help_support));
+        vHelpSupportDetails.findViewById(R.id.iv_next_logo)
+                .setVisibility(View.VISIBLE);
+        vHelpSupportDetails.findViewById(R.id.tv_help_support_subtitle)
                 .setVisibility(View.INVISIBLE);
-        ((TextView) vHelpSupportDetails.findViewById(R.id.tv_transaction_id_to))
+        vHelpSupportDetails.findViewById(R.id.tv_transaction_id_to)
                 .setVisibility(View.INVISIBLE);
+        vHelpSupportDetails.findViewById(R.id.cv_transaction_id)
+                .setOnClickListener(v -> {
+                    Toast.makeText(TransactionStatusActivity.this, "feature coming soon!", Toast.LENGTH_SHORT).show();
+                });
+
     }
 
     public static Bitmap getScreenShot(View view) {
@@ -235,10 +243,8 @@ public class TransactionStatusActivity extends AppCompatActivity {
             shareImage(file);
         }
     }
-    private void shareImage(File file){
-        /*Uri uri = Uri.fromFile(file);*/
+    private void shareImage(File file) {
         Uri uri = FileProvider.getUriForFile(this, this.getApplicationContext().getPackageName() + ".provider", file);
-
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
         intent.setType("image/*");

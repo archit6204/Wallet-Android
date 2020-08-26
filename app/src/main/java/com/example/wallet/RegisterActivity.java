@@ -4,6 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.Selection;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -49,10 +52,10 @@ public class RegisterActivity extends AppCompatActivity {
         pbActivityRegister.setVisibility(View.VISIBLE);
         btnSendOtp.setOnClickListener(v -> {
             String countryCode = "91";
-            String mobileNumber = etUserMobileNo.getText().toString().trim();
+            String mobileNumber = etUserMobileNo.getText().toString().replaceAll("\\s+", "");
             String userName = etUserName.getText().toString().trim();
 
-            if (mobileNumber.isEmpty() || mobileNumber.length() < 10) {
+            if (mobileNumber.length() != 13) {
                 etUserMobileNo.setError("Enter valid mobile number!");
                 etUserMobileNo.requestFocus();
                 return;
@@ -63,10 +66,8 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
-            String userMobileNumber = "+" + countryCode + mobileNumber;
-
             Intent intent = new Intent(RegisterActivity.this, OtpActivity.class);
-            intent.putExtra("userMobileNumber", userMobileNumber);
+            intent.putExtra("userMobileNumber", mobileNumber);
             intent.putExtra("userName", userName);
             startActivity(intent);
         });
@@ -141,6 +142,36 @@ public class RegisterActivity extends AppCompatActivity {
         Toast.makeText(getApplication(), "Please enter details!",
                 Toast.LENGTH_SHORT).show();
         tvSignUpMsg.setText("Please enter details to proceed.");
+        setupEditTextMobileNo();
     }
+
+    private void setupEditTextMobileNo() {
+        etUserMobileNo.setText("+91   ");
+        Selection.setSelection(etUserMobileNo.getText(), etUserMobileNo.getText().length());
+        etUserMobileNo.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!s.toString().startsWith("+91   ")){
+                    etUserMobileNo.setText("+91   ");
+                    Selection.setSelection(etUserMobileNo.getText(), etUserMobileNo.getText().length());
+
+                }
+
+            }
+        });
+    }
+
 }
 

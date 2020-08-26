@@ -194,13 +194,14 @@ class HostCardReaderActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
                                             "transactionHistoryData", FieldValue.arrayUnion(beneficiaryTransactionHistoryData),
                                             "lastUpdatedDateAndTime", FieldValue.serverTimestamp(),
                                             "totalAmount", beneficiaryTotalAmount
-                                    )
-                                    tvNoNfcFound?.text = "Transaction Successful! Redirecting to payment status page."
-                                    isTransactionSuccessful = true
-                                    val intent = Intent(this, TransactionStatusActivity::class.java)
-                                    intent.putExtra("transactionItem", beneficiaryTransactionHistoryData as Parcelable?)
-                                    intent.putExtra("previousPage", "HostCardReaderActivity")
-                                    startActivity(intent)
+                                    ).addOnCompleteListener {
+                                        tvNoNfcFound?.text = "Transaction Successful! Redirecting to payment status page."
+                                        isTransactionSuccessful = true
+                                        val intent = Intent(this, TransactionStatusActivity::class.java)
+                                        intent.putExtra("transactionItem", beneficiaryTransactionHistoryData as Parcelable?)
+                                        intent.putExtra("previousPage", "HostCardReaderActivity")
+                                        startActivity(intent)
+                                    }
                                 }
                             }
                         }
@@ -215,10 +216,7 @@ class HostCardReaderActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
                 Toast.makeText(this, "Transaction failed!", Toast.LENGTH_SHORT).show()
             }
         }
-        if (isTransactionSuccessful) {
-            return beneficiaryTransactionHistoryData
-        } else {
-            return null
-        }
+
+        return null
     }
 }

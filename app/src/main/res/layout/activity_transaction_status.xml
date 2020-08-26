@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="@color/grey_100"
     android:id="@+id/rl_transaction_status"
-    tools:context=".ui.TransactionHistory.transactionStatus.TransactionStatusActivity">
+    tools:context=".ui.TransactionHistory.transactionStatus.TransactionStatusActivity"
+    >
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

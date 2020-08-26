@@ -75,17 +75,17 @@
             android:textSize="16sp"
             android:fontFamily="@font/ttcommons_regular"/>
 
-        <!--<androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_share_logo"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginTop="8dp"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_next_logo"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="28dp"
             android:layout_gravity="end|bottom"
-            app:srcCompat="@drawable/ic_arrow_back"
+            app:srcCompat="@drawable/ic_next_arrow"
             android:visibility="invisible"
-            />-->
+            />
     </com.google.android.material.card.MaterialCardView>
 
 </FrameLayout>
