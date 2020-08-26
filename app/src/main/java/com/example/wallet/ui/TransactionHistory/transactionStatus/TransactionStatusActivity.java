@@ -100,14 +100,10 @@ public class TransactionStatusActivity extends AppCompatActivity {
 
     public void showPaidToDetails() {
         String paidOrReceived = "Paid to";
-        if (debitedOrCredited.equalsIgnoreCase("Credited to")) {
-            paidOrReceived = "Received from";
-        }
         String share = "Share";
         String walletId = transactionItem.getWalletId();
+        String[] walletIdArray = walletId.split(" ");
         String amount = Integer.toString(transactionAmount);
-        ((TextView) vPaidToDetails.findViewById(R.id.tv_paid_to))
-                .setText(paidOrReceived);
         TextView tvShareDetails = ((TextView) vPaidToDetails.findViewById(R.id.tv_share));
         tvShareDetails.setText(share);
         tvShareDetails.setOnClickListener(v -> {
@@ -115,8 +111,38 @@ public class TransactionStatusActivity extends AppCompatActivity {
             File file =  store(bitmap, "Justap Screenshot");
             shareImage(file);
         });
-        ((ImageView) vPaidToDetails.findViewById(R.id.iv_beneficiary_logo))
-                .setImageDrawable(getResources().getDrawable(R.drawable.ic_user));
+        ImageView ivBeneficiaryLogo = vPaidToDetails.findViewById(R.id.iv_beneficiary_logo);
+        if (walletIdArray.length > 1) {
+            String suffixWalletId = walletIdArray[1];
+            switch (suffixWalletId.toLowerCase()) {
+                case "metro":
+                    paidOrReceived = "Paid to";
+                    ivBeneficiaryLogo.setImageDrawable(getResources().getDrawable(R.drawable.ic_underground_metro));
+                    break;
+                case "bus":
+                    paidOrReceived = "Paid to";
+                    ivBeneficiaryLogo.setImageDrawable(getResources().getDrawable(R.drawable.ic_bus_ticket));
+                    break;
+                case "wallet":
+                    paidOrReceived = "Money added to";
+                    ivBeneficiaryLogo.setImageDrawable(getResources().getDrawable(R.drawable.ic_transaction_wallet));
+                    break;
+                default:
+                    paidOrReceived = "Send to";
+                    ivBeneficiaryLogo.setImageDrawable(getResources().getDrawable(R.drawable.ic_user));
+            }
+        } else {
+            paidOrReceived = "Send to";
+            ivBeneficiaryLogo.setImageDrawable(getResources().getDrawable(R.drawable.ic_user));
+        }
+        if (walletIdArray[0].equalsIgnoreCase("metro")) {
+            ivBeneficiaryLogo.setImageDrawable(getResources().getDrawable(R.drawable.ic_underground_metro));
+        }
+        if (debitedOrCredited.equalsIgnoreCase("Credited to")) {
+            paidOrReceived = "Received from";
+        }
+        ((TextView) vPaidToDetails.findViewById(R.id.tv_paid_to))
+                .setText(paidOrReceived);
         ((ImageView) vPaidToDetails.findViewById(R.id.iv_share_logo))
                 .setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_share_24));
         ((TextView) vPaidToDetails.findViewById(R.id.tv_transaction_amount))

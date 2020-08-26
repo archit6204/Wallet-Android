@@ -86,45 +86,42 @@ public class TransactionHistoryAdapter
             String[] transactionTypeArray = transactionType.split(":");
             String[] walletIdArray = walletId.split(" ");
             if (walletId.equalsIgnoreCase("JusTap")) {
-                holder.tvTransactionType.setText("Money added to:");
+                holder.tvTransactionType.setText("Money added to");
                 holder.ivTransactionTypeLogo.setImageResource(R.drawable.ic_transaction_wallet);
             }
             if (walletIdArray.length == 1) {
                 if ("justap".equals(walletIdArray[0].toLowerCase())) {
-                    holder.tvTransactionType.setText("Money added to:");
+                    holder.tvTransactionType.setText("Money added to");
                     holder.ivTransactionTypeLogo.setImageResource(R.drawable.ic_transaction_wallet);
                 } else {
-                    holder.tvTransactionType.setText("Send to:");
+                    holder.tvTransactionType.setText("Send to");
                     holder.ivTransactionTypeLogo.setImageResource(R.drawable.ic_user);
                 }
             }
             if (walletIdArray.length > 1) {
                 switch (walletIdArray[1].toLowerCase()) {
                     case "metro":
-                        holder.tvTransactionType.setText("Paid to:");
-                        holder.ivTransactionTypeLogo.setImageResource(R.drawable.ic__metro_train_ticket);
+                        holder.tvTransactionType.setText("Paid to");
+                        holder.ivTransactionTypeLogo.setImageResource(R.drawable.ic_underground_metro);
                         break;
                     case "bus":
-                        holder.tvTransactionType.setText("Paid to:");
+                        holder.tvTransactionType.setText("Paid to");
                         holder.ivTransactionTypeLogo.setImageResource(R.drawable.ic_bus_ticket);
                         break;
                     case "wallet":
-                        holder.tvTransactionType.setText("Money added to:");
+                        holder.tvTransactionType.setText("Money added to");
                         holder.ivTransactionTypeLogo.setImageResource(R.drawable.ic_transaction_wallet);
                         break;
                     default:
-                        holder.tvTransactionType.setText("Send to:");
+                        holder.tvTransactionType.setText("Send to");
                         holder.ivTransactionTypeLogo.setImageResource(R.drawable.ic_user);
                 }
-
-                if (walletIdArray[0].equalsIgnoreCase("delhi")) {
-                    holder.ivTransactionTypeLogo.setImageResource(R.drawable.ic_delhi_metro_logo);
-                }
+            }
+            if (walletIdArray[0].equalsIgnoreCase("metro")) {
+                holder.ivTransactionTypeLogo.setImageResource(R.drawable.ic_underground_metro);
             }
             if (transactionTypeArray[0].equalsIgnoreCase("Credited to")) {
-                holder.tvTransactionType.setText("Received from:");
-            } else {
-                holder.tvTransactionType.setText("Send to:");
+                holder.tvTransactionType.setText("Received from");
             }
             holder.cvTransactionItem.setOnClickListener(v -> clickListener.onClick(holder.getAdapterPosition(), v));
         }
