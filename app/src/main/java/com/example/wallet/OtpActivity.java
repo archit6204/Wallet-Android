@@ -97,7 +97,12 @@ public class OtpActivity extends AppCompatActivity {
                                     if (document.exists()) {
                                         Toast.makeText(OtpActivity.this, "Welcome " + userName + "!",
                                                 Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(OtpActivity.this, BottomNavigator.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        intent.putExtra("fragmentName", "home");
+                                        startActivity(intent);
                                     } else {
+                                        Toast.makeText(OtpActivity.this, "creating account..!", Toast.LENGTH_LONG).show();
                                         String id = mDatabase.push().getKey();
                                         String transactionId = "trns" + id;
                                         String walletId = userName + userMobileNumber;
@@ -172,7 +177,6 @@ public class OtpActivity extends AppCompatActivity {
             if (code != null){
                 etReceivedOtp.setText(code);
                 tvAutoRead.setText("OTP received.");
-                Toast.makeText(OtpActivity.this, "creating account..!", Toast.LENGTH_LONG).show();
                 progressBarAutoOTP.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
                 verifyCode(code);

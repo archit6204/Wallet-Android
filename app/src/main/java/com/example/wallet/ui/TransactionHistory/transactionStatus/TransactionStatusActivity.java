@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -50,6 +51,8 @@ public class TransactionStatusActivity extends AppCompatActivity {
     private String debitedOrCredited;
     private String debitedOrCreditedInstrument;
     private View rootView;
+    private boolean doubleBackToExitPressedOnce = false;
+    private String previousPage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +64,7 @@ public class TransactionStatusActivity extends AppCompatActivity {
         vHelpSupportDetails = findViewById(R.id.inc_Help_support_details);
         tvTransactionFormattedDateNTime = findViewById(R.id.tv_transaction_date);
         transactionItem = (TransactionHistoryData) getIntent().getSerializableExtra("transactionItem");
-        String previousPage = getIntent().getStringExtra("previousPage");
+        previousPage = getIntent().getStringExtra("previousPage");
         assert transactionItem != null;
         transactionAmount = transactionItem.getTransactionAmount();
         transactionFormattedDateNTime = transactionItem.transactionFormattedDateAndTime();
@@ -284,5 +287,18 @@ public class TransactionStatusActivity extends AppCompatActivity {
             Toast.makeText(this, "No App Available", Toast.LENGTH_SHORT).show();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        assert previousPage != null;
+        if (previousPage.equals("TransactionHistoryFragment")) {
+            finish();
+        } else {
+            Intent intentBackToHome = new Intent(TransactionStatusActivity.this, BottomNavigator.class);
+            intentBackToHome.putExtra("fragmentName", "history");
+            startActivity(intentBackToHome);
+        }
+    }
+
 }
 

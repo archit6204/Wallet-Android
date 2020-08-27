@@ -117,6 +117,8 @@ public class BottomNavigator extends AppCompatActivity {
                     globalVariables.setUserName(currentUser.getDisplayName());
                     globalVariables.setMobileNumber(currentUser.getPhoneNumber());
                 } else {
+                    Toast.makeText(BottomNavigator.this, "No user found... Please create account!",
+                            Toast.LENGTH_SHORT).show();
                     FirebaseAuth.getInstance().signOut();
                 }
         }
@@ -130,6 +132,6 @@ public class BottomNavigator extends AppCompatActivity {
         }
         this.doubleBackToExitPressedOnce = true;
         Toast.makeText(this, "press again to close Justap", Toast.LENGTH_SHORT).show();
-        new Handler().postDelayed((Runnable) () -> doubleBackToExitPressedOnce=false, 2000);
+        new Handler().postDelayed((Runnable) () -> doubleBackToExitPressedOnce = false, 2000);
     }
 }

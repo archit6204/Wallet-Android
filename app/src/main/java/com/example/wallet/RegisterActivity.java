@@ -81,7 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         GlobalVariables globalVariables = (GlobalVariables)getApplication();
         if (currentUser != null && currentUser.getPhoneNumber() != null && currentUser.getPhoneNumber().length() == 13) {
-            tvSignUpMsg.setText("Getting your stuff ready...please wait!");
+            tvSignUpMsg.setText("Getting your stuff ready... Please wait!");
             if (currentUser.getDisplayName() != null && !currentUser.getDisplayName().isEmpty()) {
                 globalVariables.setUserName(currentUser.getDisplayName());
                 globalVariables.setMobileNumber(currentUser.getPhoneNumber());

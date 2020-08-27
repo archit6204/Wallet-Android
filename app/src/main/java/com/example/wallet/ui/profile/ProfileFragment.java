@@ -2,6 +2,7 @@ package com.example.wallet.ui.profile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +47,7 @@ public class ProfileFragment extends Fragment {
     private String mobileNumber = "";
     private String VPA = "";
     private boolean isUserInfoFetched = false;
+    private boolean doubleBackToExitPressedOnce = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -149,14 +151,27 @@ public class ProfileFragment extends Fragment {
                 .setText(getResources().getString(R.string.logout));
         ivLogoutImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_logout_button_icon));
         tvLogout.setOnClickListener(v -> {
-            Toast.makeText(getContext(), getResources().getString(R.string.signing_out),
-                    Toast.LENGTH_SHORT).show();
-            signOut();
+            if (doubleBackToExitPressedOnce) {
+                signOut();
+                Toast.makeText(getContext(), getResources().getString(R.string.signing_out),
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(getContext(), "press again to logout session!", Toast.LENGTH_SHORT).show();
+            new Handler().postDelayed((Runnable) () -> doubleBackToExitPressedOnce = false, 2000);
+
         });
         ivLogoutImage.setOnClickListener(v -> {
-            Toast.makeText(getContext(), getResources().getString(R.string.signing_out),
-                    Toast.LENGTH_SHORT).show();
-            signOut();
+            if (doubleBackToExitPressedOnce) {
+                Toast.makeText(getContext(), getResources().getString(R.string.signing_out),
+                        Toast.LENGTH_SHORT).show();
+                signOut();
+                return;
+            }
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(getContext(), "press again to logout session!", Toast.LENGTH_SHORT).show();
+            new Handler().postDelayed((Runnable) () -> doubleBackToExitPressedOnce = false, 2000);
         });
 
     }

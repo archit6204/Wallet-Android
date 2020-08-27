@@ -54,10 +54,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="110dp"
-        android:layout_marginStart="80dp"
+        android:layout_marginStart="105dp"
         android:layout_gravity="center"
         android:fontFamily="@font/ttcommons_regular"
-        android:text="Auto reading otp.."
+        android:text="Veryfying OTP..."
         android:textColor="@color/colorAccentBlue50"
         android:textSize="18sp" />
 
@@ -67,7 +67,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginBottom="110dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="16dp"
         android:layout_gravity="center|end"
         android:indeterminateTint="@color/colorAccentBlue50"
         android:visibility="visible"/>
