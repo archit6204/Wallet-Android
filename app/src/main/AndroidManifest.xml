@@ -15,9 +15,9 @@
     <application
         android:name=".ui.utils.GlobalVariables"
         android:allowBackup="true"
-        android:icon="@mipmap/wallet_money"
+        android:icon="@drawable/ic_mobile_payment"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/wallet_money"
+        android:roundIcon="@drawable/ic_mobile_payment"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 

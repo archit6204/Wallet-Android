@@ -13,10 +13,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
         android:layout_gravity="center_horizontal"
-        android:fontFamily="@font/ttcommons_regular"
-        android:text="Please enter details to proceed."
+        android:fontFamily="@font/ttcommons_demibold"
+        android:text="Welcome to JusTap!"
         android:textColor="@color/colorAccentBlue50"
-        android:textSize="20sp" />
+        android:textSize="24sp" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -79,11 +79,21 @@
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_turnstiles_gate_logo"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginBottom="120dp"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/ic_turnstiles"
+        android:visibility="visible"
+        />
     <ProgressBar
         android:id="@+id/pb_activity_register"
         style="?android:attr/progressBarStyle"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_marginTop="64dp"
         android:layout_gravity="center_horizontal|center"
         android:indeterminateTint="@color/colorAccentBlue50"
         android:visibility="visible"/>

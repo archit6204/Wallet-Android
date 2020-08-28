@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout tilUserName;
     private TextInputLayout tilUserMobileNo;
     private TextView tvSignUpMsg;
+    private ImageView ivTurnstilesGate;
 
 
     @Override
@@ -50,6 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
         tvSignUpMsg = findViewById(R.id.tv_signup_msg);
         pbActivityRegister = findViewById(R.id.pb_activity_register);
         pbActivityRegister.setVisibility(View.VISIBLE);
+        ivTurnstilesGate = findViewById(R.id.iv_turnstiles_gate_logo);
         btnSendOtp.setOnClickListener(v -> {
             String countryCode = "91";
             String mobileNumber = etUserMobileNo.getText().toString().replaceAll("\\s+", "");
@@ -81,7 +84,8 @@ public class RegisterActivity extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         GlobalVariables globalVariables = (GlobalVariables)getApplication();
         if (currentUser != null && currentUser.getPhoneNumber() != null && currentUser.getPhoneNumber().length() == 13) {
-            tvSignUpMsg.setText("Getting your stuff ready... Please wait!");
+            ivTurnstilesGate.setVisibility(View.VISIBLE);
+            tvSignUpMsg.setText("Welcome to JusTap!");
             if (currentUser.getDisplayName() != null && !currentUser.getDisplayName().isEmpty()) {
                 globalVariables.setUserName(currentUser.getDisplayName());
                 globalVariables.setMobileNumber(currentUser.getPhoneNumber());
@@ -143,6 +147,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.LENGTH_SHORT).show();
         tvSignUpMsg.setText("Please enter details to proceed.");
         setupEditTextMobileNo();
+        ivTurnstilesGate.setVisibility(View.GONE);
     }
 
     private void setupEditTextMobileNo() {

@@ -231,7 +231,6 @@ public class TransactionStatusActivity extends AppCompatActivity {
                 .setOnClickListener(v -> {
                     Toast.makeText(TransactionStatusActivity.this, "feature coming soon!", Toast.LENGTH_SHORT).show();
                 });
-
     }
 
     public static Bitmap getScreenShot(View view) {
