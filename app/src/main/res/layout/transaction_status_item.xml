@@ -54,7 +54,7 @@
             android:layout_marginTop="48dp"
             android:layout_marginEnd="16dp"
             android:layout_gravity="end|top"
-            android:textColor="@color/gray_7"
+            android:textColor="@color/gray_6"
             android:textSize="@dimen/value_18sp"
             android:fontFamily="@font/ttcommons_demibold"/>
 
@@ -94,6 +94,18 @@
             android:layout_gravity="end|bottom"
             app:srcCompat="@drawable/ic_baseline_share_24"
             />
+
+        <ProgressBar
+            android:id="@+id/pb_transaction_status_item"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="12dp"
+            android:layout_gravity="end|bottom"
+            android:indeterminateTint="@color/colorAccentBlue50"
+            android:visibility="invisible"/>
     </com.google.android.material.card.MaterialCardView>
 
 </FrameLayout>

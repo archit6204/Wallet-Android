@@ -17,14 +17,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical" />
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_no_transaction_found"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="No Transaction Found!"
+        android:layout_height="18dp"
         android:layout_gravity="center"
+        android:fontFamily="@font/ttcommons_demibold"
+        android:text="No Transaction Found!"
         android:textColor="@color/gray_5"
         android:textSize="24sp"
-        android:visibility="invisible"
-        android:fontFamily="@font/ttcommons_demibold"/>
+        android:visibility="invisible" />
 </FrameLayout>

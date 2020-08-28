@@ -101,7 +101,6 @@ public class SendMoneyPaymentActivity extends AppCompatActivity {
                                 "lastUpdatedDateAndTime", FieldValue.serverTimestamp(),
                                 "totalAmount", userTotalAmount
                         );
-                        Toast.makeText(SendMoneyPaymentActivity.this, "Redirecting to transaction status page...", Toast.LENGTH_SHORT).show();
                         beneficiaryRef.get().addOnCompleteListener(taskBeneficiaryRef -> {
                             if (task.isSuccessful()) {
                                 DocumentSnapshot documentBeneficiaryRef = taskBeneficiaryRef.getResult();
@@ -116,18 +115,18 @@ public class SendMoneyPaymentActivity extends AppCompatActivity {
                                             "lastUpdatedDateAndTime", FieldValue.serverTimestamp(),
                                             "totalAmount", beneficiaryTotalAmount
                                     );
+                                    tvSendMoneyAmount.setText(stringSendMoneyAmount);
+                                    tvSendMoneyAmount.setVisibility(View.VISIBLE);
+                                    tvBeneficiaryName.setText(beneficiaryName);
+                                    tvBeneficiaryName.setVisibility(View.VISIBLE);
+                                    Intent intentTransactionStatus = new Intent(SendMoneyPaymentActivity.this, TransactionStatusActivity.class);
+                                    intentTransactionStatus.putExtra("transactionItem", (Parcelable) userTransactionHistoryData);
+                                    intentTransactionStatus.putExtra("previousPage", "SendMoneyPaymentActivity");
+                                    startActivity(intentTransactionStatus);
+                                    progressBar.setVisibility(View.GONE);
                                 }
                             }
                         });
-                        tvSendMoneyAmount.setText(stringSendMoneyAmount);
-                        tvSendMoneyAmount.setVisibility(View.VISIBLE);
-                        tvBeneficiaryName.setText(beneficiaryName);
-                        tvBeneficiaryName.setVisibility(View.VISIBLE);
-                        Intent intentTransactionStatus = new Intent(SendMoneyPaymentActivity.this, TransactionStatusActivity.class);
-                        intentTransactionStatus.putExtra("transactionItem", (Parcelable) userTransactionHistoryData);
-                        intentTransactionStatus.putExtra("previousPage", "SendMoneyPaymentActivity");
-                        startActivity(intentTransactionStatus);
-                        progressBar.setVisibility(View.GONE);
                     } else {
                         Toast.makeText(SendMoneyPaymentActivity.this, "your wallet Balance is low..!", Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.GONE);

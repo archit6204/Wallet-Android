@@ -55,20 +55,9 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_gravity="end|top"
-            android:textColor="@color/colorAccentBlue50"
+            android:textColor="@color/gray_6"
             android:textSize="@dimen/value_16sp"
             android:fontFamily="@font/ttcommons_demibold"/>
-
-            <!--<ProgressBar
-                android:id="@+id/pb_wallet"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="30dp"
-                android:layout_gravity="end|top"
-                android:layout_marginEnd="65dp"
-                android:indeterminateTint="@color/colorAccentBlue50"
-                android:visibility="visible"/>-->
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_beneficiary_instrument"

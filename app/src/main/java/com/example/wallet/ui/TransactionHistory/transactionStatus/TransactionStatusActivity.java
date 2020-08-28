@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.wallet.BottomNavigator;
@@ -40,7 +41,7 @@ public class TransactionStatusActivity extends AppCompatActivity {
     private View vTransactionIdDetails;
     private View vHelpSupportDetails;
     private String transactionId;
-    private int transactionAmount;
+    private String transactionAmount;
     private String walletId;
     private Timestamp transactionDateAndTime;
     private String transactionType;
@@ -66,7 +67,7 @@ public class TransactionStatusActivity extends AppCompatActivity {
         transactionItem = (TransactionHistoryData) getIntent().getSerializableExtra("transactionItem");
         previousPage = getIntent().getStringExtra("previousPage");
         assert transactionItem != null;
-        transactionAmount = transactionItem.getTransactionAmount();
+        transactionAmount = transactionItem.transactionAmountWithCurrency();
         transactionFormattedDateNTime = transactionItem.transactionFormattedDateAndTime();
         showTransactionStatus();
         Button btnBackToHome = findViewById(R.id.btn_back_to_home);
@@ -106,13 +107,16 @@ public class TransactionStatusActivity extends AppCompatActivity {
         String share = "Share";
         String walletId = transactionItem.getWalletId();
         String[] walletIdArray = walletId.split(" ");
-        String amount = Integer.toString(transactionAmount);
+        String amount = transactionAmount;
         TextView tvShareDetails = ((TextView) vPaidToDetails.findViewById(R.id.tv_share));
+        ProgressBar progressBar = vPaidToDetails.findViewById(R.id.pb_transaction_status_item);
         tvShareDetails.setText(share);
         tvShareDetails.setOnClickListener(v -> {
+            progressBar.setVisibility(View.VISIBLE);
             Bitmap bitmap = getScreenShot(rootView);
             File file =  store(bitmap, "Justap Screenshot");
             shareImage(file);
+            progressBar.setVisibility(View.GONE);
         });
         ImageView ivBeneficiaryLogo = vPaidToDetails.findViewById(R.id.iv_beneficiary_logo);
         if (walletIdArray.length > 1) {
@@ -157,7 +161,7 @@ public class TransactionStatusActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     public void showDebitedFromDetails() {
         String showBalance = "Show balance";
-        String amount = Integer.toString(transactionAmount);
+        String amount = transactionAmount;
         ((TextView) vDebitedFromDetails.findViewById(R.id.tv_paid_to))
                 .setText(debitedOrCredited);
         ((TextView) vDebitedFromDetails.findViewById(R.id.tv_share))

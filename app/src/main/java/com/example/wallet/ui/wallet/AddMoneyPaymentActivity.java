@@ -8,6 +8,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.Html;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +42,7 @@ public class AddMoneyPaymentActivity extends AppCompatActivity {
     private Map<String, Object> user = new HashMap<>();
     private String userName;
     private List<TransactionHistoryData> transactionHistoryDataList = new ArrayList<>();
+    private ProgressBar progressBar;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -54,7 +57,7 @@ public class AddMoneyPaymentActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference("AddedMoneyInWallet");
         final DocumentReference userRef = db.collection("users").document(userName);
         tvAddWalletAmount = findViewById(R.id.tv_add_wallet_amount);
-
+        progressBar = findViewById(R.id.pb_add_money_payment);
         Intent intent = getIntent();
 
         addWalletAmount = intent.getIntExtra("amount", -1);
@@ -91,20 +94,20 @@ public class AddMoneyPaymentActivity extends AppCompatActivity {
                                     "lastUpdatedDateAndTime", FieldValue.serverTimestamp(),
                                     "totalAmount", totalAmount
                             );
-                            Toast.makeText(AddMoneyPaymentActivity.this, "Redirecting to transaction status page...", Toast.LENGTH_SHORT).show();
                         Intent intentTransactionStatus = new Intent(AddMoneyPaymentActivity.this, TransactionStatusActivity.class);
                         intentTransactionStatus.putExtra("transactionItem", (Parcelable) transactionHistoryData);
                         intentTransactionStatus.putExtra("previousPage", "AddMoneyPaymentActivity");
                         startActivity(intentTransactionStatus);
+                        progressBar.setVisibility(View.GONE);
                     } else {
                         Toast.makeText(AddMoneyPaymentActivity.this, "No Balance found!", Toast.LENGTH_SHORT).show();
                         userRef.set(addMoneyData, SetOptions.merge())
                                 .addOnSuccessListener( aVoid -> {
-                                            Toast.makeText(AddMoneyPaymentActivity.this, "Redirecting to transaction status page...", Toast.LENGTH_SHORT).show();
                                             Intent intentTransactionStatus = new Intent(AddMoneyPaymentActivity.this, TransactionStatusActivity.class);
                                             intentTransactionStatus.putExtra("transactionItem", (Parcelable) transactionHistoryData);
                                             intentTransactionStatus.putExtra("previousPage", "AddMoneyPaymentActivity");
                                             startActivity(intentTransactionStatus);
+                                            progressBar.setVisibility(View.GONE);
                                         })
                                 .addOnFailureListener(e -> Toast.makeText(AddMoneyPaymentActivity.this, "Transaction failed!", Toast.LENGTH_SHORT).show());
                     }
