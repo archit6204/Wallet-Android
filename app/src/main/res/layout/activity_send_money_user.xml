@@ -23,14 +23,14 @@
                     android:layout_marginTop="16dp"
                     >
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        style="@style/AddMoneyTextInputLayoutStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp"
                         android:layout_marginRight="16dp"
                         android:layout_marginLeft="16dp"
                         android:hint="enter beneficiary name"
-                        app:boxStrokeColor="@color/colorAccentBlue50"
+                        app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
                         >
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
@@ -38,8 +38,9 @@
                             android:id="@+id/et_beneficiary_name"
                             android:textSize="18sp"
                             android:maxLength="20"
+                            android:textCursorDrawable="@drawable/color_cursor"
                             android:textColor="@color/gray_4"
-                            android:fontFamily="@font/ttcommons_demibold"
+                            android:fontFamily="@font/ttcommons_regular"
                             />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -101,14 +102,14 @@
                 >
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    style="@style/AddMoneyTextInputLayoutStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginLeft="16dp"
                     android:hint="₹ enter amount"
-                    app:boxStrokeColor="@color/colorAccentBlue50"
+                    app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
                     >
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -117,8 +118,9 @@
                         android:textColor="@color/gray_4"
                         android:inputType="number"
                         android:textSize="18sp"
+                        android:textCursorDrawable="@drawable/color_cursor"
                         android:maxLength="5"
-                        android:fontFamily="@font/ttcommons_demibold"
+                        android:fontFamily="@font/ttcommons_regular"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>

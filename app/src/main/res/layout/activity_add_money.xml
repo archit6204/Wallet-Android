@@ -127,14 +127,14 @@
                 >
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    style="@style/AddMoneyTextInputLayoutStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginLeft="16dp"
                     android:hint="₹ Enter amount"
-                    app:boxStrokeColor="@color/colorAccentBlue50"
+                    app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
                     >
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -143,8 +143,9 @@
                         android:inputType="number"
                         android:textSize="24sp"
                         android:maxLength="5"
-                        android:fontFamily="@font/ttcommons_demibold"
-                        android:textColor="@color/gray_6"
+                        android:textCursorDrawable="@drawable/color_cursor"
+                        android:fontFamily="@font/ttcommons_regular"
+                        android:textColor="@color/gray_7"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 

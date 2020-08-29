@@ -14,11 +14,22 @@
     android:layout_width="match_parent"
     app:titleTextAppearance="@style/Toolbar.TitleText"
     android:layout_height="@dimen/value_100dp" >
+
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_Wallet"
+        android:id="@+id/iv_nfc_logo"
         android:layout_width="32dp"
         android:layout_height="24dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="42dp"
         app:srcCompat="@drawable/ic_icon_contacless"
         />
+
+   <!-- <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_turnstiles_gate_logo"
+        android:layout_width="28dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="230dp"
+        android:layout_marginEnd="16dp"
+        app:srcCompat="@drawable/ic_turnstiles_toolbar"
+        />-->
 </androidx.appcompat.widget.Toolbar>

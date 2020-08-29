@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#FFFFFF</color>
@@ -20,7 +20,7 @@
     <color name="colorTextDisabled">@color/colorBlack38</color>
 
     <color name="colorAccentBlue">#000AFF</color>
-    <color name="colorAccentBlue50">#00558c</color>
+    <color name="colorAccentBlue50">@color/colorAccentLightBlue50</color>
     <color name="colorAccentBlack">#2F3542</color>
     <color name="colorAccentYellow">#FFF700</color>
     <color name="colorListImageBackground">#E6E6E6</color>
@@ -38,6 +38,9 @@
     <color name="colorChangeProfileImageShapeText">@color/colorPrimary</color>
 
     <color name="colorBottomViewNotFocusedIcon">@color/colorAccentBlue50</color>
+    <color name="colorAccentLightBlue100">#435dc8</color>
+    <color name="colorAccentLightBlue50">#4f74d3</color>
+    <color name="colorAccentBlueOld50">#00558c</color>
 
 
 
