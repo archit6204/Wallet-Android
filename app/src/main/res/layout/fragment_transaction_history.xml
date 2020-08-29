@@ -21,10 +21,10 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_no_transaction_found"
         android:layout_width="wrap_content"
-        android:layout_height="18dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:fontFamily="@font/ttcommons_demibold"
-        android:text="No Transaction Found!"
+        android:fontFamily="@font/ttcommons_regular"
+        android:text="No transactions found!"
         android:textColor="@color/gray_5"
         android:textSize="24sp"
         android:visibility="invisible" />

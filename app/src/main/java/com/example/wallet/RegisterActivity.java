@@ -89,7 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
             if (currentUser.getDisplayName() != null && !currentUser.getDisplayName().isEmpty()) {
                 globalVariables.setUserName(currentUser.getDisplayName());
                 globalVariables.setMobileNumber(currentUser.getPhoneNumber());
-                DocumentReference userRef = db.collection("users").document(currentUser.getDisplayName());
+                DocumentReference userRef = db.collection("users").document(currentUser.getPhoneNumber());
                 userRef.get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();

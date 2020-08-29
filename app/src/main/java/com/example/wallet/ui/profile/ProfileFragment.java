@@ -18,7 +18,6 @@ import com.example.wallet.RegisterActivity;
 import com.example.wallet.ui.hostCardEmulator.HostCardReaderActivity;
 import com.example.wallet.ui.profile.utils.TextDrawable;
 import com.example.wallet.ui.utils.GlobalVariables;
-import com.example.wallet.ui.wallet.AddMoneyActivity;
 import com.example.wallet.ui.wallet.UserData;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -28,7 +27,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Objects;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 
@@ -44,7 +42,7 @@ public class ProfileFragment extends Fragment {
     private TextView tvLogout;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String userName = "";
-    private String mobileNumber = "";
+    private String userMobileNumber = "";
     private String VPA = "";
     private boolean isUserInfoFetched = false;
     private boolean doubleBackToExitPressedOnce = false;
@@ -55,7 +53,8 @@ public class ProfileFragment extends Fragment {
         GlobalVariables globalVariables = (GlobalVariables) Objects.requireNonNull(getActivity()).getApplication();
         assert globalVariables != null;
         userName = globalVariables.getUserName();
-        DocumentReference userRef = db.collection("users").document(userName);
+        userMobileNumber = globalVariables.getMobileNumber();
+        DocumentReference userRef = db.collection("users").document(userMobileNumber);
         userRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
@@ -64,7 +63,7 @@ public class ProfileFragment extends Fragment {
                     UserData userData = document.toObject(UserData.class);
                     assert userData != null;
                     userName = userData.getUserName();
-                    mobileNumber = userData.getMobileNumber();
+                    userMobileNumber = userData.getMobileNumber();
                     VPA = userData.getWalletId();
                     if (progressBar != null) {
                         progressBar.setVisibility(View.GONE);
@@ -114,7 +113,7 @@ public class ProfileFragment extends Fragment {
                 .endConfig().buildRound(userName.substring(0, 1), R.color.colorAccentBlue);
         ivUserImage.setImageDrawable(drawable);
         tvUserName.setText("Welcome " + userName + "!");
-        showMobile(mobileNumber);
+        showMobile(userMobileNumber);
         showVpa(VPA);
         showUserName(userName);
     }

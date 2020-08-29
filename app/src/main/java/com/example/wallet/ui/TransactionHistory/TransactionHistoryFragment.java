@@ -52,6 +52,7 @@ public class TransactionHistoryFragment extends Fragment implements TransactionH
     private TransactionHistoryAdapter mTransactionHistoryAdapter;
     private ProgressBar progressBar;
     private String userName;
+    private String userMobileNumber;
     private TextView noTransactionFound;
     private List<TransactionHistoryData> transactions;
     GlobalVariables globalVariables;
@@ -61,6 +62,7 @@ public class TransactionHistoryFragment extends Fragment implements TransactionH
         globalVariables = (GlobalVariables) Objects.requireNonNull(getActivity()).getApplication();
         assert globalVariables != null;
         userName = globalVariables.getUserName();
+        userMobileNumber = globalVariables.getMobileNumber();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -78,7 +80,7 @@ public class TransactionHistoryFragment extends Fragment implements TransactionH
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void prepareTransactionData() {
-        DocumentReference userRef = db.collection("users").document(userName);
+        DocumentReference userRef = db.collection("users").document(userMobileNumber);
         userRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();

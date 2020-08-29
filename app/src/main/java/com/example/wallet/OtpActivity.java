@@ -89,7 +89,7 @@ public class OtpActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         if (userMobileNumber.length() == 13 && userName.length() >= 3) {
-                            final DocumentReference userRef = db.collection("users").document(userName);
+                            final DocumentReference userRef = db.collection("users").document(userMobileNumber);
                             userRef.get().addOnCompleteListener(userTask -> {
                                 if (userTask.isSuccessful()) {
                                     DocumentSnapshot document = userTask.getResult();
@@ -106,7 +106,6 @@ public class OtpActivity extends AppCompatActivity {
                                         String id = mDatabase.push().getKey();
                                         String transactionId = "trns" + id;
                                         String walletId = userName + userMobileNumber;
-
                                         final UserData addMoneyData = new UserData(transactionId, 0, walletId, null);
                                         addMoneyData.setMobileNumber(userMobileNumber);
                                         addMoneyData.setUserName(userName);
@@ -128,14 +127,16 @@ public class OtpActivity extends AppCompatActivity {
                                                 });
                                         Toast.makeText(OtpActivity.this, "Account Created!", Toast.LENGTH_SHORT).show();
                                         userRef.set(addMoneyData, SetOptions.merge())
-                                                .addOnSuccessListener(aVoid -> Toast.makeText(OtpActivity.this, "Transaction successful!",
-                                                        Toast.LENGTH_SHORT).show())
+                                                .addOnSuccessListener(aVoid -> {
+                                                    Toast.makeText(getApplication(), "Welcome "+  userName + "!",
+                                                            Toast.LENGTH_LONG).show();
+                                                    Intent intent = new Intent(OtpActivity.this, BottomNavigator.class);
+                                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                    intent.putExtra("fragmentName", "home");
+                                                    startActivity(intent);
+                                                })
                                                 .addOnFailureListener(e -> Toast.makeText(OtpActivity.this, "Transaction failed!",
                                                         Toast.LENGTH_SHORT).show());
-                                        Intent intent = new Intent(OtpActivity.this, BottomNavigator.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                        intent.putExtra("fragmentName", "home");
-                                        startActivity(intent);
                                     }
                                 } else {
                                     Toast.makeText(OtpActivity.this, "Transaction failed!", Toast.LENGTH_SHORT).show();

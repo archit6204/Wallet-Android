@@ -41,6 +41,7 @@ public class AddMoneyPaymentActivity extends AppCompatActivity {
     private String walletId = "ARCHIT0001";
     private Map<String, Object> user = new HashMap<>();
     private String userName;
+    private String userMobileNo;
     private List<TransactionHistoryData> transactionHistoryDataList = new ArrayList<>();
     private ProgressBar progressBar;
 
@@ -54,8 +55,9 @@ public class AddMoneyPaymentActivity extends AppCompatActivity {
         GlobalVariables globalVariables = (GlobalVariables)getApplication();
         assert globalVariables != null;
         userName = globalVariables.getUserName();
+        userMobileNo = globalVariables.getMobileNumber();
         mDatabase = FirebaseDatabase.getInstance().getReference("AddedMoneyInWallet");
-        final DocumentReference userRef = db.collection("users").document(userName);
+        final DocumentReference userRef = db.collection("users").document(userMobileNo);
         tvAddWalletAmount = findViewById(R.id.tv_add_wallet_amount);
         progressBar = findViewById(R.id.pb_add_money_payment);
         Intent intent = getIntent();

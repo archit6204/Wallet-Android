@@ -38,6 +38,7 @@ public class WalletFragment extends Fragment {
     private String tapToShow;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String userName = "";
+    private String userMobileNumber = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,8 @@ public class WalletFragment extends Fragment {
         GlobalVariables globalVariables = (GlobalVariables) Objects.requireNonNull(getActivity()).getApplication();
         assert globalVariables != null;
         userName = globalVariables.getUserName();
-        DocumentReference userRef = db.collection("users").document(userName);
+        userMobileNumber = globalVariables.getMobileNumber();
+        DocumentReference userRef = db.collection("users").document(userMobileNumber);
         userRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();

@@ -85,8 +85,8 @@ public class HomeFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         GlobalVariables globalVariables = (GlobalVariables) Objects.requireNonNull(getActivity()).getApplication();
         assert globalVariables != null;
-        if (globalVariables.getUserName() != null) {
-            DocumentReference userRef = db.collection("users").document(globalVariables.getUserName());
+        if (globalVariables.getMobileNumber() != null) {
+            DocumentReference userRef = db.collection("users").document(globalVariables.getMobileNumber());
             userRef.get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();

@@ -39,6 +39,7 @@ public class SendMoneyPaymentActivity extends AppCompatActivity {
     private String userTransactionType = "Debited from: JusTap wallet";
     private ProgressBar progressBar;
     private String userName;
+    private String userMobileNumber;
     private String stringSendMoneyAmount;
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -48,6 +49,7 @@ public class SendMoneyPaymentActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressbar);
         GlobalVariables globalVariables = (GlobalVariables)getApplication();
         userName = globalVariables.getUserName();
+        userMobileNumber = globalVariables.getMobileNumber();
         mDatabase = FirebaseDatabase.getInstance().getReference("AddedMoneyInWallet");
 
 
@@ -69,7 +71,7 @@ public class SendMoneyPaymentActivity extends AppCompatActivity {
     }
 
     private void checkingUserTransferPayments() {
-        final DocumentReference userRef = db.collection("users").document(userName);
+        final DocumentReference userRef = db.collection("users").document(userMobileNumber);
         final DocumentReference beneficiaryRef = db.collection("users").document(beneficiaryName);
         String id = mDatabase.push().getKey();
         assert id != null;
