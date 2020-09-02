@@ -125,7 +125,6 @@ public class OtpActivity extends AppCompatActivity {
                                                         Log.d("TAG", "User profile updated.");
                                                     }
                                                 });
-                                        Toast.makeText(OtpActivity.this, "Account Created!", Toast.LENGTH_SHORT).show();
                                         userRef.set(addMoneyData, SetOptions.merge())
                                                 .addOnSuccessListener(aVoid -> {
                                                     Toast.makeText(getApplication(), "Welcome "+  userName + "!",

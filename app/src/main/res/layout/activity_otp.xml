@@ -24,7 +24,7 @@
         android:layout_marginTop="180dp"
         >
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            style="@style/AddMoneyTextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
@@ -32,6 +32,7 @@
             android:layout_marginLeft="16dp"
             android:hint="enter 6 digit received OTP"
             app:boxStrokeColor="@color/colorAccentBlue50"
+            app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
             >
 
             <com.google.android.material.textfield.TextInputEditText
@@ -43,6 +44,7 @@
                 android:inputType="number"
                 android:maxLength="6"
                 android:textColor="@color/gray_6"
+                android:textCursorDrawable="@drawable/color_cursor"
                 android:textSize="18sp" />
 
         </com.google.android.material.textfield.TextInputLayout>

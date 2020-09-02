@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,8 @@ public class HostWalletReaderActivity extends AppCompatActivity implements NfcCa
     public NfcCardReader mLoyaltyCardReader;
     private TextView mAccountField;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private TextView tvNoNfcFound;
+    private EditText etViaNFCAmount;
 
     /** Called when sample is created. Displays generic UI with welcome text. */
     @Override
@@ -48,10 +51,9 @@ public class HostWalletReaderActivity extends AppCompatActivity implements NfcCa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_host_wallet_reader);
         mAccountField = findViewById(R.id.text_view);
-        mAccountField.setText("Waiting...");
-
+        tvNoNfcFound = findViewById(R.id.tv_no_nfc_found);
         mLoyaltyCardReader = new NfcCardReader(this);
-
+        etViaNFCAmount = (EditText) findViewById(R.id.et_pay_nfc_amount);
         // Disable Android Beam and register our card reader callback
         enableReaderMode();
     }
@@ -73,6 +75,13 @@ public class HostWalletReaderActivity extends AppCompatActivity implements NfcCa
         NfcAdapter nfc = NfcAdapter.getDefaultAdapter(this);
         if (nfc != null) {
             nfc.enableReaderMode(this, mLoyaltyCardReader, READER_FLAGS, null);
+            mAccountField.setVisibility(View.GONE);
+            etViaNFCAmount.setVisibility(View.VISIBLE);
+            tvNoNfcFound.setText("Waiting for payments...");
+        } else {
+            mAccountField.setText("Sorry, this phone does not have NFC!");
+            tvNoNfcFound.setVisibility(View.VISIBLE);
+            etViaNFCAmount.setVisibility(View.GONE);
         }
     }
 
@@ -91,7 +100,7 @@ public class HostWalletReaderActivity extends AppCompatActivity implements NfcCa
        this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mAccountField.setText("archit" + account);
+                tvNoNfcFound.setText("Response:" + account);
                 checkingUserTransferPayments();
             }
         });

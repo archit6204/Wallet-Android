@@ -52,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
         tilUserMobileNo = findViewById(R.id.til_user_mobile_number);
         tilUserName = findViewById(R.id.til_user_user_name);
         tvSignUpMsg = findViewById(R.id.tv_signup_msg);
-        /*pbActivityRegister.setVisibility(View.VISIBLE);*/
+        pbActivityRegister.setVisibility(View.VISIBLE);
         btnSendOtp.setOnClickListener(v -> {
             String countryCode = "91";
             String mobileNumber = etUserMobileNo.getText().toString().replaceAll("\\s+", "");
