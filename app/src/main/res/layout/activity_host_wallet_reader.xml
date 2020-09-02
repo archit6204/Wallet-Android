@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.hostCardEmulator.HostWalletReaderActivity">
+
+    <include layout="@layout/toolbar"
+        android:layout_height="80dp"
+        android:layout_width="match_parent"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="16sp"
+        android:lines="3"
+        android:text=" Reading card..\n Please place device back-to-back."
+        android:textColor="@color/gray_6"
+        android:fontFamily="@font/ttcommons_regular"
+        android:gravity="top|left"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_no_nfc_found"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sorry! this device does not have NFC."
+        android:layout_gravity="center"
+        android:textColor="@color/gray_5"
+        android:textSize="20sp"
+
+        android:fontFamily="@font/ttcommons_regular"/>
+
+</FrameLayout>

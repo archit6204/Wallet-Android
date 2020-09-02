@@ -44,15 +44,15 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        pbActivityRegister = findViewById(R.id.pb_activity_register);
+        ivTurnstilesGate = findViewById(R.id.iv_turnstiles_gate_logo);
         etUserMobileNo = findViewById(R.id.et_user_mobile_number);
         etUserName = findViewById(R.id.et_user_name);
         btnSendOtp = findViewById(R.id.btn_send_otp);
         tilUserMobileNo = findViewById(R.id.til_user_mobile_number);
         tilUserName = findViewById(R.id.til_user_user_name);
         tvSignUpMsg = findViewById(R.id.tv_signup_msg);
-        pbActivityRegister = findViewById(R.id.pb_activity_register);
-        pbActivityRegister.setVisibility(View.VISIBLE);
-        ivTurnstilesGate = findViewById(R.id.iv_turnstiles_gate_logo);
+        /*pbActivityRegister.setVisibility(View.VISIBLE);*/
         btnSendOtp.setOnClickListener(v -> {
             String countryCode = "91";
             String mobileNumber = etUserMobileNo.getText().toString().replaceAll("\\s+", "");

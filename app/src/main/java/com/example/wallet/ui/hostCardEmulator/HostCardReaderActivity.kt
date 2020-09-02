@@ -1,6 +1,7 @@
 package com.example.wallet.ui.hostCardEmulator
 
 
+import android.app.PendingIntent.getActivity
 import android.content.Intent
 import android.nfc.NfcAdapter
 import android.nfc.Tag
@@ -18,6 +19,7 @@ import com.example.wallet.ui.TransactionHistory.transactionStatus.TransactionSta
 import com.example.wallet.ui.utils.GlobalVariables
 import com.example.wallet.ui.wallet.UserData
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
@@ -25,7 +27,7 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
 
-class HostCardReaderActivity : AppCompatActivity(), NfcCardReader.AccountCallback {
+class HostCardReaderActivity : AppCompatActivity() {
 
     private var nfcAdapter: NfcAdapter? = null
     private var mTextView: TextView? = null
@@ -64,7 +66,7 @@ class HostCardReaderActivity : AppCompatActivity(), NfcCardReader.AccountCallbac
             tvNoNfcFound?.visibility = View.VISIBLE
             tvNoNfcFound?.text = "Waiting for another device or card..."
         }
-        mNfcCardReader =  NfcCardReader(this);
+        /*mNfcCardReader =  NfcCardReader(this);*/
     }
 
     public override fun onResume() {
@@ -80,69 +82,14 @@ class HostCardReaderActivity : AppCompatActivity(), NfcCardReader.AccountCallbac
         nfcAdapter?.disableReaderMode(this)
     }
 
-     fun onTagDiscovered(tag: Tag?) {
-         val globalVariables = application as GlobalVariables
-         val userName = globalVariables.userName
-         val mobileNo = globalVariables.mobileNumber
-         val isoDep = IsoDep.get(tag)
-         isoDep.connect()
-         val response = isoDep.transceive(Utils.hexStringToByteArray(
-                 "00A4040007A0000002471001"))
-
-         /*mAccountCallback.get().onAccountReceived(accountNumber);*/
-         isoDep.close()
-         runOnUiThread {
-             mTextView?.text = ("\nCard Response: " + Utils.toHex(response))
-             val id: String? = mDatabase?.push()?.key
-             otherUserName = "user"
-             val transactionId = "trnstap$id"
-             val beneficiaryTransactionType = "Credited to: JusTap wallet"
-             val sendMoneyAmount = 20
-             val beneficiaryTransactionHistoryData = TransactionHistoryData(
-                     transactionId,
-                     sendMoneyAmount,
-                     otherUserName,
-                     beneficiaryTransactionType)
-             val intent = Intent(this, TransactionStatusActivity::class.java)
-             intent.putExtra("transactionItem", beneficiaryTransactionHistoryData as Parcelable?)
-             intent.putExtra("previousPage", "HostCardReaderActivity")
-             startActivity(intent)
-             /*val isResponseSuccess = onTagResponseSuccess(Utils.toHex(response))*//*
-        }
-        *//*val responseInHex = Utils.toHex(response)
-        val responseHexStatus = responseInHex.substring(0, 4)
-        val responseHexUserMobileNo = responseInHex.substring(4, 17)
-        val responseHexUserName = responseInHex.substring(17)
-        otherUserName = responseHexUserName
-        beneficiaryName = userName*//*
-        *//*if (responseHexStatus == STATUS_SUCCESS && responseHexUserMobileNo.length == 12 && responseHexUserName.isNotEmpty()) {*//*
-
-           *//* if (isResponseSuccess && isTransactionSuccessful) {
-                val transactionOnSuccessData = "00A4040007A00000024710019000$otherUserName"
-                isoDep.connect()
-                val response1 = isoDep.transceive(Utils.hexStringToByteArray(
-                        "00A4040007A0000002471001"))
-                runOnUiThread {
-                    mTextView?.text = ("\nCard Responsesss: " + Utils.toHex(response1))
-                }
-                isoDep.close()
-            }*//*
-       *//* } else {
-            Toast.makeText(this, "Transaction Failed!", Toast.LENGTH_SHORT).show()
-            tvNoNfcFound?.text = "Transaction failed!Please try again."
-        }*/
-
-         }
-     }
-
-    private fun onTagResponseSuccess(response: String): Boolean {
+    /*private fun onTagResponseSuccess(response: String): Boolean {
         val beneficiaryTransactionHistoryData = checkingUserTransferPayments()
         if (response == STATUS_SUCCESS) {
                 if (isTransactionSuccessful && beneficiaryTransactionHistoryData != null) {
-                   /* val intent = Intent(this, TransactionStatusActivity::class.java)
+                   *//* val intent = Intent(this, TransactionStatusActivity::class.java)
                     intent.putExtra("transactionItem", beneficiaryTransactionHistoryData as Parcelable?)
                     intent.putExtra("previousPage", "HostCardReaderActivity")
-                    startActivity(intent)*/
+                    startActivity(intent)*//*
                     return true
                 } else {
                     Toast.makeText(this, "Transaction Failed!", Toast.LENGTH_SHORT).show()
@@ -152,10 +99,13 @@ class HostCardReaderActivity : AppCompatActivity(), NfcCardReader.AccountCallbac
             Toast.makeText(this, "Transaction Failed!", Toast.LENGTH_SHORT).show()
             return false
         }
-    }
+    }*/
 
-    private fun checkingUserTransferPayments(): TransactionHistoryData? {
-        otherUserName = "user"
+    private fun checkingUserTransferPayments() {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        otherUserName = currentUser?.phoneNumber.toString()
+        beneficiaryName = "+919565600500"
+        Toast.makeText(this, "Transaction Successful!", Toast.LENGTH_SHORT).show()
         val userRef: DocumentReference = db.collection("users").document(otherUserName)
         val beneficiaryRef: DocumentReference = db.collection("users").document(beneficiaryName)
         val id: String? = mDatabase?.push()?.key
@@ -200,10 +150,12 @@ class HostCardReaderActivity : AppCompatActivity(), NfcCardReader.AccountCallbac
                                     ).addOnCompleteListener {
                                         tvNoNfcFound?.text = "Transaction Successful! Redirecting to payment status page."
                                         isTransactionSuccessful = true
-                                        val intent = Intent(this, TransactionStatusActivity::class.java)
-                                        intent.putExtra("transactionItem", beneficiaryTransactionHistoryData as Parcelable?)
-                                        intent.putExtra("previousPage", "HostCardReaderActivity")
-                                        startActivity(intent)
+                                        runOnUiThread {
+                                            val intent = Intent(this, TransactionStatusActivity::class.java)
+                                            intent.putExtra("transactionItem", beneficiaryTransactionHistoryData as Parcelable?)
+                                            intent.putExtra("previousPage", "HostCardReaderActivity")
+                                            startActivity(intent)
+                                        }
                                     }
                                 }
                             }
@@ -218,16 +170,6 @@ class HostCardReaderActivity : AppCompatActivity(), NfcCardReader.AccountCallbac
             } else {
                 Toast.makeText(this, "Transaction failed!", Toast.LENGTH_SHORT).show()
             }
-        }
-
-        return null
-    }
-
-    override fun onAccountReceived(account: String?) {
-        // This callback is run on a background thread, but updates to UI elements must be performed
-        // on the UI thread.
-        runOnUiThread {
-            mTextView?.text = ("\nCard Response: $account")
         }
     }
 
