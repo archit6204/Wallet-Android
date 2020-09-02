@@ -1,5 +1,6 @@
 package com.example.wallet.ui.hostCardEmulator;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -18,6 +19,10 @@ import com.example.wallet.ui.TransactionHistory.transactionStatus.TransactionSta
 import com.example.wallet.ui.utils.GlobalVariables;
 import com.example.wallet.ui.wallet.SendMoneyPaymentActivity;
 import com.example.wallet.ui.wallet.UserData;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
@@ -93,19 +98,22 @@ public class HostWalletReaderActivity extends AppCompatActivity implements NfcCa
     }
 
     private void checkingUserTransferPayments() {
-        String userMobileNumber = "+917661960630";
-        String beneficiaryName = "+917800075706";
-        DatabaseReference mDatabase;
         GlobalVariables globalVariables = (GlobalVariables)getApplication();
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String otherUserMobileNumber = globalVariables.getMobileNumber();
+        assert currentUser != null;
+        String beneficiaryMobileNumber = "+919305748712";
+        DatabaseReference mDatabase;
         mDatabase = FirebaseDatabase.getInstance().getReference("AddedMoneyInWallet");
-        final DocumentReference userRef = db.collection("users").document(userMobileNumber);
-        final DocumentReference beneficiaryRef = db.collection("users").document(beneficiaryName);
-        int sendMoneyAmount = 37;
+        final DocumentReference userRef = db.collection("users").document(otherUserMobileNumber);
+        final DocumentReference beneficiaryRef = db.collection("users").document(beneficiaryMobileNumber);
+        int sendMoneyAmount = 28;
         String id = mDatabase.push().getKey();
         assert id != null;
         String transactionId = "trnstap" + id;
          String userTransactionType = "Debited from: JusTap wallet";
          String userName = globalVariables.getUserName();
+         String beneficiaryName = "metro";
         final TransactionHistoryData userTransactionHistoryData = new TransactionHistoryData(
                 transactionId,
                 sendMoneyAmount,
@@ -146,15 +154,12 @@ public class HostWalletReaderActivity extends AppCompatActivity implements NfcCa
                                             "transactionHistoryData", FieldValue.arrayUnion(beneficiaryTransactionHistoryData),
                                             "lastUpdatedDateAndTime", FieldValue.serverTimestamp(),
                                             "totalAmount", beneficiaryTotalAmount
-                                    );
-                                    /*tvSendMoneyAmount.setText(stringSendMoneyAmount);
-                                    tvSendMoneyAmount.setVisibility(View.VISIBLE);
-                                    tvBeneficiaryName.setText(beneficiaryName);
-                                    tvBeneficiaryName.setVisibility(View.VISIBLE);*/
-                                    Intent intentTransactionStatus = new Intent(HostWalletReaderActivity.this, TransactionStatusActivity.class);
-                                    intentTransactionStatus.putExtra("transactionItem", (Parcelable) userTransactionHistoryData);
-                                    intentTransactionStatus.putExtra("previousPage", "SendMoneyPaymentActivity");
-                                    startActivity(intentTransactionStatus);
+                                    ).addOnCompleteListener(task1 -> {
+                                        Intent intentTransactionStatus = new Intent(HostWalletReaderActivity.this, TransactionStatusActivity.class);
+                                        intentTransactionStatus.putExtra("transactionItem", (Parcelable) userTransactionHistoryData);
+                                        intentTransactionStatus.putExtra("previousPage", "SendMoneyPaymentActivity");
+                                        startActivity(intentTransactionStatus);
+                                    });
                                     /*progressBar.setVisibility(View.GONE);*/
                                 }
                             }
