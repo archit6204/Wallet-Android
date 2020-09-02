@@ -25,6 +25,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class HostWalletReaderActivity extends AppCompatActivity implements NfcCardReader.AccountCallback {
 
@@ -49,6 +50,9 @@ public class HostWalletReaderActivity extends AppCompatActivity implements NfcCa
         tvNoNfcFound = findViewById(R.id.tv_no_nfc_found);
         mLoyaltyCardReader = new NfcCardReader(this);
         etViaNFCAmount = (EditText) findViewById(R.id.et_pay_nfc_amount);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle("Receive payments");
         // Disable Android Beam and register our card reader callback
         enableReaderMode();
     }
