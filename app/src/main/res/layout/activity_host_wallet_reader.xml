@@ -20,7 +20,7 @@
         android:layout_marginEnd="64dp"
         android:textSize="16sp"
         android:lines="3"
-        android:text=" Reading card..\n Please place device back-to-back."
+        android:text="Waiting for payments..."
         android:textColor="@color/gray_6"
         android:fontFamily="@font/ttcommons_regular"
         android:gravity="top|left"/>

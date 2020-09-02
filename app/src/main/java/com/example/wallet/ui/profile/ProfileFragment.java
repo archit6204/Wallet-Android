@@ -17,6 +17,7 @@ import com.example.wallet.R;
 import com.example.wallet.RegisterActivity;
 import com.example.wallet.ui.hostCardEmulator.HostCardReaderActivity;
 import com.example.wallet.ui.hostCardEmulator.HostWalletReaderActivity;
+import com.example.wallet.ui.nfc.NFCAndroidBeamActivity;
 import com.example.wallet.ui.profile.utils.TextDrawable;
 import com.example.wallet.ui.utils.GlobalVariables;
 import com.example.wallet.ui.wallet.UserData;
@@ -101,7 +102,7 @@ public class ProfileFragment extends Fragment {
                     Toast.LENGTH_SHORT).show();
         });
         ivCardImage.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), HostWalletReaderActivity.class);
+            Intent intent = new Intent(getActivity(), NFCAndroidBeamActivity.class);
             startActivity(intent);
         });
         return view;

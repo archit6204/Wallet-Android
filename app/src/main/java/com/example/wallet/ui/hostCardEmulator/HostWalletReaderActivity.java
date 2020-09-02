@@ -1,9 +1,5 @@
 package com.example.wallet.ui.hostCardEmulator;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
@@ -18,10 +14,7 @@ import com.example.wallet.R;
 import com.example.wallet.ui.TransactionHistory.TransactionHistoryData;
 import com.example.wallet.ui.TransactionHistory.transactionStatus.TransactionStatusActivity;
 import com.example.wallet.ui.utils.GlobalVariables;
-import com.example.wallet.ui.wallet.SendMoneyPaymentActivity;
 import com.example.wallet.ui.wallet.UserData;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +23,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class HostWalletReaderActivity extends AppCompatActivity implements NfcCardReader.AccountCallback {
 

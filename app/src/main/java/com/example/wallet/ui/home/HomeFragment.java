@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.wallet.R;
 import com.example.wallet.ui.TransactionHistory.TransactionHistoryData;
+import com.example.wallet.ui.hostCardEmulator.HostWalletReaderActivity;
 import com.example.wallet.ui.nfc.NFCAndroidBeamActivity;
 import com.example.wallet.ui.utils.GlobalVariables;
 import com.example.wallet.ui.wallet.AddMoneyActivity;
@@ -74,7 +75,7 @@ public class HomeFragment extends Fragment {
             startActivity(intent);
         });
         ivNFCSendMoney.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), NFCAndroidBeamActivity.class);
+            Intent intent = new Intent(getActivity(), HostWalletReaderActivity.class);
             startActivity(intent);
         });
         prepareTransactionData();
