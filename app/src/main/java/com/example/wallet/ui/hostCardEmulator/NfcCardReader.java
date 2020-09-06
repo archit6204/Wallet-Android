@@ -9,6 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 
@@ -68,16 +69,16 @@ public class NfcCardReader implements NfcAdapter.ReaderCallback {
                 // If AID is successfully selected, 0x9000 is returned as the status word (last 2
                 // bytes of the result) by convention. Everything before the status word is
                 // optional payload, which is used here to hold the account number.
-                /*int resultLength = result.length;
-                byte[] statusWord = {result[resultLength-2], result[resultLength-1]};
-                byte[] payload = Arrays.copyOf(result, resultLength-2);
+                int resultLength = result.length;
+                byte[] statusWord = {result[resultLength-2], result[resultLength - 1]};
+                byte[] payload = Arrays.copyOf(result, resultLength - 2);
                 if (Arrays.equals(SELECT_OK_SW, statusWord)) {
                     // The remote NFC device will immediately respond with its stored account number
-                    String accountNumber = new String(payload, "UTF-8");
-                    Log.i(TAG, "Received: " + accountNumber);
+                    String mobileNumber = new String(payload, StandardCharsets.UTF_8);
+                    Log.i(TAG, "Received: " + mobileNumber);
                     // Inform CardReaderFragment of received account number
-                    mAccountCallback.get().onAccountReceived(accountNumber);
-                }*/
+                    mAccountCallback.get().onAccountReceived(mobileNumber);
+                }
                 String response = ByteArrayToHexString(result);
                 if (response.equals(STATUS_SUCCESS)) {
                     mAccountCallback.get().onAccountReceived(response);

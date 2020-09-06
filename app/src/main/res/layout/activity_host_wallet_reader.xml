@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".ui.hostCardEmulator.HostWalletReaderActivity">
 
     <include layout="@layout/toolbar"
-        android:layout_height="80dp"
+        android:layout_height="64dp"
         android:layout_width="match_parent"
         />
 

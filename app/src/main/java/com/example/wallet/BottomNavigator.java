@@ -1,11 +1,14 @@
 package com.example.wallet;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.example.wallet.ui.utils.GlobalVariables;
@@ -23,7 +26,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 
@@ -31,6 +36,7 @@ public class BottomNavigator extends AppCompatActivity {
 
     private boolean doubleBackToExitPressedOnce = false;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,8 +78,7 @@ public class BottomNavigator extends AppCompatActivity {
                         new HomeFragment()).commit();
             }
         }
-
-
+        updatingStatusBarColor();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -134,4 +139,19 @@ public class BottomNavigator extends AppCompatActivity {
         Toast.makeText(this, "press again to close Justap", Toast.LENGTH_SHORT).show();
         new Handler().postDelayed((Runnable) () -> doubleBackToExitPressedOnce = false, 2000);
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private  void updatingStatusBarColor() {
+        Window window = this.getWindow();
+
+        // clear FLAG_TRANSLUCENT_STATUS flag:
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+        // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+        // finally change the color
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.my_statusbar_color));
+    }
+
 }

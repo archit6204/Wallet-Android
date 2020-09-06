@@ -10,10 +10,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -29,6 +32,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -54,6 +58,7 @@ public class TransactionStatusActivity extends AppCompatActivity {
     private View rootView;
     private boolean doubleBackToExitPressedOnce = false;
     private String previousPage;
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +95,7 @@ public class TransactionStatusActivity extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void showTransactionStatus() {
         tvTransactionFormattedDateNTime.setText(transactionFormattedDateNTime);
         transactionType = transactionItem.getTransactionType();
@@ -100,6 +106,7 @@ public class TransactionStatusActivity extends AppCompatActivity {
         showDebitedFromDetails();
         showTransactionIdDetails();
         showHelpSupportDetails();
+        updatingStatusBarColor();
     }
 
     public void showPaidToDetails() {
@@ -301,6 +308,20 @@ public class TransactionStatusActivity extends AppCompatActivity {
             intentBackToHome.putExtra("fragmentName", "history");
             startActivity(intentBackToHome);
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private  void updatingStatusBarColor() {
+        Window window = this.getWindow();
+
+        // clear FLAG_TRANSLUCENT_STATUS flag:
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+        // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+        // finally change the color
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.added_amount_green));
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.wallet.ui.home;
 
 import android.content.Intent;
+import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.transition.TransitionManager;
 import android.util.Log;
@@ -21,6 +22,8 @@ import com.example.wallet.ui.wallet.AddMoneyActivity;
 import com.example.wallet.ui.wallet.SendMoneyUserActivity;
 import com.example.wallet.ui.wallet.UserData;
 import com.example.wallet.ui.wallet.WalletActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
@@ -75,8 +78,18 @@ public class HomeFragment extends Fragment {
             startActivity(intent);
         });
         ivNFCSendMoney.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), HostWalletReaderActivity.class);
-            startActivity(intent);
+            NfcAdapter nfc = NfcAdapter.getDefaultAdapter(getContext());
+            if (nfc == null) {
+                Toast.makeText(getContext(), "Sorry! this mobile does not have NFC.", Toast.LENGTH_LONG).show();
+            } else {
+                if (nfc.isEnabled()) {
+                    Intent intent = new Intent(getActivity(), HostWalletReaderActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getContext(), "To receive payments please enable NFC in Settings!", Toast.LENGTH_LONG).show();
+                }
+            }
+
         });
         prepareTransactionData();
         return view;
@@ -84,10 +97,12 @@ public class HomeFragment extends Fragment {
 
     private void prepareTransactionData() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         GlobalVariables globalVariables = (GlobalVariables) Objects.requireNonNull(getActivity()).getApplication();
         assert globalVariables != null;
-        if (globalVariables.getMobileNumber() != null) {
-            DocumentReference userRef = db.collection("users").document(globalVariables.getMobileNumber());
+        assert currentUser != null;
+        if (globalVariables.getMobileNumber() != null && currentUser.getPhoneNumber() != null && currentUser.getPhoneNumber().length() == 13) {
+            DocumentReference userRef = db.collection("users").document(currentUser.getPhoneNumber());
             userRef.get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();

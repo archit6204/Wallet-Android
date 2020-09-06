@@ -3,6 +3,7 @@ package com.example.wallet.ui.wallet;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Build;
@@ -11,6 +12,7 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,6 +37,7 @@ public class AddMoneyActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private TextView tvTotalWalletAmount;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +86,7 @@ public class AddMoneyActivity extends AppCompatActivity {
                     }
                 }
             });
+        updatingStatusBarColor();
         }
 
     @Override
@@ -93,6 +97,20 @@ public class AddMoneyActivity extends AppCompatActivity {
         String stringAvailableWalletAmount = getString(R.string.add_wallet_amount, currentUserTotalAmount);
         tvTotalWalletAmount.setText(stringAvailableWalletAmount);
         tvTotalWalletAmount.setVisibility(View.VISIBLE);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private  void updatingStatusBarColor() {
+        Window window = this.getWindow();
+
+        // clear FLAG_TRANSLUCENT_STATUS flag:
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+        // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+        // finally change the color
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.my_statusbar_color));
     }
 
 }

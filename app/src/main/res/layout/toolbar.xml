@@ -8,18 +8,18 @@
     app:contentInsetRight="0dp"
     app:contentInsetEnd="0dp"
     app:title="JusTap"
-    app:titleMarginTop="40dp"
+    app:titleMarginTop="32dp"
     app:titleMarginStart="16dp"
     app:titleTextColor="@color/gray_0"
     android:layout_width="match_parent"
     app:titleTextAppearance="@style/Toolbar.TitleText"
-    android:layout_height="@dimen/value_100dp" >
+    android:layout_height="64dp" >
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_nfc_logo"
-        android:layout_width="32dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="42dp"
+        android:layout_width="24dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="36dp"
         app:srcCompat="@drawable/ic_icon_contacless"
         />
 

@@ -11,12 +11,12 @@
         android:id="@+id/tv_signup_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="72dp"
         android:layout_gravity="center_horizontal"
         android:fontFamily="@font/ttcommons_demibold"
         android:text="Welcome to JusTap!"
         android:textColor="@color/colorAccentBlue50"
-        android:textSize="24sp" />
+        android:textSize="20sp" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
     <Button
         android:id="@+id/btn_send_otp"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
+        android:layout_height="64dp"
         android:layout_gravity="bottom"
         android:background="@color/colorAccentBlue50"
         android:fontFamily="@font/ttcommons_demibold"
@@ -113,5 +113,5 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:visibility="invisible"
-        android:textSize="22sp" />
+        android:textSize="20sp" />
 </FrameLayout>

@@ -1,24 +1,15 @@
 package com.example.wallet.ui.hostCardEmulator
 
-import android.content.Intent
 import android.nfc.cardemulation.HostApduService
 import android.os.Build
 import android.os.Bundle
-import android.os.Parcelable
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import com.example.wallet.BottomNavigator
 import com.example.wallet.ui.TransactionHistory.TransactionHistoryData
-import com.example.wallet.ui.TransactionHistory.transactionStatus.TransactionStatusActivity
 import com.example.wallet.ui.utils.GlobalVariables
-import com.example.wallet.ui.wallet.UserData
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.FirebaseFirestore
+import java.util.*
 
 
 class HostCardEmulatorService: HostApduService() {
@@ -63,6 +54,10 @@ class HostCardEmulatorService: HostApduService() {
 
         if (hexCommandApdu.substring(10, 24) == AID) {
             Toast.makeText(this, "AId", Toast.LENGTH_SHORT).show()
+            val globalVariables = application as GlobalVariables
+            val userMobileNo = globalVariables.mobileNumber
+            val byteArrayUserMobileNo = Utils.hexStringToByteArray(userMobileNo)
+            val byteArrayStatusSuccess = Utils.hexStringToByteArray(STATUS_SUCCESS)
             /*val globalVariables = application as GlobalVariables
             val userMobileNo = globalVariables.mobileNumber
             val userName = globalVariables.userName
@@ -88,13 +83,32 @@ class HostCardEmulatorService: HostApduService() {
                     }
 
                 }*/
-                return Utils.hexStringToByteArray(STATUS_SUCCESS)
+            return concatArrays(byteArrayUserMobileNo, byteArrayStatusSuccess)
             } else {
                 return Utils.hexStringToByteArray(STATUS_FAILED)
             }
-        } /*else {
-            return Utils.hexStringToByteArray(STATUS_FAILED)
-        }*/
+        }
+
+    /**
+     * Utility method to concatenate two byte arrays.
+     * @param first First array
+     * @param rest Any remaining arrays
+     * @return Concatenated copy of input arrays
+     */
+    fun concatArrays(first: ByteArray, vararg rest: ByteArray): ByteArray {
+        var totalLength = first.size
+        for (array in rest) {
+            totalLength += array.size
+        }
+        val result: ByteArray = first.copyOf(totalLength)
+        var offset = first.size
+        for (array in rest) {
+            System.arraycopy(array, 0, result, offset, array.size)
+            offset += array.size
+        }
+        return result
+    }
+
     }
 
     /*@RequiresApi(Build.VERSION_CODES.N)

@@ -25,6 +25,7 @@
         <activity
             android:name=".ui.hostCardEmulator.HostWalletReaderActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:windowSoftInputMode="adjustResize"
             >
             <intent-filter>
                 <action android:name="android.nfc.action.TECH_DISCOVERED" />
@@ -46,6 +47,7 @@
 
         <activity
             android:name=".ui.TransactionHistory.transactionStatus.TransactionStatusActivity"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity
             android:name=".ui.hostCardEmulator.HostCardReaderActivity"
@@ -79,21 +81,27 @@
         </activity>
         <activity
             android:name=".ui.nfc.NFCAndroidBeamActivity"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity
             android:name=".ui.wallet.SendMoneyPaymentActivity"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity
             android:name=".ui.wallet.SendMoneyUserActivity"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity
             android:name=".ui.wallet.AddMoneyPaymentActivity"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity
             android:name=".ui.wallet.AddMoneyActivity"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity
             android:name=".RegisterActivity"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -103,12 +111,15 @@
         </activity>
         <activity
             android:name=".BottomNavigator"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" /> <!-- activity android:name=".MainActivity" / -->
         <activity
             android:name=".OtpActivity"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity
             android:name=".ui.wallet.WalletActivity"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
     </application>
 

@@ -1,25 +1,22 @@
 package com.example.wallet.ui.wallet;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.wallet.R;
 import com.example.wallet.ui.utils.GlobalVariables;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import static android.text.Html.FROM_HTML_MODE_LEGACY;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 
 public class WalletActivity extends AppCompatActivity {
@@ -31,6 +28,7 @@ public class WalletActivity extends AppCompatActivity {
     private TextView tvTotalWalletAmount;
     private ProgressBar progressBar;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,9 +59,11 @@ public class WalletActivity extends AppCompatActivity {
         init();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void init() {
         progressBar.setVisibility(View.VISIBLE);
         tvTotalWalletAmount.setVisibility(View.INVISIBLE);
+        updatingStatusBarColor();
     }
 
     @Override
@@ -76,4 +76,19 @@ public class WalletActivity extends AppCompatActivity {
         tvTotalWalletAmount.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private  void updatingStatusBarColor() {
+        Window window = this.getWindow();
+
+        // clear FLAG_TRANSLUCENT_STATUS flag:
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+        // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+        // finally change the color
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.my_statusbar_color));
+    }
+
 }

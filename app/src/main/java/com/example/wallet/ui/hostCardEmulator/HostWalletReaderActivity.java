@@ -2,10 +2,13 @@ package com.example.wallet.ui.hostCardEmulator;
 
 import android.content.Intent;
 import android.nfc.NfcAdapter;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,8 +27,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 public class HostWalletReaderActivity extends AppCompatActivity implements NfcCardReader.AccountCallback {
 
@@ -42,6 +47,7 @@ public class HostWalletReaderActivity extends AppCompatActivity implements NfcCa
     private EditText etViaNFCAmount;
 
     /** Called when sample is created. Displays generic UI with welcome text. */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +61,7 @@ public class HostWalletReaderActivity extends AppCompatActivity implements NfcCa
         toolbar.setTitle("Receive payments");
         // Disable Android Beam and register our card reader callback
         enableReaderMode();
+        updatingStatusBarColor();
     }
 
     @Override
@@ -76,7 +83,12 @@ public class HostWalletReaderActivity extends AppCompatActivity implements NfcCa
             nfc.enableReaderMode(this, mLoyaltyCardReader, READER_FLAGS, null);
             mAccountField.setVisibility(View.GONE);
             etViaNFCAmount.setVisibility(View.VISIBLE);
-            tvNoNfcFound.setText("Waiting for payments...");
+            if (nfc.isEnabled()) {
+                tvNoNfcFound.setText("Waiting for payments...");
+            } else {
+                tvNoNfcFound.setText("Please enable NFC via settings!");
+            }
+
         } else {
             mAccountField.setText("Sorry, this phone does not have NFC!");
             tvNoNfcFound.setVisibility(View.VISIBLE);
@@ -96,19 +108,15 @@ public class HostWalletReaderActivity extends AppCompatActivity implements NfcCa
     public void onAccountReceived(final String account) {
         // This callback is run on a background thread, but updates to UI elements must be performed
         // on the UI thread.
-       this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                tvNoNfcFound.setText("Response:" + account);
-                checkingUserTransferPayments();
-            }
-        });
+       this.runOnUiThread(() -> {
+           tvNoNfcFound.setText("Customer Mobile Number:" + account);
+           checkingUserTransferPayments(account);
+       });
     }
 
-    private void checkingUserTransferPayments() {
+    private void checkingUserTransferPayments(final String otherUserMobileNumber) {
         GlobalVariables globalVariables = (GlobalVariables)getApplication();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        String otherUserMobileNumber = globalVariables.getMobileNumber();
         assert currentUser != null;
         String beneficiaryMobileNumber = "+919305748712";
         DatabaseReference mDatabase;
@@ -131,7 +139,7 @@ public class HostWalletReaderActivity extends AppCompatActivity implements NfcCa
         final TransactionHistoryData beneficiaryTransactionHistoryData = new TransactionHistoryData(
                 transactionId,
                 sendMoneyAmount,
-                userName,
+                otherUserMobileNumber,
                 beneficiaryTransactionType);
 
         userRef.get().addOnCompleteListener(task -> {
@@ -187,5 +195,18 @@ public class HostWalletReaderActivity extends AppCompatActivity implements NfcCa
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private  void updatingStatusBarColor() {
+        Window window = this.getWindow();
+
+        // clear FLAG_TRANSLUCENT_STATUS flag:
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+        // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+        // finally change the color
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.my_statusbar_color));
+    }
 
 }

@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
         android:layout_gravity="center_horizontal"
-        android:fontFamily="@font/ttcommons_regular"
+        android:fontFamily="@font/ttcommons_demibold"
         android:text="Enter OTP to create an account."
         android:textColor="@color/colorAccentBlue50"
         android:textSize="20sp" />
@@ -58,16 +58,16 @@
         android:layout_marginBottom="110dp"
         android:layout_marginStart="105dp"
         android:layout_gravity="center"
-        android:fontFamily="@font/ttcommons_regular"
-        android:text="Veryfying OTP..."
+        android:fontFamily="@font/ttcommons_demibold"
+        android:text="Waiting for OTP..."
         android:textColor="@color/colorAccentBlue50"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <ProgressBar
         android:id="@+id/pb_auto_read_otp"
         style="?android:attr/progressBarStyle"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
         android:layout_marginBottom="110dp"
         android:layout_marginEnd="16dp"
         android:layout_gravity="center|end"
