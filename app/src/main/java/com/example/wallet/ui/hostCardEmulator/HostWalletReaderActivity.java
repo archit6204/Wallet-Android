@@ -110,7 +110,13 @@ public class HostWalletReaderActivity extends AppCompatActivity implements NfcCa
         // on the UI thread.
        this.runOnUiThread(() -> {
            tvNoNfcFound.setText("Customer Mobile Number:" + account);
-           checkingUserTransferPayments(account);
+           if (account.length() == 13) {
+               tvNoNfcFound.setText("Payments completed!");
+               Toast.makeText(HostWalletReaderActivity.this, "Payments completed!", Toast.LENGTH_SHORT).show();
+               checkingUserTransferPayments(account);
+           } else {
+               Toast.makeText(HostWalletReaderActivity.this, "Transaction failed!", Toast.LENGTH_SHORT).show();
+           }
        });
     }
 

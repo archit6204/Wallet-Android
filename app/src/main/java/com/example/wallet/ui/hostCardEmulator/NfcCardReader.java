@@ -79,11 +79,10 @@ public class NfcCardReader implements NfcAdapter.ReaderCallback {
                     // Inform CardReaderFragment of received account number
                     mAccountCallback.get().onAccountReceived(mobileNumber);
                 }
-                String response = ByteArrayToHexString(result);
+               /* String response = ByteArrayToHexString(result);
                 if (response.equals(STATUS_SUCCESS)) {
                     mAccountCallback.get().onAccountReceived(response);
-                }
-
+                }*/
             } catch (IOException e) {
                 Log.e(TAG, "Error communicating with card: " + e.toString());
             }
