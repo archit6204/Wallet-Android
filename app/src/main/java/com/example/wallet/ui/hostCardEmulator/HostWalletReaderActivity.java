@@ -110,7 +110,7 @@ public class HostWalletReaderActivity extends AppCompatActivity implements NfcCa
         // on the UI thread.
        this.runOnUiThread(() -> {
            tvNoNfcFound.setText("Customer Mobile Number:" + account);
-           if (account.length() == 13) {
+           if (account.length() == 12) {
                tvNoNfcFound.setText("Payments completed!");
                Toast.makeText(HostWalletReaderActivity.this, "Payments completed!", Toast.LENGTH_SHORT).show();
                checkingUserTransferPayments(account);
@@ -125,9 +125,10 @@ public class HostWalletReaderActivity extends AppCompatActivity implements NfcCa
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         assert currentUser != null;
         String beneficiaryMobileNumber = "+919305748712";
+        String otherMobileNumber = "+" + otherUserMobileNumber;
         DatabaseReference mDatabase;
         mDatabase = FirebaseDatabase.getInstance().getReference("AddedMoneyInWallet");
-        final DocumentReference userRef = db.collection("users").document(otherUserMobileNumber);
+        final DocumentReference userRef = db.collection("users").document(otherMobileNumber);
         final DocumentReference beneficiaryRef = db.collection("users").document(beneficiaryMobileNumber);
         int sendMoneyAmount = 28;
         String id = mDatabase.push().getKey();
@@ -145,7 +146,7 @@ public class HostWalletReaderActivity extends AppCompatActivity implements NfcCa
         final TransactionHistoryData beneficiaryTransactionHistoryData = new TransactionHistoryData(
                 transactionId,
                 sendMoneyAmount,
-                otherUserMobileNumber,
+                otherMobileNumber,
                 beneficiaryTransactionType);
 
         userRef.get().addOnCompleteListener(task -> {

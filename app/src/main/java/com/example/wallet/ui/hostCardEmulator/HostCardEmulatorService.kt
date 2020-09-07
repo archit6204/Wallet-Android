@@ -55,7 +55,8 @@ class HostCardEmulatorService: HostApduService() {
         if (hexCommandApdu.substring(10, 24) == AID) {
             Toast.makeText(this, "AId", Toast.LENGTH_SHORT).show()
             val globalVariables = application as GlobalVariables
-            val userMobileNo = globalVariables.mobileNumber
+            var userMobileNo = globalVariables.mobileNumber
+            userMobileNo = userMobileNo.substring(1)
             val byteArrayUserMobileNo = Utils.hexStringToByteArray(userMobileNo)
             val byteArrayStatusSuccess = Utils.hexStringToByteArray(STATUS_SUCCESS)
             /*val globalVariables = application as GlobalVariables

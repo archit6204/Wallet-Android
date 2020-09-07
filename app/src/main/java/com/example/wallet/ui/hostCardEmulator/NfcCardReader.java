@@ -75,9 +75,11 @@ public class NfcCardReader implements NfcAdapter.ReaderCallback {
                 if (Arrays.equals(SELECT_OK_SW, statusWord)) {
                     // The remote NFC device will immediately respond with its stored account number
                     String mobileNumber = new String(payload, StandardCharsets.UTF_8);
+                    String mobileNumberHex = ByteArrayToHexString(payload);
                     Log.i(TAG, "Received: " + mobileNumber);
+                    Log.i(TAG, "mobileNumberHex: " + mobileNumberHex);
                     // Inform CardReaderFragment of received account number
-                    mAccountCallback.get().onAccountReceived(mobileNumber);
+                    mAccountCallback.get().onAccountReceived(mobileNumberHex);
                 }
                /* String response = ByteArrayToHexString(result);
                 if (response.equals(STATUS_SUCCESS)) {
