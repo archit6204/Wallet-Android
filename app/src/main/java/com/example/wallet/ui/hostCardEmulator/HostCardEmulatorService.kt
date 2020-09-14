@@ -9,12 +9,12 @@ import androidx.annotation.RequiresApi
 import com.example.wallet.ui.TransactionHistory.TransactionHistoryData
 import com.example.wallet.ui.utils.GlobalVariables
 import com.google.firebase.auth.FirebaseAuth
-import java.util.*
 
 
 class HostCardEmulatorService: HostApduService() {
     private var currentUser = FirebaseAuth.getInstance().currentUser
     private var isTransactionDataFetched = false
+    private val TAG = "HostCardEmulatorService"
     private var userTransactionData: TransactionHistoryData? = null
     companion object {
         const val TAG = "Host Card Emulator"
@@ -56,9 +56,8 @@ class HostCardEmulatorService: HostApduService() {
             Toast.makeText(this, "AId", Toast.LENGTH_SHORT).show()
             val globalVariables = application as GlobalVariables
             var userMobileNo = globalVariables.mobileNumber
-            userMobileNo = userMobileNo.substring(1)
-            val byteArrayUserMobileNo = Utils.hexStringToByteArray(userMobileNo)
-            val byteArrayStatusSuccess = Utils.hexStringToByteArray(STATUS_SUCCESS)
+            userMobileNo = userMobileNo.substring(1) + STATUS_SUCCESS
+            /*val byteArrayStatusSuccess = Utils.hexStringToByteArray(STATUS_SUCCESS)*/
             /*val globalVariables = application as GlobalVariables
             val userMobileNo = globalVariables.mobileNumber
             val userName = globalVariables.userName
@@ -84,7 +83,8 @@ class HostCardEmulatorService: HostApduService() {
                     }
 
                 }*/
-            return concatArrays(byteArrayUserMobileNo, byteArrayStatusSuccess)
+            Log.i(TAG, "APDUResponse: $userMobileNo")
+            return Utils.hexStringToByteArray(userMobileNo)
             } else {
                 return Utils.hexStringToByteArray(STATUS_FAILED)
             }

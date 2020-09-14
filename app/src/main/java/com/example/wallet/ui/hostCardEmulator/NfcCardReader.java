@@ -19,7 +19,7 @@ public class NfcCardReader implements NfcAdapter.ReaderCallback {
     private NfcAdapter nfcAdapter;
     // AID for our loyalty card service.
     private static final String SAMPLE_LOYALTY_CARD_AID = "F222222222";
-    private static final String SAMPLE_NFC_CARD_AID = "00A4040007A0000002471001";
+    private static final String SAMPLE_NFC_CARD_AID = "00A4040007A0000002471001" + "06";
     private static final String STATUS_SUCCESS = "9000";
     // ISO-DEP command HEADER for selecting an AID.
     // Format: [Class | Instruction | Parameter 1 | Parameter 2]
@@ -66,6 +66,8 @@ public class NfcCardReader implements NfcAdapter.ReaderCallback {
                 // Send command to remote device
                 Log.i(TAG, "Sending: " + ByteArrayToHexString(command));
                 byte[] result = isoDep.transceive(command);
+                isoDep.close();
+                Log.i(TAG, "Received: " + ByteArrayToHexString(result));
                 // If AID is successfully selected, 0x9000 is returned as the status word (last 2
                 // bytes of the result) by convention. Everything before the status word is
                 // optional payload, which is used here to hold the account number.
