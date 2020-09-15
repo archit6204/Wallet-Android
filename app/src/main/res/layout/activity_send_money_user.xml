@@ -30,7 +30,7 @@
                         android:layout_marginBottom="12dp"
                         android:layout_marginRight="16dp"
                         android:layout_marginLeft="16dp"
-                        android:hint="enter beneficiary name"
+                        android:hint="Beneficiary mobile number"
                         app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
                         >
                         <com.google.android.material.textfield.TextInputEditText
@@ -71,10 +71,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:layout_marginStart="16dp"
-                    android:fontFamily="@font/ttcommons_demibold"
-                    android:text="Please enter beneficiary name"
+                    android:fontFamily="@font/ttcommons_regular"
+                    android:text="Please enter beneficiary mobile number!"
                     android:textColor="@color/gray_4"
-                    android:textSize="16sp" />
+                    android:textSize="20sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
@@ -92,10 +92,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:layout_marginStart="16dp"
-                    android:fontFamily="@font/ttcommons_demibold"
+                    android:fontFamily="@font/ttcommons_regular"
                     android:text="Please enter amount ₹"
                     android:textColor="@color/gray_4"
-                    android:textSize="16sp" />
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -132,7 +132,7 @@
     <Button
         android:id="@+id/btn_send_money"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
+        android:layout_height="68dp"
         android:text="Proceed To Send Money"
         android:textColor="@color/white"
         android:fontFamily="@font/ttcommons_demibold"

@@ -85,11 +85,11 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_turnstiles_gate_logo"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginBottom="32dp"
+        android:layout_width="240dp"
+        android:layout_height="220dp"
+        android:layout_marginBottom="100dp"
         android:layout_gravity="center"
-        app:srcCompat="@drawable/ic_turnstiles"
+        app:srcCompat="@drawable/inside_metro"
         android:visibility="visible"
         />
     <ProgressBar

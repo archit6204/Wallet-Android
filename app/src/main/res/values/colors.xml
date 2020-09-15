@@ -20,7 +20,7 @@
     <color name="colorTextDisabled">@color/colorBlack38</color>
 
     <color name="colorAccentBlue">#000AFF</color>
-    <color name="colorAccentBlue50">@color/colorAccentLightBlue50</color>
+    <color name="colorAccentBlue50">@color/colorAccentLightBlue150</color>
     <color name="colorAccentBlack">#2F3542</color>
     <color name="colorAccentYellow">#FFF700</color>
     <color name="colorListImageBackground">#E6E6E6</color>
@@ -40,6 +40,8 @@
     <color name="colorBottomViewNotFocusedIcon">@color/colorAccentBlue50</color>
     <color name="colorAccentLightBlue100">#435dc8</color>
     <color name="colorAccentLightBlue50">#4f74d3</color>
+    <color name="colorAccentLightBlue150">#6565ff</color>
+    <color name="colorAccentLightBlue200">#655cff</color>
     <color name="colorAccentBlueOld50">#00558c</color>
 
 
@@ -75,5 +77,5 @@
     <color name="gray_8">#2a2a2a</color>
     <color name="gray_9">#151515</color>
     <color name="added_amount_green">#64ef66</color>
-    <color name="my_statusbar_color">@color/colorAccentLightBlue50</color>
+    <color name="my_statusbar_color">@color/colorAccentLightBlue200</color>
 </resources>
