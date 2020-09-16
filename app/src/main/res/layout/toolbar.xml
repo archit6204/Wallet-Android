@@ -7,7 +7,7 @@
     app:contentInsetStart="0dp"
     app:contentInsetRight="0dp"
     app:contentInsetEnd="0dp"
-    app:title="JusTap"
+    app:title="TouchPe"
     app:titleMarginTop="32dp"
     app:titleMarginStart="16dp"
     app:titleTextColor="@color/gray_0"
@@ -18,9 +18,10 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_nfc_logo"
         android:layout_width="24dp"
-        android:layout_height="20dp"
+        android:layout_height="24dp"
         android:layout_marginTop="36dp"
-        app:srcCompat="@drawable/ic_icon_contacless"
+        android:layout_marginStart="8dp"
+        app:srcCompat="@drawable/ic_underground_metro"
         />
 
    <!-- <androidx.appcompat.widget.AppCompatImageView

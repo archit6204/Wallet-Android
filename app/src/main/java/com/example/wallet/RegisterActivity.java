@@ -93,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
         GlobalVariables globalVariables = (GlobalVariables)getApplication();
         if (currentUser != null && currentUser.getPhoneNumber() != null && currentUser.getPhoneNumber().length() == 13) {
             ivTurnstilesGate.setVisibility(View.VISIBLE);
-            tvSignUpMsg.setText("Welcome to JusTap!");
+            tvSignUpMsg.setText("Welcome to TouchPe!");
             if (currentUser.getDisplayName() != null && !currentUser.getDisplayName().isEmpty()) {
                 globalVariables.setUserName(currentUser.getDisplayName());
                 globalVariables.setMobileNumber(currentUser.getPhoneNumber());
