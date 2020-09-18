@@ -155,4 +155,14 @@
         android:indeterminateTint="@color/colorAccentBlue50"
         android:visibility="invisible"/>
 
+    <ImageView
+        android:id="@+id/iv_inside_metro_icon"
+        android:layout_width="280dp"
+        android:layout_height="200dp"
+        android:layout_marginBottom="32dp"
+        android:layout_gravity="bottom|center"
+        android:layout_marginStart="@dimen/marginItemsInSectionSmall"
+        android:layout_marginEnd="32dp"
+        app:srcCompat="@drawable/inside_metro_run" />
+
 </FrameLayout>

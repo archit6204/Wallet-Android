@@ -5,11 +5,14 @@ import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +48,8 @@ public class HostWalletReaderActivity extends AppCompatActivity implements NfcCa
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private TextView tvNoNfcFound;
     private EditText etViaNFCAmount;
+    private ImageView ivCheckLogo;
+    private int viaNFCAmount;
 
     /** Called when sample is created. Displays generic UI with welcome text. */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -55,13 +60,38 @@ public class HostWalletReaderActivity extends AppCompatActivity implements NfcCa
         mAccountField = findViewById(R.id.text_view);
         tvNoNfcFound = findViewById(R.id.tv_no_nfc_found);
         mLoyaltyCardReader = new NfcCardReader(this);
-        etViaNFCAmount = (EditText) findViewById(R.id.et_pay_nfc_amount);
+        etViaNFCAmount = findViewById(R.id.et_pay_nfc_amount);
+        ivCheckLogo = findViewById(R.id.iv_transaction_type_logo);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("Receive payments");
         // Disable Android Beam and register our card reader callback
         enableReaderMode();
         updatingStatusBarColor();
+        initAmountWatcher();
+    }
+
+    private void initAmountWatcher() {
+        etViaNFCAmount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().trim().length() == 0){
+                    tvNoNfcFound.setText("Please enter amount to start receiving payments from users!");
+                }   else {
+                    tvNoNfcFound.setText("Waiting for user to pay  ₹" + s + "/-");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
@@ -84,7 +114,7 @@ public class HostWalletReaderActivity extends AppCompatActivity implements NfcCa
             mAccountField.setVisibility(View.GONE);
             etViaNFCAmount.setVisibility(View.VISIBLE);
             if (nfc.isEnabled()) {
-                tvNoNfcFound.setText("Waiting for payments...");
+                tvNoNfcFound.setText("Please enter amount to start receiving payments from user!");
             } else {
                 tvNoNfcFound.setText("Please enable NFC via settings!");
             }
@@ -110,14 +140,26 @@ public class HostWalletReaderActivity extends AppCompatActivity implements NfcCa
         // on the UI thread.
        this.runOnUiThread(() -> {
            tvNoNfcFound.setText("Customer Mobile Number:" + account);
+           readingAmount();
            if (account.length() == 12) {
-               tvNoNfcFound.setText("Payments completed!");
-               Toast.makeText(HostWalletReaderActivity.this, "Payments completed!", Toast.LENGTH_SHORT).show();
-               checkingUserTransferPayments(account);
+               if (viaNFCAmount >= 1) {
+                   ivCheckLogo.setVisibility(View.VISIBLE);
+                   tvNoNfcFound.setText("Payments Successful!");
+                   Toast.makeText(HostWalletReaderActivity.this, "Payments Successful!", Toast.LENGTH_SHORT).show();
+                   checkingUserTransferPayments(account);
+               } else {
+                   tvNoNfcFound.setText("Please enter valid amount!");
+                   Toast.makeText(HostWalletReaderActivity.this, "Please enter valid amount!", Toast.LENGTH_SHORT).show();
+               }
            } else {
                Toast.makeText(HostWalletReaderActivity.this, "Transaction failed!", Toast.LENGTH_SHORT).show();
            }
        });
+    }
+
+    private void readingAmount() {
+        String sViaNFCAmount = etViaNFCAmount.getText().toString();
+        viaNFCAmount = Integer.parseInt(sViaNFCAmount);
     }
 
     private void checkingUserTransferPayments(final String otherUserMobileNumber) {
@@ -130,7 +172,7 @@ public class HostWalletReaderActivity extends AppCompatActivity implements NfcCa
         mDatabase = FirebaseDatabase.getInstance().getReference("AddedMoneyInWallet");
         final DocumentReference userRef = db.collection("users").document(otherMobileNumber);
         final DocumentReference beneficiaryRef = db.collection("users").document(beneficiaryMobileNumber);
-        int sendMoneyAmount = 28;
+        int sendMoneyAmount = viaNFCAmount;
         String id = mDatabase.push().getKey();
         assert id != null;
         String transactionId = "trnstap" + id;

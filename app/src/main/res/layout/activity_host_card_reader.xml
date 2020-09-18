@@ -29,6 +29,8 @@
         android:id="@+id/tv_no_nfc_found"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:text="Sorry! this device does not have NFC."
         android:layout_gravity="center"
         android:textColor="@color/gray_5"

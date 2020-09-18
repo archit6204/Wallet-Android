@@ -56,23 +56,38 @@
         android:id="@+id/tv_no_nfc_found"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="16dp"
         android:text="Sorry! this device does not have NFC!"
         android:layout_gravity="center"
-        android:textColor="@color/gray_5"
-        android:textSize="20sp"
+        android:textColor="@color/gray_6"
+        android:textSize="22sp"
         android:fontFamily="@font/ttcommons_regular"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_transaction_type_logo"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="64dp"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/ic_check"
+        android:visibility="invisible"
+        />
 
     <Button
         android:id="@+id/btn_nfc_send_money"
         android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:text="Pay via NFC"
+        android:paddingEnd="68dp"
+        android:paddingStart="68dp"
+        android:text="Start receiving payments"
         android:textColor="@color/white"
         android:fontFamily="@font/ttcommons_demibold"
         android:textSize="22sp"
         android:layout_gravity="bottom"
         android:background="@color/colorAccentBlue50"
         android:textAllCaps="false"
+        android:drawableEnd="@drawable/ic_icon_contacless"
         />
 
 </FrameLayout>
