@@ -53,7 +53,7 @@ class HostCardEmulatorService: HostApduService() {
         }
 
         if (hexCommandApdu.substring(10, 24) == AID) {
-            Toast.makeText(this, "AId", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Payment requested!", Toast.LENGTH_SHORT).show()
             val globalVariables = application as GlobalVariables
             var userMobileNo = globalVariables.mobileNumber
             userMobileNo = userMobileNo.substring(1) + STATUS_SUCCESS

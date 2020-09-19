@@ -145,7 +145,6 @@ public class HostWalletReaderActivity extends AppCompatActivity implements NfcCa
                if (viaNFCAmount >= 1) {
                    ivCheckLogo.setVisibility(View.VISIBLE);
                    tvNoNfcFound.setText("Payments Successful!");
-                   Toast.makeText(HostWalletReaderActivity.this, "Payments Successful!", Toast.LENGTH_SHORT).show();
                    checkingUserTransferPayments(account);
                } else {
                    tvNoNfcFound.setText("Please enter valid amount!");
@@ -158,7 +157,11 @@ public class HostWalletReaderActivity extends AppCompatActivity implements NfcCa
     }
 
     private void readingAmount() {
-        String sViaNFCAmount = etViaNFCAmount.getText().toString();
+        String sViaNFCAmount = "0";
+        sViaNFCAmount = etViaNFCAmount.getText().toString();
+        if (sViaNFCAmount.equals("")) {
+            sViaNFCAmount = "0";
+        }
         viaNFCAmount = Integer.parseInt(sViaNFCAmount);
     }
 
@@ -230,7 +233,9 @@ public class HostWalletReaderActivity extends AppCompatActivity implements NfcCa
                             }
                         });
                     } else {
-                        Toast.makeText(HostWalletReaderActivity.this, "your wallet Balance is low..!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HostWalletReaderActivity.this, "Customer wallet does not have sufficient Balance..!", Toast.LENGTH_SHORT).show();
+                        tvNoNfcFound.setText("Customer wallet does not have sufficient Balance for this transaction!");
+                        ivCheckLogo.setVisibility(View.INVISIBLE);
                         /*progressBar.setVisibility(View.GONE);*/
                     }
                 } else {

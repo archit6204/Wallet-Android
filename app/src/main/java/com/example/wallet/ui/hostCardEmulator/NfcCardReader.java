@@ -67,7 +67,7 @@ public class NfcCardReader implements NfcAdapter.ReaderCallback {
                 // Send command to remote device
                 Log.i(TAG, "Sending: " + ByteArrayToHexString(command));
                 byte[] result = isoDep.transceive(command);
-               /* isoDep.close();*/
+                isoDep.close();
                 Log.i(TAG, "Received: " + ByteArrayToHexString(result));
                 // If AID is successfully selected, 0x9000 is returned as the status word (last 2
                 // bytes of the result) by convention. Everything before the status word is
